@@ -1,0 +1,31 @@
+---
+import Action from './Action.astro';
+const links = [
+  { href: '/in-person/', label: 'In-person training' },
+  { href: '/online-group-membership/', label: 'Online coaching' },
+  { href: '/#coach', label: 'Meet Nico' },
+  { href: '/#questions', label: 'FAQ' },
+];
+---
+
+<header class="site-header shell">
+  <a class="brand" href="/" aria-label="Paradox Fitness home">
+    paradox<span aria-hidden="true">.</span>
+    <small>Fitness &amp; personal training</small>
+  </a>
+  <nav class="desktop-nav" aria-label="Main navigation">
+    {links.map((link) => (
+      <a href={link.href}>{link.label}</a>
+    ))}
+  </nav>
+  <Action placement="header" label="Start your free week" />
+  <details class="mobile-menu">
+    <summary>Menu</summary>
+    <nav aria-label="Mobile navigation">
+      {links.map((link) => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+      <a href="/contact-us-1/">Get in touch</a>
+    </nav>
+  </details>
+</header>

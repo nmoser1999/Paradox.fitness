@@ -1,0 +1,157 @@
+---
+import '../styles/global.css';
+import '../styles/appearance.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Consent from '../components/Consent.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import DesignControls from '../components/DesignControls.astro';
+import { palettes, layouts, defaultDesign, DESIGN_KEY } from '../lib/design';
+import { site } from '../data/site';
+import { getImage } from 'astro:assets';
+import nico from '../../assets/unnamed.jpg';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  mobileCta?: boolean;
+}
+const { title, description, noindex = false, mobileCta = true } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const indexable = import.meta.env.SITE_INDEXABLE === 'true' && !noindex;
+const onlinePage = Astro.url.pathname === '/online-group-membership/';
+const appearanceSeed = {
+  paletteIds: Object.keys(palettes),
+  layoutIds: Object.keys(layouts),
+  defaults: defaultDesign,
+  storageKey: DESIGN_KEY,
+};
+const social = await getImage({
+  src: nico,
+  width: 1200,
+  height: 630,
+  fit: 'cover',
+  format: 'jpg',
+  quality: 75,
+});
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'SportsActivityLocation',
+  name: site.name,
+  url: Astro.site?.toString(),
+  telephone: '+1-510-606-0868',
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address,
+    addressLocality: 'Fremont',
+    addressRegion: 'CA',
+    postalCode: '94539',
+    addressCountry: 'US',
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '06:00',
+      closes: '19:30',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: 'Saturday',
+      opens: '06:00',
+      closes: '12:00',
+    },
+  ],
+  sameAs: [site.instagram],
+};
+---
+
+<!doctype html>
+<html lang="en" data-theme="grove" data-layout="panorama">
+  <head>
+    <meta charset="utf-8" />
+    <script is:inline define:vars={{ appearanceSeed }}>
+      // Apply saved appearance before first paint. Enum lists come from the shared catalog.
+      (() => {
+        let saved = {};
+        try {
+          saved =
+            JSON.parse(
+              localStorage.getItem(appearanceSeed.storageKey) || '{}',
+            ) || {};
+        } catch {}
+        const params = new URLSearchParams(location.search);
+        const theme = appearanceSeed.paletteIds.includes(params.get('theme'))
+          ? params.get('theme')
+          : appearanceSeed.paletteIds.includes(saved.theme)
+            ? saved.theme
+            : appearanceSeed.defaults.theme;
+        const layout = appearanceSeed.layoutIds.includes(params.get('layout'))
+          ? params.get('layout')
+          : appearanceSeed.layoutIds.includes(saved.layout)
+            ? saved.layout
+            : appearanceSeed.defaults.layout;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.dataset.layout = layout;
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title} | Paradox Fitness</title>
+    <meta name="description" content={description} />
+    <meta
+      name="robots"
+      content={indexable ? 'index,follow' : 'noindex,nofollow'}
+    />
+    <meta name="theme-color" content="#45592e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={`${title} | Paradox Fitness`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(social.src, Astro.site)} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Personal training with Nico" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schema).replace(/</g, '\\u003c')}
+    />
+  </head>
+  <body class:list={{ 'has-mobile-cta': mobileCta }} data-clarity-mask="true">
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <DesignControls />
+    <Header />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <Consent />
+    {mobileCta && (
+      <a
+        class="mobile-cta button"
+        href={onlinePage ? site.checkout : '/contact-us-1/?service=in-person'}
+        target={onlinePage ? '_blank' : undefined}
+        rel={onlinePage ? 'noopener' : undefined}
+        data-track={onlinePage ? 'online_checkout_click' : 'cta_click'}
+        data-placement="mobile-sticky"
+        data-service={onlinePage ? 'online' : 'in-person'}
+      >
+        {onlinePage ? 'Start your online trial' : 'Start your free week'}{' '}
+        <ArrowIcon direction={onlinePage ? 'up-right' : 'right'} />
+        {onlinePage && <span class="sr-only"> (opens in a new tab)</span>}
+      </a>
+    )}
+    <script>
+      import '../lib/appearance';
+      import '../lib/consent';
+    </script>
+  </body>
+</html>

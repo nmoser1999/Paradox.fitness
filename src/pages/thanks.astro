@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Thank You for Reaching Out"
+  description="Your inquiry has been sent to Paradox Fitness. Nico will follow up to discuss your training options and the next step."
+  noindex
+  mobileCta={false}
+>
+  <section class="page-heading shell">
+    <p class="eyebrow">Your next chapter starts here</p>
+    <h1>
+      Thanks for
+      <br />
+      <em>reaching out.</em>
+    </h1>
+    <p>
+      If you arrived here after submitting the form, your inquiry has been sent.
+      Nico will follow up using the contact details you provided to discuss the
+      next step.
+    </p>
+    <p>
+      No session is reserved until you arrange it with Nico. If you need to
+      contact him directly, use{' '}
+      <a href={`mailto:${site.email}`}>{site.email}</a> or{' '}
+      <a href={site.phoneHref}>{site.phone}</a>.
+    </p>
+    <div class="actions">
+      <a class="button" href="/">
+        Back to Paradox Fitness <ArrowIcon />
+      </a>
+    </div>
+  </section>
+</Base>

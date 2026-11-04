@@ -1,0 +1,89 @@
+---
+import Base from '../layouts/Base.astro';
+import Action from '../components/Action.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Online Personal Training — Paradox Membership"
+  description="Train with more structure through the Paradox online membership. Programs, exercise tutorials, and coaching in Trainerize. Seven-day trial, then $60/month."
+>
+  <div class="shell">
+    <section class="page-heading">
+      <p class="eyebrow">Paradox online / Powered by Trainerize</p>
+      <h1>
+        A plan to follow.
+        <br />
+        <em>Room to make it yours.</em>
+      </h1>
+      <p>
+        Bring guidance and consistency to the place you already train. The
+        Paradox membership gives you programs, exercise tutorials, and a
+        connection to your coach.
+      </p>
+      <div class="actions">
+        <Action
+          href={site.checkout}
+          label="Start the seven-day trial"
+          placement="online-hero"
+          event="online_checkout_click"
+          service="online"
+        />
+        <Action
+          href="/contact-us-1/?service=online"
+          label="Ask Nico a question"
+          secondary
+          placement="online-hero"
+          service="online"
+        />
+      </div>
+      <p class="fine-print">
+        Seven-day trial, then {site.onlinePrice}/month. Checkout and
+        subscription terms are provided by Trainerize. Review them before
+        subscribing.
+      </p>
+    </section>
+    <section class="content-grid section" aria-labelledby="online-heading">
+      <div class="content-block">
+        <h2 id="online-heading">
+          Less guessing.
+          <br />
+          More direction.
+        </h2>
+        <p>
+          Choose from structured programs and on-demand workouts. Exercise
+          tutorials help you follow the plan, while coaching and the training
+          community give you a place to ask questions.
+        </p>
+        <ul>
+          <li>Master programs and on-demand workouts</li>
+          <li>Exercise demonstrations and form guidance</li>
+          <li>Coaching through the Trainerize app</li>
+          <li>A shared space for questions and training discussion</li>
+        </ul>
+      </div>
+      <aside class="content-panel">
+        <h2>Get started online.</h2>
+        <p class="price">
+          {site.onlinePrice}
+          <span> / month after your trial</span>
+        </p>
+        <p>
+          Use the existing Paradox Trainerize checkout to review the offer,
+          create your account, and begin the trial.
+        </p>
+        <Action
+          href={site.checkout}
+          label="Explore the online trial"
+          placement="online-details"
+          event="online_checkout_click"
+          service="online"
+        />
+        <p class="fine-print">
+          Already training with Nico in person? Ask how online programming fits
+          your plan.
+        </p>
+      </aside>
+    </section>
+  </div>
+</Base>

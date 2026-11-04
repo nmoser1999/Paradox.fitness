@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en" data-theme="fieldwork" data-layout="classic">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Eight color palettes and eight independent layouts for the Paradox Fitness website rebuild.">
+  <title>Paradox Fitness — Design Directions</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root { color-scheme: light; --bg:#f4f1e9; --ink:#192c27; --muted:#52645b; --accent:#254d3d; --button-ink:#fff; --panel:#e2e7dd; --line:#c2cbbd; --small:#364b40; --radius:4px; --title:Arial,Helvetica,sans-serif; --title-weight:700; --tracking:-.055em; }
+    [data-theme="precision"] { color-scheme:dark; --bg:#101c2b; --ink:#f3f6f8; --muted:#becad5; --accent:#b7d7ee; --button-ink:#101c2b; --panel:#1d3046; --line:#4c6179; --small:#d0dfed; --radius:0px; --title:Arial,Helvetica,sans-serif; --title-weight:700; --tracking:-.06em; }
+    [data-theme="foundation"] { --bg:#f4eee5; --ink:#322821; --muted:#6d5749; --accent:#81462f; --button-ink:#fff; --panel:#e5d7c7; --line:#c7b4a0; --small:#674d3d; --radius:24px; --title:Georgia,'Times New Roman',serif; --title-weight:400; --tracking:-.055em; }
+    body { margin:0; background:var(--bg); color:var(--ink); font-family:Arial,Helvetica,sans-serif; line-height:1.55; }
+    a { color:inherit; text-underline-offset:4px; }
+    button,a { -webkit-tap-highlight-color:transparent; }
+    :focus-visible { outline:3px solid var(--accent); outline-offset:5px; }
+    .skip { position:absolute; left:16px; top:-80px; z-index:5; background:var(--bg); padding:12px; }
+    .skip:focus { top:12px; }
+    .review { color:#f6f5f1; background:#202522; padding:18px 4.5%; display:flex; gap:20px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .review-title { font-size:12px; letter-spacing:.12em; text-transform:uppercase; margin:0 0 4px; font-weight:700; }
+    .review-sub { margin:0; color:#ccd1cc; font-size:12px; }
+    fieldset { border:0; padding:0; margin:0; }
+    legend { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+    .options { display:flex; gap:6px; flex-wrap:wrap; }
+    .option { position:relative; cursor:pointer; }
+    .option input { position:absolute; opacity:0; width:1px; height:1px; }
+    .option span { display:block; border:1px solid #777f78; border-radius:5px; padding:9px 14px; font-size:12px; font-weight:700; white-space:nowrap; }
+    .option input:checked + span { background:#f1f0e9; color:#202522; border-color:#f1f0e9; }
+    .option input:focus-visible + span { outline:3px solid #c7e5dc; outline-offset:3px; }
+    .wrap { max-width:1360px; margin:0 auto; padding:0 5.5%; }
+    .nav { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:27px 0; border-bottom:1px solid var(--line); }
+    .brand { font-weight:800; letter-spacing:-.07em; font-size:25px; line-height:1; text-decoration:none; }
+    .brand small { display:block; font-weight:500; font-size:9px; text-transform:uppercase; letter-spacing:.29em; margin-top:8px; }
+    .nav-links { display:flex; align-items:center; gap:24px; font-size:13px; }
+    .nav-links > a:not(.button) { text-decoration:none; }
+    .button { display:inline-flex; align-items:center; justify-content:center; gap:20px; text-decoration:none; padding:15px 21px; background:var(--accent); color:var(--button-ink); border:1px solid var(--accent); border-radius:min(var(--radius),8px); font-size:13px; font-weight:700; line-height:1.3; min-height:48px; }
+    .button:hover { filter:brightness(1.1); }
+    .button.secondary { background:transparent; color:var(--ink); border-color:var(--line); }
+    .nav .button { padding:12px 16px; }
+    .hero { display:grid; grid-template-columns:1.1fr 1fr; gap:7%; padding:64px 0 56px; align-items:center; }
+    .eyebrow { display:flex; align-items:center; gap:11px; font-size:10px; letter-spacing:.16em; text-transform:uppercase; font-weight:700; color:var(--small); margin:0 0 26px; }
+    .eyebrow::before { content:''; height:1px; width:30px; background:currentColor; }
+    h1 { font-family:var(--title); font-size:clamp(42px,5.5vw,80px); font-weight:var(--title-weight); letter-spacing:var(--tracking); line-height:1.01; margin:0 0 27px; }
+    h1 em { display:block; font-style:normal; color:var(--accent); }
+    .intro { max-width:410px; font-size:16px; color:var(--muted); line-height:1.75; margin:0 0 28px; }
+    .actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .terms { font-size:11px; color:var(--muted); margin:13px 0 0; }
+    .portrait { min-height:440px; border-radius:var(--radius); overflow:hidden; background:var(--panel); border:1px solid var(--line); position:relative; display:flex; flex-direction:column; justify-content:space-between; padding:27px; isolation:isolate; }
+    .portrait::before { content:''; position:absolute; width:390px; height:390px; border:1px solid var(--line); border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%); z-index:-1; }
+    .portrait::after { content:''; position:absolute; inset:55px; border-left:1px solid var(--line); border-right:1px solid var(--line); transform:rotate(20deg); z-index:-1; }
+    .portrait-top { display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:10px; letter-spacing:.13em; text-transform:uppercase; color:var(--small); }
+    .portrait-center { text-align:center; padding:55px 0; }
+    .monogram { font-family:var(--title); font-size:120px; font-weight:var(--title-weight); letter-spacing:-.1em; line-height:1; opacity:.22; }
+    .placeholder-label { display:block; margin-top:14px; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--small); }
+    .portrait-bottom { display:flex; gap:12px; align-items:flex-end; justify-content:space-between; }
+    .portrait-bottom strong { font-size:28px; font-family:var(--title); letter-spacing:-.04em; line-height:1; }
+    .portrait-bottom span { font-size:11px; color:var(--small); }
+    .coordinates { font-size:9px; text-align:right; text-transform:uppercase; letter-spacing:.1em; }
+    .pillars { border-top:1px solid var(--line); border-bottom:1px solid var(--line); display:grid; grid-template-columns:repeat(3,1fr); gap:30px; padding:25px 0; }
+    .pillar { display:flex; align-items:baseline; gap:14px; }
+    .pillar .number { font-size:10px; color:var(--muted); }
+    .pillar strong { display:block; font-size:15px; }
+    .pillar p { color:var(--muted); font-size:12px; margin:3px 0 0; }
+    .below { display:grid; grid-template-columns:1fr 1fr; gap:7%; padding:44px 0; }
+    .below h2 { font-family:var(--title); font-weight:var(--title-weight); font-size:34px; letter-spacing:-.04em; line-height:1.15; margin:10px 0 0; max-width:340px; }
+    .services { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+    .services article { border-top:2px solid var(--accent); padding-top:15px; }
+    .services h3 { font-size:15px; margin:0 0 8px; }
+    .services p { font-size:12px; color:var(--muted); margin:0 0 14px; }
+    .services a { font-size:12px; font-weight:700; }
+    .note { border-top:1px solid var(--line); padding:20px 0 32px; display:flex; gap:24px; justify-content:space-between; font-size:11px; color:var(--muted); }
+    .note p { margin:0; max-width:690px; }
+    .direction { margin-top:4px; font-size:12px; font-weight:700; }
+    [data-theme="precision"] .portrait::before { border-radius:0; transform:translate(-50%,-50%) rotate(45deg); width:260px; height:260px; }
+    [data-theme="precision"] .portrait::after { transform:none; inset:30px; border:1px solid var(--line); }
+    [data-theme="precision"] .eyebrow::before { width:7px; height:7px; }
+    [data-theme="foundation"] .portrait { border-radius:160px 160px 16px 16px; padding-top:60px; }
+    [data-theme="foundation"] h1 em { font-style:italic; }
+    [data-theme="foundation"] .portrait::after { transform:none; border:0; }
+    @media (max-width:800px) {
+      .review { padding:17px 5%; gap:14px; }
+      .nav-links > a:not(.button) { display:none; }
+      .nav { padding:23px 0; }
+      .hero { gap:6%; padding:42px 0; }
+      .portrait { min-height:360px; padding:20px; }
+      .monogram { font-size:90px; }
+      .portrait-top { font-size:8px; }
+      .actions .button { width:100%; }
+      .below { gap:5%; }
+      .services { gap:16px; }
+    }
+    @media (max-width:580px) {
+      .wrap { padding:0 6%; }
+      .review { padding:15px 6%; }
+      .review-sub { max-width:290px; }
+      .option span { padding:9px 10px; font-size:11px; }
+      .brand { font-size:22px; }
+      .nav .button { font-size:11px; padding:11px 12px; }
+      .hero { grid-template-columns:1fr; padding:36px 0 30px; gap:30px; }
+      h1 { font-size:clamp(42px,11.4vw,64px); max-width:450px; }
+      .eyebrow { margin-bottom:22px; font-size:9px; }
+      .intro { font-size:15px; }
+      .actions { gap:9px; }
+      .actions .button { width:auto; flex:1 1 145px; }
+      .portrait { min-height:330px; }
+      .portrait-center { padding:25px 0; }
+      .portrait::before { width:270px; height:270px; }
+      .pillars { grid-template-columns:1fr; gap:18px; padding:23px 0; }
+      .pillar strong { font-size:16px; }
+      .pillar p { font-size:13px; }
+      .below { grid-template-columns:1fr; gap:28px; padding:32px 0; }
+      .below h2 { font-size:35px; }
+      .services p { font-size:13px; }
+      .note { flex-direction:column; gap:10px; }
+    }
+    @media (prefers-reduced-motion:no-preference) { .button { transition:filter .15s; } }
+  </style>
+  <link rel="stylesheet" href="./design-explorer.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <aside class="review" aria-label="Design comparison controls">
+    <div class="review-inner">
+      <div class="review-row">
+        <div><p class="review-title">Paradox Fitness / Design study</p><p class="review-sub">8 palettes × 8 layouts. Mix freely. Photo stand-in supplied.</p></div>
+        <div class="review-controls">
+          <label class="control-label" for="palette-select">Color palette
+            <select id="palette-select">
+              <option value="fieldwork">01 Fieldwork · forest</option>
+              <option value="precision">02 Precision · navy</option>
+              <option value="foundation">03 Foundation · clay</option>
+              <option value="studio">04 Studio · cobalt</option>
+              <option value="mineral">05 Mineral · graphite</option>
+              <option value="tide">06 Tide · coastal blue</option>
+              <option value="cadence">07 Cadence · burgundy</option>
+              <option value="grove">08 Grove · olive</option>
+            </select>
+          </label>
+          <label class="control-label" for="layout-select">Layout
+            <select id="layout-select">
+              <option value="classic">01 Classic split</option>
+              <option value="architectural">02 Architectural</option>
+              <option value="arch">03 Soft arch</option>
+              <option value="reverse">04 Portrait first</option>
+              <option value="immersive">05 Immersive photo</option>
+              <option value="panorama">06 Centered panorama</option>
+              <option value="editorial">07 Editorial offset</option>
+              <option value="portrait">08 Circular portrait</option>
+            </select>
+          </label>
+          <button class="pair-button" id="suggested-pair" type="button" title="Use the suggested layout for the selected color palette">Suggested pairing ↗</button>
+        </div>
+      </div>
+      <div class="review-status"><span class="swatches" aria-hidden="true"><span class="swatch"></span><span class="swatch"></span><span class="swatch"></span><span class="swatch"></span></span><span id="comparison-status" role="status" aria-live="polite">Fieldwork + Classic split · Grounded forest and ivory. Text left, coach right.</span></div>
+    </div>
+  </aside>
+  <div class="wrap">
+    <header class="nav">
+      <a class="brand" href="https://www.pdoxfitness.com/" target="_blank" rel="noopener">paradox<span aria-hidden="true">.</span><small>Fitness &amp; personal training</small></a>
+      <nav class="nav-links" aria-label="Preview navigation">
+        <a href="#training">Training</a>
+        <a href="#coach">Meet Nico</a>
+        <a class="button" href="https://www.pdoxfitness.com/contact-us-1" target="_blank" rel="noopener">Start your free week <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Fremont, California · In person &amp; online</p>
+          <h1 id="hero-title"><span>Strength for</span><br> <span>the life you</span><br> <em>want to live.</em></h1>
+          <p class="intro">Personal training built around strength, mobility, and consistency. Work with Nico to make movement part of your everyday life.</p>
+          <div class="actions">
+            <a class="button" href="https://www.pdoxfitness.com/contact-us-1" target="_blank" rel="noopener">Start your free training week <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="https://www.pdoxfitness.com/online-group-membership" target="_blank" rel="noopener">Explore online coaching</a>
+          </div>
+          <p class="terms">Current in-person offer: up to three sessions. Confirm terms with Nico.</p>
+        </div>
+        <figure class="portrait" id="coach">
+          <img class="portrait-media" src="./assets/unnamed.jpg" width="4284" height="5712" alt="Photo stand-in for Nico, smiling in a training studio." fetchpriority="high" decoding="async">
+          <div class="portrait-top"><span>Personal coaching</span><span>Paradox / Fremont</span></div>
+          <div class="portrait-aside"><span class="aside-label">Meet Nico / Your coach</span><strong>Move well.<br> Live fully.</strong><p>Coaching that meets you where you are.</p></div>
+          <figcaption class="portrait-bottom"><div><strong>Meet Nico.</strong><br><span>Your coach. Your next chapter.</span></div><div class="coordinates">Strength<br>with purpose</div></figcaption>
+        </figure>
+      </section>
+      <section class="pillars" aria-label="Coaching priorities">
+        <div class="pillar"><span class="number">01 /</span><div><strong>Build strength.</strong><p>A foundation for everyday life.</p></div></div>
+        <div class="pillar"><span class="number">02 /</span><div><strong>Move with confidence.</strong><p>Make room for better movement.</p></div></div>
+        <div class="pillar"><span class="number">03 /</span><div><strong>Find your consistency.</strong><p>Training that fits into your week.</p></div></div>
+      </section>
+      <section class="below" id="training" aria-labelledby="training-title">
+        <div><p class="eyebrow">Two ways to get started</p><h2 id="training-title">Good coaching.<br>Wherever you train.</h2></div>
+        <div class="services">
+          <article><h3>In-person training</h3><p>One-to-one coaching in Fremont, with guidance and feedback as you train.</p><a href="https://www.pdoxfitness.com/in-person" target="_blank" rel="noopener">Explore in person ↗</a></article>
+          <article><h3>Paradox online</h3><p>Structured programs and coaching through the Trainerize app.</p><a href="https://www.pdoxfitness.com/online-group-membership" target="_blank" rel="noopener">Explore online ↗</a></article>
+        </div>
+      </section>
+    </main>
+    <footer class="note">
+      <p><strong>Concept preview.</strong> Using the supplied photo stand-in; final copy pending owner review. Service buttons open the existing website in a new tab. This file does not collect inquiries or analytics.</p>
+      <div><div class="direction" id="direction">Fieldwork / Classic split</div><a href="./REBUILD_PROPOSAL.md">Read the rebuild proposal</a></div>
+    </footer>
+  </div>
+  <script src="./design-explorer.js"></script>
+</body>
+</html>

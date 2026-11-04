@@ -1,0 +1,49 @@
+---
+import { palettes, layouts, defaultDesign } from '../lib/design';
+import ArrowIcon from './ArrowIcon.astro';
+---
+
+<aside class="design-bar" aria-label="Design controls">
+  <div class="design-inner shell">
+    <div class="design-label">
+      <strong>Paradox / Choose your look</strong>
+      <span>Mix colors and layouts.</span>
+    </div>
+    <div class="design-selectors">
+      <label for="palette-select">
+        Color palette
+        <select id="palette-select">
+          {Object.entries(palettes).map(([value, palette]) => (
+            <option value={value} selected={value === defaultDesign.theme}>
+              {palette.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label for="layout-select">
+        Layout
+        <select id="layout-select">
+          {Object.entries(layouts).map(([value, label]) => (
+            <option value={value} selected={value === defaultDesign.layout}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <button type="button" id="suggested-pair">
+        Suggested pairing <ArrowIcon />
+      </button>
+    </div>
+    <div class="design-status">
+      <span class="palette-samples" aria-hidden="true">
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </span>
+      <span id="design-status" role="status" aria-live="polite">
+        Grove + Centered panorama
+      </span>
+    </div>
+  </div>
+</aside>

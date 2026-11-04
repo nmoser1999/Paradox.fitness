@@ -1,0 +1,106 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+const hasGa = Boolean(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
+const hasClarity = Boolean(import.meta.env.PUBLIC_CLARITY_PROJECT_ID);
+---
+
+<Base
+  title="Privacy & Analytics Choices"
+  description="Learn how Paradox Fitness handles training inquiries and optional analytics, and how to change your analytics preferences."
+  mobileCta={false}
+>
+  <div class="shell">
+    <section class="page-heading">
+      <p class="eyebrow">Your information, handled thoughtfully</p>
+      <h1>
+        Privacy &amp;
+        <br />
+        <em>your choices.</em>
+      </h1>
+    </section>
+    <article class="prose">
+      <p>Updated November 4, 2026.</p>
+      <h2>When you get in touch</h2>
+      <p>
+        The inquiry form collects your name, email address, training interest,
+        preferred reply method, and any phone number or message you choose to
+        provide. Paradox Fitness uses this information to respond to your
+        request and discuss training. Please do not send medical records or
+        detailed health information through the form.
+      </p>
+      <p>
+        Netlify processes and stores form submissions for Paradox Fitness, and
+        the configured notification sends the inquiry to Nico’s business email
+        account. Information is used for your inquiry and is not automatically
+        added to a marketing mailing list.
+      </p>
+      <h2>Appearance preferences</h2>
+      <p>
+        The color and layout controls save your selections in your browser so
+        your preferred appearance continues across pages and visits. These
+        functional preferences are separate from optional analytics and can be
+        changed at the top of any page.
+      </p>
+      <h2>Optional analytics</h2>
+      <p>
+        Optional analytics load only after you allow them. Declining analytics
+        does not affect the inquiry form or access to the website. You can
+        change your choice using the analytics settings button below or in the
+        footer.
+      </p>
+      <p>
+        {hasGa
+          ? 'Google Analytics is configured to measure page visits, CTA clicks, and form flow events after consent.'
+          : 'Google Analytics is currently disabled on this deployment.'}{' '}
+        {hasClarity
+          ? 'Microsoft Clarity is configured to help understand page use through heatmaps and session recordings after consent. Form inputs and page text are masked.'
+          : 'Microsoft Clarity is currently disabled on this deployment.'}
+      </p>
+      <p>
+        We exclude form contents, email addresses, phone numbers, and query
+        strings from our custom analytics events. Providers may process device
+        and connection information as described in their policies:{' '}
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener"
+        >
+          Google privacy policy (opens in a new tab)
+        </a>{' '}
+        and{' '}
+        <a
+          href="https://privacy.microsoft.com/privacystatement"
+          target="_blank"
+          rel="noopener"
+        >
+          Microsoft privacy statement (opens in a new tab)
+        </a>
+        .
+      </p>
+      <button class="button button-secondary" type="button" data-consent-open>
+        Change analytics settings
+      </button>
+      <h2>Retention and access</h2>
+      <p>
+        Inquiry records are kept while responding to your request and arranging
+        any resulting services, unless a longer period is needed for an ongoing
+        business relationship. Contact Nico to ask about your information or
+        request deletion. Analytics retention is controlled in the provider
+        accounts; it does not replace the inquiry records.
+      </p>
+      <h2>Other services</h2>
+      <p>
+        Online membership signup and payment are handled by Trainerize under its
+        own terms and privacy practices. Directions and social links open
+        third-party websites; they are not embedded into this site.
+      </p>
+      <h2>Contact</h2>
+      <p>
+        For privacy questions or information requests, email{' '}
+        <a href={`mailto:${site.email}`}>{site.email}</a>. Paradox Fitness is
+        located at {site.address}, {site.city}.
+      </p>
+    </article>
+  </div>
+</Base>

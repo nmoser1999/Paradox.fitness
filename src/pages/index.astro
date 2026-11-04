@@ -1,0 +1,218 @@
+---
+import { Picture } from 'astro:assets';
+import nico from '../../assets/unnamed.jpg';
+import Base from '../layouts/Base.astro';
+import Action from '../components/Action.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import { site } from '../data/site';
+const pillars = [
+  {
+    title: 'Build strength.',
+    text: 'Develop a foundation you can bring to everything you do.',
+  },
+  {
+    title: 'Move with confidence.',
+    text: 'Give strength, mobility, and good movement a place in your week.',
+  },
+  {
+    title: 'Find your consistency.',
+    text: 'Follow a plan with guidance and a clear next step.',
+  },
+];
+---
+
+<Base
+  title="Personal Training in Fremont & Online Coaching"
+  description="Build strength, mobility, and consistency with Nico at Paradox Fitness in Fremont, CA. Explore a free in-person training week or online coaching."
+>
+  <section class="home-hero shell" aria-labelledby="hero-heading">
+    <div class="hero-intro">
+      <p class="eyebrow justify-center">
+        Fremont, California · In person &amp; online
+      </p>
+      <h1 id="hero-heading">
+        Strength for the life
+        <br class="desktop-break" /> <em>you want to live.</em>
+      </h1>
+      <p class="hero-description">
+        Personal training built around strength, mobility, and consistency.
+        <br class="desktop-break" /> Work with Nico to make movement part of
+        your everyday life.
+      </p>
+      <div class="actions justify-center">
+        <Action placement="hero" />
+        <Action
+          href="/online-group-membership/"
+          label="Explore online coaching"
+          secondary
+          placement="hero"
+          service="online"
+        />
+      </div>
+      <p class="fine-print">
+        Complimentary in-person training week · Up to three sessions · Arranged
+        with Nico
+      </p>
+    </div>
+    <div class="coach-panel">
+      <figure class="coach-photo">
+        <Picture
+          src={nico}
+          formats={['avif', 'webp']}
+          widths={[400, 720, 1080, 1440]}
+          sizes="(max-width: 700px) 100vw, 50vw"
+          width={1080}
+          height={900}
+          fit="cover"
+          alt="Nico, personal trainer, in a training studio."
+          loading="eager"
+          fetchpriority="high"
+        />
+        <figcaption>
+          Meet Nico.<span>Your coach. Your next chapter.</span>
+        </figcaption>
+      </figure>
+      <div class="coach-copy" id="coach">
+        <p class="eyebrow">Personal coaching. Real connection.</p>
+        <h2>
+          Move well.
+          <br />
+          <em>Live fully.</em>
+        </h2>
+        <p>
+          Training should support the life you enjoy. Nico’s approach brings
+          together structured strength work, mobility, and the habits that make
+          showing up feel possible.
+        </p>
+        <p>
+          Choose one-to-one guidance in Fremont or a program you can follow
+          online. Start where you are, and build from there.
+        </p>
+        <a
+          class="inline-link"
+          href="/contact-us-1/"
+          data-track="cta_click"
+          data-placement="coach"
+          data-service="unsure"
+        >
+          Have a conversation with Nico <ArrowIcon />
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="pillars shell" aria-label="Coaching priorities">
+    {pillars.map((pillar, index) => (
+      <div>
+        <span class="index">0{index + 1} /</span>
+        <div>
+          <h2>{pillar.title}</h2>
+          <p>{pillar.text}</p>
+        </div>
+      </div>
+    ))}
+  </section>
+  <section
+    class="section shell"
+    id="training"
+    aria-labelledby="training-heading"
+  >
+    <div class="section-intro">
+      <p class="eyebrow">Two ways to get started</p>
+      <h2 id="training-heading">
+        Good coaching.
+        <br />
+        <em>Wherever you train.</em>
+      </h2>
+      <p>Choose the support that fits your routine.</p>
+    </div>
+    <div class="service-grid">
+      <article class="service-card">
+        <p class="eyebrow">01 / Fremont</p>
+        <h3>In-person training</h3>
+        <p>
+          Work one to one with Nico, with feedback on your movements and a
+          structured approach to getting stronger.
+        </p>
+        <ul>
+          <li>Coaching at the Mission San Jose location</li>
+          <li>Strength, mobility, and movement guidance</li>
+          <li>A plan supported by online programming</li>
+        </ul>
+        <p class="price">
+          From {site.inPersonPrice}
+          <span> / session</span>
+        </p>
+        <p class="fine-print">
+          Two sessions per week minimum after your trial.
+        </p>
+        <Action
+          href="/in-person/"
+          label="Explore in-person training"
+          placement="service-card"
+        />
+      </article>
+      <article class="service-card service-card-light">
+        <p class="eyebrow">02 / Wherever you are</p>
+        <h3>Paradox online</h3>
+        <p>
+          Bring more structure to your training with programs, exercise
+          tutorials, and guidance through Trainerize.
+        </p>
+        <ul>
+          <li>Structured training programs</li>
+          <li>Exercise demonstrations and tutorials</li>
+          <li>Coaching and a shared training community</li>
+        </ul>
+        <p class="price">
+          {site.onlinePrice}
+          <span> / month after your trial</span>
+        </p>
+        <p class="fine-print">Start with the current seven-day trial.</p>
+        <Action
+          href="/online-group-membership/"
+          label="Explore online coaching"
+          secondary
+          placement="service-card"
+          service="online"
+        />
+      </article>
+    </div>
+  </section>
+  <section class="section steps-section shell" aria-labelledby="steps-heading">
+    <div class="section-intro">
+      <p class="eyebrow">A simple first step</p>
+      <h2 id="steps-heading">
+        You don’t need it
+        <br />
+        <em>all figured out.</em>
+      </h2>
+    </div>
+    <ol class="steps">
+      <li>
+        <span>01</span>
+        <h3>Tell Nico a little about yourself.</h3>
+        <p>
+          Choose a training option and send a short inquiry. It is fine to still
+          be deciding.
+        </p>
+      </li>
+      <li>
+        <span>02</span>
+        <h3>Talk about what works for you.</h3>
+        <p>
+          Discuss your goals, your routine, and the kind of support you are
+          looking for.
+        </p>
+      </li>
+      <li>
+        <span>03</span>
+        <h3>Arrange your next step.</h3>
+        <p>Confirm the details with Nico and find your starting point.</p>
+      </li>
+    </ol>
+  </section>
+  <Faq />
+  <FinalCta />
+</Base>

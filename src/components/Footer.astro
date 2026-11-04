@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site';
+import ArrowIcon from './ArrowIcon.astro';
+---
+
+<footer class="site-footer shell">
+  <div class="footer-grid">
+    <div>
+      <a class="brand" href="/">
+        paradox<small>Strength for everyday life.</small>
+      </a>
+      <p>
+        Personal training in Fremont.
+        <br />
+        Online coaching, wherever you train.
+      </p>
+    </div>
+    <div>
+      <h2>Find us</h2>
+      <address>
+        {site.address}
+        <br />
+        {site.city}
+      </address>
+      <a href={site.directions} target="_blank" rel="noopener">
+        Get directions <ArrowIcon direction="up-right" />
+        <span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+    <div>
+      <h2>Get in touch</h2>
+      <a
+        href={`mailto:${site.email}`}
+        data-track="contact_click"
+        data-placement="footer"
+        data-channel="email"
+      >
+        {site.email}
+      </a>
+      <br />
+      <a
+        href={site.phoneHref}
+        data-track="contact_click"
+        data-placement="footer"
+        data-channel="phone"
+      >
+        {site.phone}
+      </a>
+      <p>
+        {site.hours.map((hours) => (
+          <span class="block">{hours}</span>
+        ))}
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© {new Date().getFullYear()} Paradox Fitness</p>
+    <div>
+      <a href="/privacy/">Privacy</a>
+      <button type="button" class="text-button" data-consent-open>
+        Analytics settings
+      </button>
+      <a href={site.instagram} target="_blank" rel="noopener">
+        Instagram<span class="sr-only"> (opens in a new tab)</span>
+      </a>
+    </div>
+  </div>
+</footer>

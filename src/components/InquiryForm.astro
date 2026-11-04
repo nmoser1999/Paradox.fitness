@@ -1,0 +1,120 @@
+---
+import ArrowIcon from './ArrowIcon.astro';
+---
+
+<form
+  name="training-inquiry"
+  method="POST"
+  action="/thanks/"
+  data-netlify="true"
+  netlify-honeypot="company"
+  class="contact-form"
+  id="inquiry-form"
+  aria-label="Training inquiry"
+>
+  <input type="hidden" name="form-name" value="training-inquiry" />
+  <input
+    type="hidden"
+    name="subject"
+    value="New Paradox Fitness training inquiry"
+  />
+  <p hidden>
+    <label>
+      Leave this field empty:{' '}
+      <input name="company" tabindex="-1" autocomplete="off" />
+    </label>
+  </p>
+  <div
+    id="form-error"
+    class="form-error"
+    role="alert"
+    tabindex="-1"
+    hidden
+  ></div>
+  <div class="form-fields">
+    <div class="form-field full-width">
+      <label for="name">Your name (required)</label>
+      <input
+        id="name"
+        name="name"
+        autocomplete="name"
+        required
+        maxlength="100"
+      />
+    </div>
+    <div class="form-field full-width">
+      <label for="email">Email address (required)</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        autocomplete="email"
+        required
+        maxlength="254"
+      />
+    </div>
+    <div class="form-field full-width">
+      <label for="service">What are you interested in?</label>
+      <select id="service" name="service">
+        <option value="in-person">In-person training</option>
+        <option value="online">Online coaching</option>
+        <option value="unsure" selected>
+          Still deciding
+        </option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label for="contact-method">How should Nico reply?</label>
+      <select id="contact-method" name="contact-method">
+        <option value="email">By email</option>
+        <option value="phone">With a phone call</option>
+      </select>
+    </div>
+    <div class="form-field">
+      <label for="phone">
+        Phone number <span id="phone-optional">(optional)</span>
+      </label>
+      <input
+        id="phone"
+        name="phone"
+        type="tel"
+        autocomplete="tel"
+        maxlength="40"
+        aria-describedby="phone-help"
+      />
+      <small id="phone-help">
+        Include a number if you would like a callback.
+      </small>
+    </div>
+    <div class="form-field full-width">
+      <label for="message">
+        Anything you would like Nico to know? (optional)
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        maxlength="1500"
+        aria-describedby="message-help"
+      ></textarea>
+      <small id="message-help">
+        A brief introduction is enough. Please keep medical details out of this
+        form.
+      </small>
+    </div>
+  </div>
+  <div class="form-footer">
+    <button type="submit" class="button" id="inquiry-submit">
+      <span data-inquiry-label>Send my inquiry</span>
+      <ArrowIcon />
+    </button>
+    <p>
+      By sending this inquiry, you are asking Nico to contact you about
+      training. An inquiry does not reserve a session.{' '}
+      <a href="/privacy/">How we handle your information</a>.
+    </p>
+    <p id="form-status" role="status" aria-live="polite"></p>
+  </div>
+</form>
+<script>
+  import '../lib/contact';
+</script>

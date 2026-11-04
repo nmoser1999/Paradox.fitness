@@ -1,0 +1,35 @@
+name: Verify website
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: production
+            indexable: 'true'
+            review: 'false'
+          - name: review
+            indexable: 'false'
+            review: 'true'
+    name: Verify ${{ matrix.name }} build
+    env:
+      ASTRO_TELEMETRY_DISABLED: '1'
+      SITE_INDEXABLE: ${{ matrix.indexable }}
+      ENABLE_DESIGN_REVIEW: ${{ matrix.review }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run format:check
+      - run: npm run verify

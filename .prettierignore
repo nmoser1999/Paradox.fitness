@@ -1,0 +1,10 @@
+node_modules
+dist
+.astro
+package-lock.json
+assets
+design-directions.html
+design-explorer.css
+design-explorer.js
+REBUILD_PROPOSAL.md
+.qa-*

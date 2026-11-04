@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import InquiryForm from '../components/InquiryForm.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Start Training — Contact Nico"
+  description="Ask Nico about personal training in Fremont, a complimentary training week, or Paradox online coaching. Send a short inquiry to get started."
+  mobileCta={false}
+>
+  <div class="shell">
+    <section class="page-heading">
+      <p class="eyebrow">A conversation is a good place to start</p>
+      <h1>
+        Your next step.
+        <br />
+        <em>Let’s find it together.</em>
+      </h1>
+      <p>
+        Tell Nico which kind of training you are interested in. You do not need
+        a perfect plan to get in touch.
+      </p>
+    </section>
+    <div class="contact-grid">
+      <InquiryForm />
+      <aside class="content-panel">
+        <h2>Prefer to reach out directly?</h2>
+        <p>
+          <a
+            href={`mailto:${site.email}`}
+            data-track="contact_click"
+            data-placement="contact-page"
+            data-channel="email"
+          >
+            {site.email}
+          </a>
+          <br />
+          <a
+            href={site.phoneHref}
+            data-track="contact_click"
+            data-placement="contact-page"
+            data-channel="phone"
+          >
+            {site.phone}
+          </a>
+        </p>
+        <h2>Training in Fremont</h2>
+        <address>
+          {site.address}
+          <br />
+          {site.city}
+        </address>
+        <p>
+          Mission San Jose location.
+          <br />
+          Parking shared with Intero.
+        </p>
+        <a
+          class="inline-link"
+          href={site.directions}
+          target="_blank"
+          rel="noopener"
+        >
+          Get directions <ArrowIcon direction="up-right" />
+          <span class="sr-only"> (opens in a new tab)</span>
+        </a>
+        <p>
+          {site.hours.map((hours) => (
+            <span class="block">{hours}</span>
+          ))}
+        </p>
+        <p class="fine-print">
+          Complimentary in-person training week: up to three sessions, with
+          times and details arranged with Nico.
+        </p>
+      </aside>
+    </div>
+  </div>
+</Base>
