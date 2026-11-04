@@ -1,15 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import ArrowIcon from '../components/ArrowIcon.astro';
+import DirectionsLink from '../components/DirectionsLink.astro';
 import Action from '../components/Action.astro';
 import FinalCta from '../components/FinalCta.astro';
 import Faq from '../components/Faq.astro';
-import { site } from '../data/site';
+import { coach, site } from '../data/site';
 ---
 
 <Base
   title="One-to-One Personal Training in Fremont"
-  description="Train one to one with Nico in Fremont’s Mission San Jose neighborhood. Build strength and mobility with personal guidance. Ask about a free training week."
+  description={`Train one to one with ${coach.name} in Fremont’s Mission San Jose neighborhood. Build strength and mobility with personal guidance. Ask about a free training week.`}
 >
   <div class="shell">
     <section class="page-heading">
@@ -21,13 +21,14 @@ import { site } from '../data/site';
       </h1>
       <p>
         Personal guidance, useful feedback, and a plan for getting stronger.
-        Train with Nico at the Mission San Jose location.
+        Train with {coach.name} at the Mission San Jose location.
       </p>
       <div class="actions">
         <Action placement="in-person-hero" />
       </div>
       <p class="fine-print">
-        Complimentary week · Maximum three sessions · Arranged with Nico
+        Complimentary week · Maximum three sessions · Arranged with{' '}
+        {coach.firstName}
       </p>
     </section>
     <section class="content-grid section" aria-labelledby="in-person-heading">
@@ -48,8 +49,8 @@ import { site } from '../data/site';
           <li>Online programming to support consistency between sessions</li>
         </ul>
         <p>
-          Start with an inquiry. Nico will talk through your goals, explain the
-          approach, and help arrange your next step.
+          Start with an inquiry. {coach.firstName} will talk through your goals,
+          explain the approach, and help arrange your next step.
         </p>
       </div>
       <aside class="content-panel">
@@ -68,15 +69,7 @@ import { site } from '../data/site';
           <br />
           {site.city}
         </address>
-        <a
-          class="inline-link"
-          href={site.directions}
-          target="_blank"
-          rel="noopener"
-        >
-          Find the studio <ArrowIcon direction="up-right" />
-          <span class="sr-only"> (opens in a new tab)</span>
-        </a>
+        <DirectionsLink class="inline-link" label="Find the studio" />
       </aside>
     </section>
   </div>

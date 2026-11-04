@@ -1,9 +1,10 @@
 ---
+import { coach } from '../data/site';
 import Action from './Action.astro';
 const links = [
   { href: '/in-person/', label: 'In-person training' },
   { href: '/online-group-membership/', label: 'Online coaching' },
-  { href: '/#coach', label: 'Meet Nico' },
+  { href: '/#coach', label: `Meet ${coach.firstName}` },
   { href: '/#questions', label: 'FAQ' },
 ];
 ---

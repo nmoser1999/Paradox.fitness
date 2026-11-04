@@ -1,4 +1,5 @@
 ---
+import { coach } from '../data/site';
 import Base from '../layouts/Base.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 ---
@@ -18,14 +19,14 @@ import ArrowIcon from '../components/ArrowIcon.astro';
     </h1>
     <p>
       This page could not be found. Explore training options or get in touch
-      with Nico.
+      with {coach.firstName}.
     </p>
     <div class="actions">
       <a class="button" href="/">
         Back to the homepage <ArrowIcon />
       </a>
       <a class="button button-secondary" href="/contact-us-1/">
-        Contact Nico <ArrowIcon />
+        Contact {coach.firstName} <ArrowIcon />
       </a>
     </div>
   </section>

@@ -543,12 +543,41 @@ em {
   min-height: 44px;
   align-items: center;
 }
-.footer-grid > div > a:not(.brand),
+.social-link {
+  gap: 8px;
+}
+.instagram-icon {
+  display: block;
+  flex: none;
+}
+.footer-grid > div > a:not(.brand, .directions-link),
 .content-panel a[href^='mailto:'],
 .content-panel a[href^='tel:'] {
   display: inline-block;
   min-height: 44px;
   padding-block: 10px;
+}
+.directions-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 44px;
+  max-width: 100%;
+  padding-block: 10px;
+  vertical-align: middle;
+}
+.directions-label {
+  min-width: 0;
+  line-height: 1.2;
+  text-align: center;
+}
+.maps-icon {
+  display: block;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
 .text-button {
   border: 0;
@@ -675,6 +704,42 @@ em {
 .form-field textarea {
   min-height: 130px;
   resize: vertical;
+}
+.select-control {
+  --select-arrow-inset: 16px;
+  --select-arrow-size: 16px;
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+.select-control > select {
+  appearance: none;
+  -webkit-appearance: none;
+  display: block;
+  width: 100%;
+  padding-inline-end: calc(
+    var(--select-arrow-inset) + var(--select-arrow-size) + 12px
+  );
+}
+.select-control > svg {
+  position: absolute;
+  inset-inline-end: var(--select-arrow-inset);
+  top: 50%;
+  width: var(--select-arrow-size);
+  height: var(--select-arrow-size);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+@media (forced-colors: active) {
+  .select-control > select {
+    appearance: auto;
+    -webkit-appearance: auto;
+    padding-inline-end: 12px;
+  }
+  .select-control > svg {
+    display: none;
+  }
 }
 .form-field small {
   color: var(--muted);

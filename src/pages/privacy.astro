@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { site } from '../data/site';
+import { coach, site } from '../data/site';
 const hasGa = Boolean(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
 const hasClarity = Boolean(import.meta.env.PUBLIC_CLARITY_PROJECT_ID);
 ---
@@ -31,9 +31,9 @@ const hasClarity = Boolean(import.meta.env.PUBLIC_CLARITY_PROJECT_ID);
       </p>
       <p>
         Netlify processes and stores form submissions for Paradox Fitness, and
-        the configured notification sends the inquiry to Nico’s business email
-        account. Information is used for your inquiry and is not automatically
-        added to a marketing mailing list.
+        the configured notification sends the inquiry to {coach.firstName}’s
+        business email account. Information is used for your inquiry and is not
+        automatically added to a marketing mailing list.
       </p>
       <h2>Appearance preferences</h2>
       <p>
@@ -85,9 +85,9 @@ const hasClarity = Boolean(import.meta.env.PUBLIC_CLARITY_PROJECT_ID);
       <p>
         Inquiry records are kept while responding to your request and arranging
         any resulting services, unless a longer period is needed for an ongoing
-        business relationship. Contact Nico to ask about your information or
-        request deletion. Analytics retention is controlled in the provider
-        accounts; it does not replace the inquiry records.
+        business relationship. Contact {coach.firstName} to ask about your
+        information or request deletion. Analytics retention is controlled in
+        the provider accounts; it does not replace the inquiry records.
       </p>
       <h2>Other services</h2>
       <p>

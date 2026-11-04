@@ -7,9 +7,9 @@ import Consent from '../components/Consent.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import DesignControls from '../components/DesignControls.astro';
 import { palettes, layouts, defaultDesign, DESIGN_KEY } from '../lib/design';
-import { site } from '../data/site';
+import { coach, site } from '../data/site';
 import { getImage } from 'astro:assets';
-import nico from '../../assets/unnamed.jpg';
+import trainerPortrait from '../../assets/unnamed.jpg';
 
 interface Props {
   title: string;
@@ -28,7 +28,7 @@ const appearanceSeed = {
   storageKey: DESIGN_KEY,
 };
 const social = await getImage({
-  src: nico,
+  src: trainerPortrait,
   width: 1200,
   height: 630,
   fit: 'cover',
@@ -116,7 +116,10 @@ const schema = {
     <meta property="og:image" content={new URL(social.src, Astro.site)} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Personal training with Nico" />
+    <meta
+      property="og:image:alt"
+      content={`Personal training with ${coach.name}`}
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <script
       type="application/ld+json"

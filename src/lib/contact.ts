@@ -1,3 +1,4 @@
+import { coach } from '../data/site';
 import { leadPlacement, track } from './analytics';
 import { isService, parseInquiry } from './inquiry';
 
@@ -97,8 +98,7 @@ form?.addEventListener('submit', async (event) => {
     status.textContent = 'Your inquiry has been sent.';
     location.assign('/thanks/');
   } catch {
-    error.textContent =
-      'Your inquiry could not be sent. Your entries are still here. Please try again, or contact Nico using the email or phone number on this page.';
+    error.textContent = `Your inquiry could not be sent. Your entries are still here. Please try again, or contact ${coach.firstName} using the email or phone number on this page.`;
     error.hidden = false;
     error.focus();
     status.textContent = '';

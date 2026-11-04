@@ -207,23 +207,21 @@
   color: #d8e1d8;
   letter-spacing: 0.03em;
 }
-.design-selectors select {
-  appearance: none;
-  -webkit-appearance: none;
-  display: block;
+.design-selectors .select-control {
+  --select-arrow-inset: 12px;
   margin-top: 4px;
+  color: #fff;
+}
+.design-selectors select {
   min-width: 175px;
   min-height: 44px;
   max-width: 100%;
-  padding: 9px 40px 9px 12px;
+  padding-block: 9px;
+  padding-inline-start: 12px;
   border: 1px solid #768278;
   border-radius: 4px;
   color: #fff;
   background-color: #303831;
-  background-image: url('/icons/chevron-down.svg');
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px 16px;
   color-scheme: dark;
   font-size: 0.72rem;
   font-weight: 600;
@@ -241,14 +239,6 @@
   border-radius: 4px;
   background: #eef0e2;
   color: #202522;
-}
-@media (forced-colors: active) {
-  .design-selectors select {
-    appearance: auto;
-    -webkit-appearance: auto;
-    background-image: none;
-    padding-inline-end: 12px;
-  }
 }
 .design-selectors button .arrow-icon {
   width: 16px;
@@ -727,11 +717,12 @@
     flex-wrap: wrap;
     gap: 7px;
   }
+  .design-selectors .select-control {
+    --select-arrow-inset: 10px;
+  }
   .design-selectors select {
     font-size: 0.65rem;
     padding-inline-start: 8px;
-    padding-inline-end: 36px;
-    background-position: right 10px center;
   }
   .design-selectors button {
     width: 100%;

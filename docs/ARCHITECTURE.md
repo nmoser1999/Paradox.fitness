@@ -8,6 +8,8 @@ Node 24 is the selected runtime. Dependencies are pinned in `package.json`, with
 
 ## Source boundaries
 
+The `coach` export in `src/data/site.ts` holds the provided public name, **Nicho Moser**, and short form, **Nicho**. Page introductions, portrait descriptions, and search/social metadata use the full name; navigation, form labels, and follow-up copy use the short form. Runtime messages and FAQ copy read the same values.
+
 ```text
 src/data/site.ts         business facts, offers, contact details, FAQs
 src/pages/               page-specific content and routes
@@ -29,9 +31,15 @@ public/                 favicon and legacy-route redirects
 
 The real app renders design selectors in the shared layout on every page. Palettes alter color tokens across the site; layouts alter homepage composition plus shared display type and framing. Browser-local preferences preserve both choices across navigation, and validated query parameters override them for shared links. A small hashed head script applies appearance before first paint. The default remains Grove/panorama. No analytics consent is needed for functional appearance preferences.
 
+`SelectControl.astro` shares the dropdown wrapper and decorative SVG chevron between design controls and inquiry fields. Native selects retain their labels, names, options, keyboard behavior, and focus indicators. The chevron inherits the text color and ignores pointer events; reserved end padding keeps labels clear of it. Form arrows sit 16px inside the control, while compact design controls use 12px (10px on narrow screens). Forced-colors mode restores the system arrow.
+
 The original concept explorer is retained in the root files as an archive. `ENABLE_DESIGN_REVIEW=true` packages that archive under `/design/`; it does not control the real app’s selectors.
 
 `ArrowIcon.astro` is the shared decorative SVG for CTA arrows. Internal actions use a right arrow; external destinations use an upward diagonal arrow. Icons inherit the current palette and stay fixed on hover and keyboard focus. Button color and focus outlines provide interaction feedback. Icons are hidden from assistive technology. Form label updates preserve the icon instead of replacing the button markup.
+
+`InstagramIcon.astro` supplies the footer's decorative camera glyph as a local inline SVG. It inherits the palette, stays fixed on hover, and adds no external requests or dependencies. The visible Instagram label and new-tab announcement supply the link's accessible name.
+
+`DirectionsLink.astro` renders every Google Maps link in the app: the shared footer, contact panel, and in-person studio panel. It uses the full-color Maps pin from [Google's official Maps page](https://www.google.com/maps/about/), served locally as `public/icons/google-maps.webp`. The label and fixed-size icon share a centered flex row with a consistent gap and no hover motion. The accessible link name identifies Google Maps and the new tab; the image is decorative. Asset source: `https://www.gstatic.com/marketing-cms/assets/images/1b/21/a9543d8e4eb694200ddba538d536/googlemaps-pin.webp=n-w64-h73-fcrop64=1,0000110cffffeef4-rw`.
 
 ## Conversion flow
 
@@ -61,6 +69,8 @@ Clarity is optional. It is not initialized on form, confirmation, privacy, or fu
 
 - Indexing is off by default, including an `X-Robots-Tag` header and robots rule. Production launch requires an explicit environment change and rebuild.
 - The post-build script hashes inline scripts/styles and generates the Content Security Policy. There is no blanket inline-script permission.
+- Generated-output checks verify each inline script/style hash against its own CSP directive and reject inline event/style attributes. The browser feature policy permits no camera, microphone, or geolocation access and avoids experimental feature declarations.
+- Netlify's injected public badge must be disabled in project settings because its iframe uses inline code outside the build's hash policy. See [security header troubleshooting](SECURITY_HEADERS.md).
 - Hashed Astro assets receive immutable caching; document HTML is not given a year-long immutable policy.
 - No SPA catch-all sends unknown URLs to the homepage. Netlify serves the genuine generated 404 page.
 - Existing `/contact-us-1/`, `/in-person/`, and `/online-group-membership/` paths are retained. The old referral path redirects to `/referrals/`.
@@ -71,6 +81,6 @@ Clarity is optional. It is not initialized on form, confirmation, privacy, or fu
 
 For a member portal, introduce an identity provider and protected server-side endpoints or a separately deployed app. Validate sessions and ownership for every private read/write. A hidden component or a noindex static route is not an auth wall; private data must never be embedded in public build output.
 
-For an LLM chatbot, keep the model key on the server, lazily load the UI, verify sessions where required, enforce quotas/timeouts/spending limits, and use approved business information. Give users a route to Nico. Define conversation retention and access before storing anything. Auth, storage, and model inference need their own operating budget; free marketing hosting does not imply free model usage.
+For an LLM chatbot, keep the model key on the server, lazily load the UI, verify sessions where required, enforce quotas/timeouts/spending limits, and use approved business information. Give users a route to Nicho Moser. Define conversation retention and access before storing anything. Auth, storage, and model inference need their own operating budget; free marketing hosting does not imply free model usage.
 
 Prefer small additions with a clear boundary over installing a general application stack before it is needed. Reassess the static architecture when actual feature requirements warrant it.

@@ -1,7 +1,9 @@
+export const coach = { name: 'Nicho Moser', firstName: 'Nicho' } as const;
+
 /** Business facts and offers: update here, then review every affected page. */
 export const site = {
   name: 'Paradox Fitness',
-  coach: 'Nico',
+  coach: coach.name,
   email: 'Nichomoser@pdoxfitness.com',
   phone: '(510) 606-0868',
   phoneHref: 'tel:+15106060868',
@@ -20,13 +22,11 @@ export const site = {
 export const faqs = [
   {
     question: 'Do I need training experience?',
-    answer:
-      'You can start with a conversation about where you are now and what you want to work toward. Nico will help you choose a starting point and training approach.',
+    answer: `You can start with a conversation about where you are now and what you want to work toward. ${coach.firstName} will help you choose a starting point and training approach.`,
   },
   {
     question: 'How does the free training week work?',
-    answer:
-      'Send an inquiry to arrange a complimentary in-person training week, with a maximum of three sessions. Nico will confirm the details and available times. An inquiry does not reserve a session.',
+    answer: `Send an inquiry to arrange a complimentary in-person training week, with a maximum of three sessions. ${coach.firstName} will confirm the details and available times. An inquiry does not reserve a session.`,
   },
   {
     question: 'Where is in-person training?',
@@ -35,8 +35,7 @@ export const faqs = [
   },
   {
     question: 'What does in-person training cost afterward?',
-    answer:
-      'Sessions start at $85, with a minimum of two sessions per week. Billing is through Square every two weeks. Talk with Nico about the right arrangement before starting.',
+    answer: `Sessions start at $85, with a minimum of two sessions per week. Billing is through Square every two weeks. Talk with ${coach.firstName} about the right arrangement before starting.`,
   },
   {
     question: 'What if I want to train online?',
@@ -45,7 +44,6 @@ export const faqs = [
   },
   {
     question: 'How do I book my first session?',
-    answer:
-      'Use the short inquiry form to tell Nico whether you are interested in in-person training, online coaching, or still deciding. He will follow up to discuss the next step.',
+    answer: `Use the short inquiry form to tell ${coach.firstName} whether you are interested in in-person training, online coaching, or still deciding. He will follow up to discuss the next step.`,
   },
 ] as const;

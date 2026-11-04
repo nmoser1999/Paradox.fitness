@@ -7,7 +7,7 @@
 1. Astro/strict TypeScript diagnostics.
 2. Unit tests covering optional contact fields, callback requirements, malformed inputs, honeypot handling, analytics allowlists, removal of identifying URL components, and approved campaign attribution.
 3. Static production build and image optimization.
-4. Generated HTML checks: one H1, unique titles, description/canonical metadata, local links/assets, a detectable Netlify form, noindex confirmation, and bundle size budgets.
+4. Generated HTML checks: one H1, unique titles, description/canonical metadata, local links/assets, a detectable Netlify form, noindex confirmation, CSP hash coverage, the minimal browser feature policy, and bundle size budgets. CSP checks also cover the archived explorer when included and reject inline style/event attributes.
 
 `npm run format:check` checks source/document formatting. The GitHub workflow runs both ordinary and design-review builds. Dependency installation reported zero known vulnerabilities at implementation time; this is not a promise about future package advisories.
 
@@ -29,6 +29,10 @@ Implementation review on November 4, 2026: all eight built pages had a single H1
 
 The real app now includes independent selectors on every page. All 64 live homepage combinations passed selector consistency, image-loading, and 1280px overflow checks. Browser review confirmed that Precision/reversed-layout preferences persisted into the inquiry page and through reload, while in-person service preselection still worked. Mobile visual review included live selectors, Studio/reversed and Mineral/immersive homepages, and a Precision/arched contact page at 320px/390px. Five additional unit tests cover independent selection, share-link overrides, and invalid stored/query values.
 
+Shared-dropdown review on November 4, 2026: all four app dropdowns use `SelectControl.astro`. Browser measurements confirmed centered chevrons, a 16px form inset with 44px end padding, and a 12px desktop design-control inset with 40px end padding. All eight palettes preserved form arrow/text color matching and had no desktop overflow. Visual review at 320px and 390px confirmed clear arrow spacing in both form and design controls. In-person query preselection and the callback phone requirement still worked. The high-contrast fallback is implemented with `forced-colors`; it was not tested on a Windows high-contrast browser.
+
+Maps-link review on November 4, 2026: all ten Google Maps links across the eight built pages used `DirectionsLink.astro`, including both service/contact panels and the footer. Browser measurements confirmed a 10px horizontal gap, a 32px square icon box, and equal vertical centers for the label and icon in every instance. The contact panel was also checked visually with the local Maps asset loaded.
+
 ## Required checks on Netlify
 
 These cannot be completed by a local static build and remain launch gates:
@@ -36,6 +40,7 @@ These cannot be completed by a local static build and remain launch gates:
 - Form detection, native/enhanced submission acceptance, dashboard storage, spam behavior, inbox delivery, and reply-to.
 - Actual GA4/Clarity account setup, consent behavior with real IDs, no duplicate automatic events, and CSP compatibility with provider endpoints.
 - Security/cache headers and legacy redirects as served by Netlify.
+- Disable Netlify's injected public badge and confirm no `about:srcdoc` CSP errors after a fresh load. See [security header troubleshooting](SECURITY_HEADERS.md).
 - Custom-domain DNS, primary-host redirect, TLS, and independent mailbox send/receive.
 - Owner approval of photo/copy/offers, privacy/retention practice, and checkout/referral terms.
 

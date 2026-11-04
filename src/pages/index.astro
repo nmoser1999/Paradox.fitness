@@ -1,12 +1,12 @@
 ---
 import { Picture } from 'astro:assets';
-import nico from '../../assets/unnamed.jpg';
+import trainerPortrait from '../../assets/unnamed.jpg';
 import Base from '../layouts/Base.astro';
 import Action from '../components/Action.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
-import { site } from '../data/site';
+import { coach, site } from '../data/site';
 const pillars = [
   {
     title: 'Build strength.',
@@ -25,7 +25,7 @@ const pillars = [
 
 <Base
   title="Personal Training in Fremont & Online Coaching"
-  description="Build strength, mobility, and consistency with Nico at Paradox Fitness in Fremont, CA. Explore a free in-person training week or online coaching."
+  description={`Build strength, mobility, and consistency with ${coach.name} at Paradox Fitness in Fremont, CA. Explore a free in-person training week or online coaching.`}
 >
   <section class="home-hero shell" aria-labelledby="hero-heading">
     <div class="hero-intro">
@@ -38,8 +38,8 @@ const pillars = [
       </h1>
       <p class="hero-description">
         Personal training built around strength, mobility, and consistency.
-        <br class="desktop-break" /> Work with Nico to make movement part of
-        your everyday life.
+        <br class="desktop-break" /> Work with {coach.name} to make movement
+        part of your everyday life.
       </p>
       <div class="actions justify-center">
         <Action placement="hero" />
@@ -53,25 +53,26 @@ const pillars = [
       </div>
       <p class="fine-print">
         Complimentary in-person training week · Up to three sessions · Arranged
-        with Nico
+        with {coach.firstName}
       </p>
     </div>
     <div class="coach-panel">
       <figure class="coach-photo">
         <Picture
-          src={nico}
+          src={trainerPortrait}
           formats={['avif', 'webp']}
           widths={[400, 720, 1080, 1440]}
           sizes="(max-width: 700px) 100vw, 50vw"
           width={1080}
           height={900}
           fit="cover"
-          alt="Nico, personal trainer, in a training studio."
+          alt={`${coach.name}, personal trainer, in a training studio.`}
           loading="eager"
           fetchpriority="high"
         />
         <figcaption>
-          Meet Nico.<span>Your coach. Your next chapter.</span>
+          {coach.name}
+          <span>Your coach. Your next chapter.</span>
         </figcaption>
       </figure>
       <div class="coach-copy" id="coach">
@@ -82,9 +83,9 @@ const pillars = [
           <em>Live fully.</em>
         </h2>
         <p>
-          Training should support the life you enjoy. Nico’s approach brings
-          together structured strength work, mobility, and the habits that make
-          showing up feel possible.
+          Training should support the life you enjoy. {coach.firstName}’s
+          approach brings together structured strength work, mobility, and the
+          habits that make showing up feel possible.
         </p>
         <p>
           Choose one-to-one guidance in Fremont or a program you can follow
@@ -97,7 +98,7 @@ const pillars = [
           data-placement="coach"
           data-service="unsure"
         >
-          Have a conversation with Nico <ArrowIcon />
+          Have a conversation with {coach.firstName} <ArrowIcon />
         </a>
       </div>
     </div>
@@ -132,8 +133,8 @@ const pillars = [
         <p class="eyebrow">01 / Fremont</p>
         <h3>In-person training</h3>
         <p>
-          Work one to one with Nico, with feedback on your movements and a
-          structured approach to getting stronger.
+          Work one to one with {coach.firstName}, with feedback on your
+          movements and a structured approach to getting stronger.
         </p>
         <ul>
           <li>Coaching at the Mission San Jose location</li>
@@ -192,7 +193,7 @@ const pillars = [
     <ol class="steps">
       <li>
         <span>01</span>
-        <h3>Tell Nico a little about yourself.</h3>
+        <h3>Tell {coach.firstName} a little about yourself.</h3>
         <p>
           Choose a training option and send a short inquiry. It is fine to still
           be deciding.
@@ -209,7 +210,10 @@ const pillars = [
       <li>
         <span>03</span>
         <h3>Arrange your next step.</h3>
-        <p>Confirm the details with Nico and find your starting point.</p>
+        <p>
+          Confirm the details with {coach.firstName} and find your starting
+          point.
+        </p>
       </li>
     </ol>
   </section>

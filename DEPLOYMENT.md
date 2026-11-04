@@ -1,11 +1,11 @@
 # Deployment walkthrough
 
-This guide takes the completed source from this folder to **Netlify + your Namecheap domain**. Keep the current Squarespace website active until the final checks pass. No account setup or DNS changes have been performed for you yet.
+This guide takes the completed source from this folder to **Netlify + your Namecheap domain**. Keep the current Squarespace website active until the final checks pass. Skip setup steps you have already completed.
 
 ## 1. Gather the owner-controlled accounts and confirm the content
 
 - A GitHub account/repository controlled by the business or its agreed maintainer.
-- A Netlify account **owned by Nico using `Nichomoser@pdoxfitness.com`**. Verify that mailbox first. Native form notification recipients must be active Netlify team members; a single business owner avoids assuming a second free seat. [Netlify notification requirements](https://docs.netlify.com/manage/forms/notifications/).
+- A Netlify account **owned by Nicho Moser using `Nichomoser@pdoxfitness.com`**. Verify that mailbox first. Native form notification recipients must be active Netlify team members; a single business owner avoids assuming a second free seat. [Netlify notification requirements](https://docs.netlify.com/manage/forms/notifications/).
 - Access to the domain’s actual DNS provider. A domain can be registered at Namecheap while its DNS is hosted elsewhere.
 - The existing mailbox provider and billing details. Netlify website hosting does not replace business email.
 - Owner approval for the supplied photo, public name/bio, address/hours, trial eligibility, $85 starting session price, two-session weekly minimum, $60 online subscription, and Trainerize checkout offer. The site carries forward these published offers; it does not verify their commercial terms.
@@ -27,7 +27,7 @@ Open the URL printed by the last command. Check the homepage, service pages, con
 
 Create an **empty repository** in the intended owner’s account. Choose visibility according to the owner’s preference and your Netlify plan’s repository support. Do not add a second generated project or put `dist/` in Git.
 
-This folder already has an empty Git repository on `main`, with no remote. After reviewing the files:
+For an initial repository setup, review the files and commit them on `main`. If the repository is already connected and pushed, continue to the Netlify steps.
 
 ```sh
 git status
@@ -71,12 +71,14 @@ Netlify branch/deploy-preview contexts keep indexing off and include the archive
 
 Start the first deploy. Open the generated `…netlify.app` URL, confirm the build succeeded, and check navigation and images. Do not use a successful build as proof of email delivery.
 
+Turn off **Project configuration → General → Powered by Netlify badge** and save. Netlify injects this badge after the build; its inline iframe code conflicts with this site's strict Content Security Policy and produces `about:srcdoc` console errors. The setting takes effect on the next request without a redeploy. Keep the existing CSP. See [security header troubleshooting](docs/SECURITY_HEADERS.md) for the diagnosis and verification steps. [Netlify badge settings and CSP behavior](https://docs.netlify.com/manage/projects/powered-by-netlify-badge/).
+
 ## 5. Connect and prove the inquiry flow
 
 1. In the Netlify project’s **Forms** area, enable form detection if it is off, then redeploy.
 2. Confirm that `training-inquiry` appears. The generated HTML contains the real form, the `form-name` hidden field, and a honeypot.
 3. Under **Forms → Submission notifications**, add an email notification for this form to the owner’s verified `Nichomoser@pdoxfitness.com` address.
-4. Send a controlled test inquiry from the deployed contact page using a real email address you control. Verify all of the following: a stored submission, the confirmation page, receipt in Nico’s inbox, and a reply addressed to the test prospect. The input is named `email` for reply-to handling.
+4. Send a controlled test inquiry from the deployed contact page using a real email address you control. Verify all of the following: a stored submission, the confirmation page, receipt in Nicho Moser’s inbox, and a reply addressed to the test prospect. The input is named `email` for reply-to handling.
 5. Repeat with JavaScript disabled to verify native POST fallback. Confirm callback selection and phone details, invalid-input handling, and an offline retry that keeps the entries.
 6. Inspect spam handling and agree who checks the dashboard. Remove test leads after verification using the provider’s normal controls.
 

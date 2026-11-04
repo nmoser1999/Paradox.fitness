@@ -42,6 +42,7 @@ For local Lighthouse SEO checks, use `npm run preview:audit` instead of a stagin
 - [Analytics](docs/ANALYTICS.md): consent, provider setup, event definitions, funnels, campaign labels.
 - [Maintenance](docs/MAINTENANCE.md): content edits, releases, dependencies, lead operations.
 - [Verification](docs/VERIFICATION.md): checks performed, remaining launch gates, Lighthouse protocol.
+- [Security header troubleshooting](docs/SECURITY_HEADERS.md): Netlify badge conflicts, CSP checks, and console diagnostics.
 - [Original proposal](REBUILD_PROPOSAL.md): research and design rationale; implementation docs describe the current code.
 
 ## Editing

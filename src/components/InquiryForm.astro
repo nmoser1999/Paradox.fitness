@@ -1,5 +1,7 @@
 ---
+import { coach } from '../data/site';
 import ArrowIcon from './ArrowIcon.astro';
+import SelectControl from './SelectControl.astro';
 ---
 
 <form
@@ -55,20 +57,20 @@ import ArrowIcon from './ArrowIcon.astro';
     </div>
     <div class="form-field full-width">
       <label for="service">What are you interested in?</label>
-      <select id="service" name="service">
+      <SelectControl id="service" name="service">
         <option value="in-person">In-person training</option>
         <option value="online">Online coaching</option>
         <option value="unsure" selected>
           Still deciding
         </option>
-      </select>
+      </SelectControl>
     </div>
     <div class="form-field">
-      <label for="contact-method">How should Nico reply?</label>
-      <select id="contact-method" name="contact-method">
+      <label for="contact-method">How should {coach.firstName} reply?</label>
+      <SelectControl id="contact-method" name="contact-method">
         <option value="email">By email</option>
         <option value="phone">With a phone call</option>
-      </select>
+      </SelectControl>
     </div>
     <div class="form-field">
       <label for="phone">
@@ -88,7 +90,7 @@ import ArrowIcon from './ArrowIcon.astro';
     </div>
     <div class="form-field full-width">
       <label for="message">
-        Anything you would like Nico to know? (optional)
+        Anything you would like {coach.firstName} to know? (optional)
       </label>
       <textarea
         id="message"
@@ -108,8 +110,8 @@ import ArrowIcon from './ArrowIcon.astro';
       <ArrowIcon />
     </button>
     <p>
-      By sending this inquiry, you are asking Nico to contact you about
-      training. An inquiry does not reserve a session.{' '}
+      By sending this inquiry, you are asking {coach.firstName} to contact you
+      about training. An inquiry does not reserve a session.{' '}
       <a href="/privacy/">How we handle your information</a>.
     </p>
     <p id="form-status" role="status" aria-live="polite"></p>

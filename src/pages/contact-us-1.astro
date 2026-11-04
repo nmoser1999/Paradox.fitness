@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import ArrowIcon from '../components/ArrowIcon.astro';
+import DirectionsLink from '../components/DirectionsLink.astro';
 import InquiryForm from '../components/InquiryForm.astro';
-import { site } from '../data/site';
+import { coach, site } from '../data/site';
 ---
 
 <Base
-  title="Start Training — Contact Nico"
-  description="Ask Nico about personal training in Fremont, a complimentary training week, or Paradox online coaching. Send a short inquiry to get started."
+  title={`Start Training — Contact ${coach.name}`}
+  description={`Ask ${coach.name} about personal training in Fremont, a complimentary training week, or Paradox online coaching. Send a short inquiry to get started.`}
   mobileCta={false}
 >
   <div class="shell">
@@ -19,8 +19,8 @@ import { site } from '../data/site';
         <em>Let’s find it together.</em>
       </h1>
       <p>
-        Tell Nico which kind of training you are interested in. You do not need
-        a perfect plan to get in touch.
+        Tell {coach.name} which kind of training you are interested in. You do
+        not need a perfect plan to get in touch.
       </p>
     </section>
     <div class="contact-grid">
@@ -57,15 +57,7 @@ import { site } from '../data/site';
           <br />
           Parking shared with Intero.
         </p>
-        <a
-          class="inline-link"
-          href={site.directions}
-          target="_blank"
-          rel="noopener"
-        >
-          Get directions <ArrowIcon direction="up-right" />
-          <span class="sr-only"> (opens in a new tab)</span>
-        </a>
+        <DirectionsLink class="inline-link" />
         <p>
           {site.hours.map((hours) => (
             <span class="block">{hours}</span>
@@ -73,7 +65,7 @@ import { site } from '../data/site';
         </p>
         <p class="fine-print">
           Complimentary in-person training week: up to three sessions, with
-          times and details arranged with Nico.
+          times and details arranged with {coach.firstName}.
         </p>
       </aside>
     </div>

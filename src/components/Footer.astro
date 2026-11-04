@@ -1,6 +1,7 @@
 ---
 import { site } from '../data/site';
-import ArrowIcon from './ArrowIcon.astro';
+import DirectionsLink from './DirectionsLink.astro';
+import InstagramIcon from './InstagramIcon.astro';
 ---
 
 <footer class="site-footer shell">
@@ -22,10 +23,7 @@ import ArrowIcon from './ArrowIcon.astro';
         <br />
         {site.city}
       </address>
-      <a href={site.directions} target="_blank" rel="noopener">
-        Get directions <ArrowIcon direction="up-right" />
-        <span class="sr-only"> (opens in a new tab)</span>
-      </a>
+      <DirectionsLink />
     </div>
     <div>
       <h2>Get in touch</h2>
@@ -60,8 +58,14 @@ import ArrowIcon from './ArrowIcon.astro';
       <button type="button" class="text-button" data-consent-open>
         Analytics settings
       </button>
-      <a href={site.instagram} target="_blank" rel="noopener">
-        Instagram<span class="sr-only"> (opens in a new tab)</span>
+      <a
+        class="social-link"
+        href={site.instagram}
+        target="_blank"
+        rel="noopener"
+      >
+        Instagram <InstagramIcon />
+        <span class="sr-only"> (opens in a new tab)</span>
       </a>
     </div>
   </div>

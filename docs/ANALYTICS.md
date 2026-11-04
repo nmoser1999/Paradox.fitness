@@ -63,4 +63,4 @@ Compare mobile/desktop, source/medium, landing page, and CTA placement. Keep the
 
 Define lead rate as measured sessions containing an accepted inquiry divided by eligible measured sessions. Define form completion as measured form-start sessions that contain a lead event divided by measured form-start sessions. These are a subset of activity because consent, blockers, no-JavaScript visits, and immediate navigation can reduce telemetry.
 
-Track the online path separately: online page visit → `online_checkout_click`. A completed trial or subscription requires supported Trainerize reporting/integration. This implementation cannot infer purchases from an outbound click. Keep Nico’s consultation/client outcomes in the existing business system until a deliberate CRM integration is added.
+Track the online path separately: online page visit → `online_checkout_click`. A completed trial or subscription requires supported Trainerize reporting/integration. This implementation cannot infer purchases from an outbound click. Keep Nicho Moser’s consultation/client outcomes in the existing business system until a deliberate CRM integration is added.

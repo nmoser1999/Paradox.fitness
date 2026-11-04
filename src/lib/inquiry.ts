@@ -1,3 +1,4 @@
+import { coach } from '../data/site';
 export const services = ['in-person', 'online', 'unsure'] as const;
 export type Service = (typeof services)[number];
 export function isService(value: unknown): value is Service {
@@ -33,7 +34,7 @@ export function parseInquiry(values: Record<string, unknown>): InquiryResult {
     return {
       ok: false,
       code: 'missing_name',
-      message: 'Please add your name so Nico knows who to reply to.',
+      message: `Please add your name so ${coach.firstName} knows who to reply to.`,
     };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
     return {

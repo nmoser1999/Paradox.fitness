@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Action from '../components/Action.astro';
-import { site } from '../data/site';
+import { coach, site } from '../data/site';
 ---
 
 <Base
@@ -19,7 +19,7 @@ import { site } from '../data/site';
       <p>
         Bring guidance and consistency to the place you already train. The
         Paradox membership gives you programs, exercise tutorials, and a
-        connection to your coach.
+        connection to your coach, {coach.name}.
       </p>
       <div class="actions">
         <Action
@@ -31,7 +31,7 @@ import { site } from '../data/site';
         />
         <Action
           href="/contact-us-1/?service=online"
-          label="Ask Nico a question"
+          label={`Ask ${coach.firstName} a question`}
           secondary
           placement="online-hero"
           service="online"
@@ -80,8 +80,8 @@ import { site } from '../data/site';
           service="online"
         />
         <p class="fine-print">
-          Already training with Nico in person? Ask how online programming fits
-          your plan.
+          Already training with {coach.firstName} in person? Ask how online
+          programming fits your plan.
         </p>
       </aside>
     </section>

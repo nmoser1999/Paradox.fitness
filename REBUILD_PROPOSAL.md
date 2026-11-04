@@ -10,7 +10,7 @@ Build a fast, static marketing website with **Astro, TypeScript, Tailwind CSS, a
 
 Astro is the recommended adjustment to the proposed Vite/TypeScript stack: it suits a content and conversion focused website, produces HTML ahead of time, and allows interactive components where needed. A plain Vite + TypeScript implementation is also viable. A React single-page app adds unnecessary work for this initial site. Astro supports adding React components later through its islands architecture. [Astro overview](https://docs.astro.build/en/concepts/why-astro/), [islands architecture](https://docs.astro.build/en/concepts/islands/).
 
-The design should communicate **capable, approachable coaching for lasting strength and mobility**. Put Nico and the next step on the first screen. Lead with the in-person trial and retain a clearly visible online membership path.
+The design should communicate **capable, approachable coaching for lasting strength and mobility**. Put Nicho Moser and the next step on the first screen. Lead with the in-person trial and retain a clearly visible online membership path.
 
 Two constraints need explicit treatment:
 
@@ -25,7 +25,7 @@ Reviewed the homepage, in-person service page, online membership page, contact p
 
 | Observation | Proposed improvement |
 | --- | --- |
-| Homepage opens with an animated abstract background and two service links; Nico and the training proposition are absent from the initial view. | A static portrait, clear outcome, Fremont location, primary trial button, and a visible online alternative. |
+| Homepage opens with an animated abstract background and two service links; Nicho Moser and the training proposition are absent from the initial view. | A static portrait, clear outcome, Fremont location, primary trial button, and a visible online alternative. |
 | The in-person offer sits behind the service link. It currently advertises a complimentary training week, with up to three sessions. | Surface the offer in the header, hero, service section, and final CTA. Confirm its eligibility and terms before publication. |
 | Contact requires separate first/last names, email, phone, and a message. | One name field, email, service interest, optional phone, and optional message; require phone only when a callback is selected. |
 | The online offer links to Trainerize with a seven-day trial and currently advertises $60/month afterward. | Keep the existing checkout destination and promotion parameters; label the online path consistently and state its terms clearly. |
@@ -33,7 +33,7 @@ Reviewed the homepage, in-person service page, online membership page, contact p
 
 Sources: [homepage](https://www.pdoxfitness.com/), [in-person training and trial](https://www.pdoxfitness.com/in-person), [online membership and checkout link](https://www.pdoxfitness.com/online-group-membership), [contact page](https://www.pdoxfitness.com/contact-us-1).
 
-Do not invent testimonials, certifications, results, response times, or availability. Confirm the public spelling of Nico’s name and all offers with the owner.
+Do not invent testimonials, certifications, results, response times, or availability. Use the provided public name, **Nicho Moser**, and confirm all offers with the owner.
 
 ## 2. Visual directions
 
@@ -68,11 +68,11 @@ The original three palettes and compositions remain available. The following add
 
 The local explorer has separate, keyboard-accessible **Color palette** and **Layout** selectors at the top. `data-theme` controls colors; `data-layout` controls typography, framing, and composition. The eight options in each selector provide 64 combinations using the same content and photo. URLs retain both choices, for example `?theme=tide&layout=reverse`. Original theme-only links still select their original matching layout. During implementation, keep this tool on a **noindex review route** and preserve the selection across review pages.
 
-Use the same Nico photo and copy in each direction. Check all states for contrast, focus visibility, and mobile layout. After selection, ship the chosen palette and layout publicly; retain the comparison only in the review environment. This comparison is for owner review, not an A/B test.
+Use the same Nicho Moser photo and copy in each direction. Check all states for contrast, focus visibility, and mobile layout. After selection, ship the chosen palette and layout publicly; retain the comparison only in the review environment. This comparison is for owner review, not an A/B test.
 
-### Nico’s photo brief
+### Nicho Moser’s photo brief
 
-Request a high-resolution original, ideally at least 1,600 pixels on its long edge, with permission to publish it. Favor approachable eye contact, simple training clothes, soft daylight, and room around the face for desktop/mobile crops. Prepare responsive AVIF/WebP versions, preserve natural skin tones, and use meaningful alt text. Never publish the placeholder as Nico’s actual portrait.
+Request a high-resolution original, ideally at least 1,600 pixels on its long edge, with permission to publish it. Favor approachable eye contact, simple training clothes, soft daylight, and room around the face for desktop/mobile crops. Prepare responsive AVIF/WebP versions, preserve natural skin tones, and use meaningful alt text. Never publish the placeholder as Nicho Moser’s actual portrait.
 
 ## 3. Content and CTA structure
 
@@ -86,16 +86,16 @@ Primary CTA: **Start your free training week** → `/contact-us-1/?service=in-pe
 
 Secondary CTA: **Explore online coaching** → `/online-group-membership/` → existing Trainerize trial checkout.
 
-Use “Request my training week” on the inquiry form. The thank-you message must explain that Nico will arrange the next step: submitting an inquiry does not reserve a session. Keep trial limits visible beside the offer. Only publish a response-time commitment if Nico agrees to it.
+Use “Request my training week” on the inquiry form. The thank-you message must explain that Nicho Moser will arrange the next step: submitting an inquiry does not reserve a session. Keep trial limits visible beside the offer. Only publish a response-time commitment if Nicho Moser agrees to it.
 
 ### Homepage progression
 
-1. **Header:** logo/name, Training, Online, Meet Nico, FAQ, and a high-contrast trial button.
-2. **Hero:** outcome, location, Nico’s photo, primary CTA, online alternative.
+1. **Header:** logo/name, Training, Online, Meet Nicho Moser, FAQ, and a high-contrast trial button.
+2. **Hero:** outcome, location, Nicho Moser’s photo, primary CTA, online alternative.
 3. **Approach:** three specific benefits—strength, movement, consistency—with concise explanations.
-4. **Meet Nico:** approved bio, coaching philosophy, and verified credentials.
+4. **Meet Nicho Moser:** approved bio, coaching philosophy, and verified credentials.
 5. **Choose your training:** in-person and online options, what is included, current pricing/commitments where approved, and distinct CTAs.
-6. **What happens next:** send an inquiry, talk with Nico, arrange the first session. Describe actual operations.
+6. **What happens next:** send an inquiry, talk with Nicho Moser, arrange the first session. Describe actual operations.
 7. **Client evidence:** genuine, permissioned testimonials if available; otherwise omit this section.
 8. **FAQ:** experience level, location, scheduling, trial terms, online requirements, pricing, and cancellation questions using approved answers.
 9. **Final CTA and footer:** inquiry link, phone/email, address, hours, directions, and privacy settings.
@@ -127,7 +127,7 @@ Build the form into the generated HTML with `method="POST"`, `data-netlify="true
 
 ```text
 Visitor → form POST → Netlify acceptance/storage → confirmation page
-                              └→ email notification → Nico’s inbox
+                              └→ email notification → Nicho Moser’s inbox
 ```
 
 **Critical account detail:** Netlify currently requires email notification recipients to be active team members. Establish the business-owned Netlify account with **Nichomoser@pdoxfitness.com as its owner email**, verify it, and use that account for the site. This fits the single-owner free setup. Do not assume an arbitrary external address can receive native notifications. Set the input name to `email` so replies address the prospect; use a recognizable notification subject. [Notification requirements](https://docs.netlify.com/manage/forms/notifications/).
@@ -163,7 +163,7 @@ Mark `generate_lead` as the GA4 lead key event. With JavaScript enhancement enab
 
 **Two separate funnels:**
 
-- In-person: landing/service visit → trial CTA → form start → accepted inquiry → Nico’s manually recorded consultation/client outcome.
+- In-person: landing/service visit → trial CTA → form start → accepted inquiry → Nicho Moser’s manually recorded consultation/client outcome.
 - Online: online service visit → Trainerize checkout click → completed trial/subscription only if a supported Trainerize integration or owner report can verify it. Cross-domain measurement requires cooperation from that platform; a click is not a sale.
 
 Create a GA4 funnel exploration broken down by device, source/medium, landing page, and CTA placement. Define lead rate as unique measured sessions with an accepted inquiry divided by eligible measured sessions, and form completion as successful form sessions divided by form-start sessions. Keep the date range and consent coverage consistent. Use actual counts alongside rates when volume is low. [Funnel explorations](https://support.google.com/analytics/answer/9327974).
@@ -232,11 +232,11 @@ netlify/functions/         future server-only endpoints
 netlify.toml               build and hosting configuration
 ```
 
-Use a lockfile, supported Node LTS, strict TypeScript checks, and a production build in CI. Build with `npm run build`, publish `dist`, and use review deploys for changes. Keep service URLs, offers, contact details, and content separate from layout so editing them is straightforward. A CMS is optional later if Nico needs frequent self-service editing; source-managed content is the simpler launch choice.
+Use a lockfile, supported Node LTS, strict TypeScript checks, and a production build in CI. Build with `npm run build`, publish `dist`, and use review deploys for changes. Keep service URLs, offers, contact details, and content separate from layout so editing them is straightforward. A CMS is optional later if Nicho Moser needs frequent self-service editing; source-managed content is the simpler launch choice.
 
 **Future auth:** choose a maintained identity provider when requirements are known. Validate sessions and authorization on every protected server endpoint. Hiding components or gating a static page in JavaScript does not protect data; never ship private content in public HTML/JS bundles. Introduce server rendering or a separate app only where required.
 
-**Future chatbot:** lazy-load the UI when opened; send requests through a server-side endpoint; keep provider keys in server environment variables. Verify sessions, enforce per-user limits and a monthly spending cap, and ground answers in approved business information. Give users a clear path to Nico. Keep conversations outside marketing analytics and define retention before storing them. Auth/database/LLM usage may introduce ongoing costs and requires a separate scope. The initial rebuild does not implement a member portal or chatbot.
+**Future chatbot:** lazy-load the UI when opened; send requests through a server-side endpoint; keep provider keys in server environment variables. Verify sessions, enforce per-user limits and a monthly spending cap, and ground answers in approved business information. Give users a clear path to Nicho Moser. Keep conversations outside marketing analytics and define retention before storing them. Auth/database/LLM usage may introduce ongoing costs and requires a separate scope. The initial rebuild does not implement a member portal or chatbot.
 
 Set HTTPS, appropriate security headers, and a Content Security Policy compatible with the chosen integrations. Test the form and consent controls with those headers enabled. Do not blanket-rewrite missing paths to the homepage as an SPA fallback.
 
@@ -288,15 +288,15 @@ Planning estimate: **6–10 working days of implementation and review**, dependi
 
 Needed before implementation/launch:
 
-- Nico’s portrait, approved name/bio/credentials, logo assets, and permissioned testimonials if used.
+- Nicho Moser’s portrait, approved name/bio/credentials, logo assets, and permissioned testimonials if used.
 - Confirmation of the in-person trial limits, online trial/price, current Trainerize checkout URL, and referral-page treatment.
 - Namecheap domain and DNS access through the provider’s normal access flow; existing mailbox provider and ownership details. Keep credentials out of project files and chat documents.
-- Confirmation that Nico can own Netlify using the required inbox, plus business-owned repository and analytics access.
+- Confirmation that Nicho Moser can own Netlify using the required inbox, plus business-owned repository and analytics access.
 - Agreement on follow-up expectations, lead retention, analytics choices, design selection, and acceptance results.
 
 ### Launch acceptance checklist
 
-- [ ] Owner-selected design, responsive pages, final Nico photo, approved content, and obvious CTAs.
+- [ ] Owner-selected design, responsive pages, final Nicho Moser photo, approved content, and obvious CTAs.
 - [ ] Existing inquiry and Trainerize paths preserved; old URLs work or redirect specifically.
 - [ ] Form works without JavaScript; success, validation, failure, retry, spam, delivery, and reply-to verified.
 - [ ] Analytics counts accepted inquiries correctly; checkout clicks are reported separately; no PII in telemetry.
