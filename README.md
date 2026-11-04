@@ -1,6 +1,6 @@
 # Paradox Fitness
 
-Static Astro + TypeScript + Tailwind website, prepared for Netlify. The default design uses the **Grove palette with the centered panorama layout**, matching the selected concept. The real app includes independent **eight-palette/eight-layout selectors on every page**. Choices persist in the browser and can be shared with `?theme=tide&layout=reverse`. The original standalone concept explorer is also retained as an archive.
+Static Astro + TypeScript + Tailwind website, prepared for Netlify. The default design uses the **Grove palette with the centered panorama layout**, matching the selected concept. The real app includes independent **eight-palette/eight-layout selectors on every page**. Choices persist in the browser and can be shared with `?theme=tide&layout=reverse`. The design header is hidden on mobile. Its desktop **Hide header** button dismisses the entire bar until the page is refreshed. The original standalone concept explorer is also retained as an archive.
 
 ## Start here
 

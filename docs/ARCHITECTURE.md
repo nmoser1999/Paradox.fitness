@@ -31,7 +31,9 @@ public/                 favicon and legacy-route redirects
 
 The real app renders design selectors in the shared layout on every page. Palettes alter color tokens across the site; layouts alter homepage composition plus shared display type and framing. Browser-local preferences preserve both choices across navigation, and validated query parameters override them for shared links. A small hashed head script applies appearance before first paint. The default remains Grove/panorama. No analytics consent is needed for functional appearance preferences.
 
-`SelectControl.astro` shares the dropdown wrapper and decorative SVG chevron between design controls and inquiry fields. Native selects retain their labels, names, options, keyboard behavior, and focus indicators. The chevron inherits the text color and ignores pointer events; reserved end padding keeps labels clear of it. Form arrows sit 16px inside the control, while compact design controls use 12px (10px on narrow screens). Forced-colors mode restores the system arrow.
+The entire design header is hidden at viewport widths of 800px and below. On larger screens, **Hide header** dismisses the entire bar for the current page and moves keyboard focus to the main content without scrolling. Refreshing restores it. Visibility is not stored, and dismissal does not change the selected palette/layout or URL. Without JavaScript, the desktop header remains visible and its dismiss button remains disabled.
+
+`SelectControl.astro` shares the dropdown wrapper and decorative SVG chevron between design controls and inquiry fields. Native selects retain their labels, names, options, keyboard behavior, and focus indicators. The chevron inherits the text color and ignores pointer events; reserved end padding keeps labels clear of it. Form arrows sit 16px inside the control, while desktop design controls use 12px. Forced-colors mode restores the system arrow.
 
 The original concept explorer is retained in the root files as an archive. `ENABLE_DESIGN_REVIEW=true` packages that archive under `/design/`; it does not control the real app’s selectors.
 

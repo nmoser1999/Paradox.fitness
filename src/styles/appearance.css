@@ -180,12 +180,48 @@
   border-bottom: 1px solid #ffffff22;
 }
 .design-inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px 24px;
-  flex-wrap: wrap;
-  justify-content: space-between;
   padding-block: 13px;
+}
+.design-label {
+  grid-column: 1;
+  grid-row: 1;
+}
+.design-hide {
+  grid-column: 3;
+  grid-row: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 112px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #768278;
+  border-radius: 4px;
+  background: transparent;
+  color: #f5f5ef;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.design-hide:hover {
+  background: #303831;
+}
+.design-hide svg {
+  flex: none;
+}
+.design-panel {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+  display: grid;
+  gap: 10px;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
 }
 .design-label strong {
   display: block;
@@ -200,6 +236,7 @@
 .design-selectors {
   display: flex;
   align-items: flex-end;
+  justify-content: flex-end;
   gap: 9px;
 }
 .design-selectors label {
@@ -588,6 +625,21 @@
 }
 
 @media (max-width: 1050px) {
+  .design-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .design-hide {
+    grid-column: 2;
+  }
+  .design-panel {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: stretch;
+    width: 100%;
+  }
+  .design-selectors {
+    justify-content: flex-start;
+  }
   .design-selectors select {
     min-width: 160px;
   }
@@ -603,19 +655,11 @@
   }
 }
 @media (max-width: 800px) {
-  .design-label {
-    width: 100%;
+  .design-bar {
+    display: none;
   }
-  .design-selectors {
-    width: 100%;
-  }
-  .design-selectors label {
-    flex: 1;
-    min-width: 0;
-  }
-  .design-selectors select {
-    width: 100%;
-    min-width: 0;
+  [data-layout] :is(#coach, #questions, #main) {
+    scroll-margin-top: 25px;
   }
 }
 @media (max-width: 760px) {
@@ -709,34 +753,6 @@
   }
 }
 @media (max-width: 460px) {
-  .design-inner {
-    padding-block: 10px;
-    gap: 9px;
-  }
-  .design-selectors {
-    flex-wrap: wrap;
-    gap: 7px;
-  }
-  .design-selectors .select-control {
-    --select-arrow-inset: 10px;
-  }
-  .design-selectors select {
-    font-size: 0.65rem;
-    padding-inline-start: 8px;
-  }
-  .design-selectors button {
-    width: 100%;
-    min-height: 34px;
-    padding: 7px;
-  }
-  .design-label strong {
-    font-size: 0.59rem;
-  }
-  [data-layout] #coach,
-  [data-layout] #questions,
-  [data-layout] #main {
-    scroll-margin-top: 230px;
-  }
   :is(
       [data-layout='classic'],
       [data-layout='architectural'],

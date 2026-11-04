@@ -14,6 +14,16 @@ const paletteSelect =
   document.querySelector<HTMLSelectElement>('#palette-select');
 const layoutSelect =
   document.querySelector<HTMLSelectElement>('#layout-select');
+const controlsBar = document.getElementById('design-controls');
+const hideControls = document.querySelector<HTMLButtonElement>('#design-hide');
+
+if (controlsBar && hideControls) {
+  hideControls.disabled = false;
+  hideControls.addEventListener('click', () => {
+    controlsBar.hidden = true;
+    document.getElementById('main')?.focus({ preventScroll: true });
+  });
+}
 
 function apply(theme: Palette, layout: Layout, updateUrl = false) {
   document.documentElement.dataset.theme = theme;
