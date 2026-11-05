@@ -33,6 +33,8 @@ Shared-dropdown review on November 4, 2026: all four app dropdowns use `SelectCo
 
 Maps-link review on November 4, 2026: all ten Google Maps links across the eight built pages used `DirectionsLink.astro`, including both service/contact panels and the footer. Browser measurements confirmed a 10px horizontal gap, a 32px square icon box, and equal vertical centers for the label and icon in every instance. The contact panel was also checked visually with the local Maps asset loaded.
 
+Design-header dismissal review on November 4, 2026: the desktop **Hide header** button removed the entire bar, reduced its rendered height to zero, removed its controls from the accessibility tree, and placed keyboard focus on the main content. Enter-key activation worked. Refreshing restored the header while preserving a non-default Tide/Soft arch selection. Visual and accessibility-tree review at 320px and 390px confirmed the entire design header and dismiss button were absent. Visibility is not persisted; the mobile CSS cutoff is 800px. Documentation reflects this behavior.
+
 ## Required checks on Netlify
 
 These cannot be completed by a local static build and remain launch gates:
