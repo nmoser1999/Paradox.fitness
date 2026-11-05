@@ -12,21 +12,22 @@ import { coach, site } from '../data/site';
 >
   <div class="shell">
     <section class="page-heading">
-      <p class="eyebrow">A conversation is a good place to start</p>
+      <p class="eyebrow">Get in touch with {coach.name}</p>
       <h1>
-        Your next step.
+        Let’s talk
         <br />
-        <em>Let’s find it together.</em>
+        <em>about your training.</em>
       </h1>
       <p>
-        Tell {coach.name} which kind of training you are interested in. You do
-        not need a perfect plan to get in touch.
+        Have a goal in mind, a question about coaching, or no idea where to
+        start? Send {coach.firstName} a note. He’ll follow up to talk through
+        your options and arrange the next step.
       </p>
     </section>
     <div class="contact-grid">
       <InquiryForm />
       <aside class="content-panel">
-        <h2>Prefer to reach out directly?</h2>
+        <h2>Talk to {coach.firstName} directly.</h2>
         <p>
           <a
             href={`mailto:${site.email}`}
@@ -46,7 +47,8 @@ import { coach, site } from '../data/site';
             {site.phone}
           </a>
         </p>
-        <h2>Training in Fremont</h2>
+        <hr />
+        <h3>Training in Fremont</h3>
         <address>
           {site.address}
           <br />
@@ -59,6 +61,9 @@ import { coach, site } from '../data/site';
         </p>
         <DirectionsLink class="inline-link" />
         <p>
+          <span class="footer-hours-label">
+            Training hours · By appointment
+          </span>
           {site.hours.map((hours) => (
             <span class="block">{hours}</span>
           ))}

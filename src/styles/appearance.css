@@ -167,6 +167,9 @@
   background: var(--panel);
   border-color: var(--panel);
 }
+[data-theme] .final-cta :focus-visible {
+  outline-color: var(--button-ink);
+}
 .hero-intro > .fine-print {
   margin-top: 13px;
 }
@@ -318,7 +321,10 @@
 [data-layout] #coach,
 [data-layout] #questions,
 [data-layout] #main {
-  scroll-margin-top: 160px;
+  scroll-margin-top: var(--anchor-offset, 160px);
+}
+body:has(.design-bar[hidden]) {
+  --anchor-offset: 24px;
 }
 
 :root[data-layout='classic'] {
@@ -505,7 +511,7 @@
 [data-layout='immersive'] .hero-intro {
   grid-area: 1/1/2/3;
   align-self: center;
-  width: 59%;
+  width: 62%;
   padding: 44px;
   z-index: 2;
   color: #fff;
@@ -549,17 +555,13 @@
 }
 [data-layout='immersive'] .coach-photo::after {
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    #111e20 20%,
-    #111e20dd 37%,
-    transparent 78%
-  );
+  background: linear-gradient(90deg, #111e20 25%, #111e20e8 50%, #111e2044 80%);
 }
 [data-layout='immersive'] .coach-photo figcaption {
   left: auto;
   right: 30px;
   text-align: right;
+  text-shadow: 0 2px 12px #000;
 }
 [data-layout='immersive'] .coach-copy {
   grid-area: 2/1/3/3;

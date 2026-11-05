@@ -1,11 +1,13 @@
 ---
 import { coach } from '../data/site';
 import Action from './Action.astro';
+const currentPath = Astro.url.pathname;
+const homeAnchor = currentPath === '/' ? '' : '/';
 const links = [
   { href: '/in-person/', label: 'In-person training' },
   { href: '/online-group-membership/', label: 'Online coaching' },
-  { href: '/#coach', label: `Meet ${coach.firstName}` },
-  { href: '/#questions', label: 'FAQ' },
+  { href: `${homeAnchor}#coach`, label: `Meet ${coach.firstName}` },
+  { href: `${homeAnchor}#questions`, label: 'FAQ' },
 ];
 ---
 
@@ -16,17 +18,74 @@ const links = [
   </a>
   <nav class="desktop-nav" aria-label="Main navigation">
     {links.map((link) => (
-      <a href={link.href}>{link.label}</a>
+      <a
+        href={link.href}
+        aria-current={currentPath === link.href ? 'page' : undefined}
+      >
+        {link.label}
+      </a>
     ))}
   </nav>
-  <Action placement="header" label="Start your free week" />
+  <Action placement="header" />
   <details class="mobile-menu">
-    <summary>Menu</summary>
+    <summary>
+      Menu
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.5"
+        aria-hidden="true"
+      >
+        <path d="M3 6h14M3 14h14" />
+      </svg>
+    </summary>
     <nav aria-label="Mobile navigation">
       {links.map((link) => (
-        <a href={link.href}>{link.label}</a>
+        <a
+          href={link.href}
+          aria-current={currentPath === link.href ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
       ))}
       <a href="/contact-us-1/">Get in touch</a>
+      <a
+        class="menu-cta"
+        href="/contact-us-1/?service=in-person"
+        data-track="cta_click"
+        data-placement="header"
+        data-service="in-person"
+      >
+        Request your free week
+      </a>
     </nav>
   </details>
 </header>
+
+<script>
+  const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+  const summary = menu?.querySelector('summary');
+  menu?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      menu.open = false;
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menu?.open) {
+      menu.open = false;
+      summary?.focus();
+    }
+  });
+  document.addEventListener('click', (event) => {
+    if (
+      menu?.open &&
+      event.target instanceof Node &&
+      !menu.contains(event.target)
+    ) {
+      menu.open = false;
+    }
+  });
+</script>

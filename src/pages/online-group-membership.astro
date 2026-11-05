@@ -1,30 +1,33 @@
 ---
 import Base from '../layouts/Base.astro';
 import Action from '../components/Action.astro';
-import { coach, site } from '../data/site';
+import Faq from '../components/Faq.astro';
+import FinalCta from '../components/FinalCta.astro';
+import ArrowIcon from '../components/ArrowIcon.astro';
+import { coach, site, onlineFaqs } from '../data/site';
 ---
 
 <Base
   title="Online Personal Training — Paradox Membership"
-  description="Train with more structure through the Paradox online membership. Programs, exercise tutorials, and coaching in Trainerize. Seven-day trial, then $60/month."
+  description={`Train with more structure through the Paradox online membership. Programs, exercise tutorials, and coaching in Trainerize. Seven-day trial, then ${site.onlinePrice}/month.`}
 >
   <div class="shell">
     <section class="page-heading">
       <p class="eyebrow">Paradox online / Powered by Trainerize</p>
       <h1>
-        A plan to follow.
+        Your training.
         <br />
-        <em>Room to make it yours.</em>
+        <em>With more direction.</em>
       </h1>
       <p>
-        Bring guidance and consistency to the place you already train. The
-        Paradox membership gives you programs, exercise tutorials, and a
-        connection to your coach, {coach.name}.
+        Follow structured programs, learn the movements, and stay connected to
+        your coach, {coach.name}. The Paradox online membership brings it
+        together in the Trainerize app.
       </p>
       <div class="actions">
         <Action
           href={site.checkout}
-          label="Start the seven-day trial"
+          label="Start your seven-day trial"
           placement="online-hero"
           event="online_checkout_click"
           service="online"
@@ -38,43 +41,43 @@ import { coach, site } from '../data/site';
         />
       </div>
       <p class="fine-print">
-        Seven-day trial, then {site.onlinePrice}/month. Checkout and
-        subscription terms are provided by Trainerize. Review them before
-        subscribing.
+        Seven-day trial, then {site.onlinePrice}/month. Opens Trainerize
+        checkout; review the subscription terms before signing up.
       </p>
     </section>
     <section class="content-grid section" aria-labelledby="online-heading">
       <div class="content-block">
         <h2 id="online-heading">
-          Less guessing.
+          Open the app.
           <br />
-          More direction.
+          <em>Get to work.</em>
         </h2>
         <p>
-          Choose from structured programs and on-demand workouts. Exercise
-          tutorials help you follow the plan, while coaching and the training
-          community give you a place to ask questions.
+          Give each training day a purpose. Choose from structured programs and
+          on-demand workouts, use the exercise tutorials to follow along, and
+          bring your questions to your coach and training community.
         </p>
         <ul>
-          <li>Master programs and on-demand workouts</li>
+          <li>Structured programs and on-demand workouts</li>
           <li>Exercise demonstrations and form guidance</li>
           <li>Coaching through the Trainerize app</li>
           <li>A shared space for questions and training discussion</li>
         </ul>
       </div>
       <aside class="content-panel">
-        <h2>Get started online.</h2>
+        <p class="eyebrow">The Paradox membership</p>
+        <h2>A plan in your pocket.</h2>
         <p class="price">
           {site.onlinePrice}
           <span> / month after your trial</span>
         </p>
         <p>
-          Use the existing Paradox Trainerize checkout to review the offer,
-          create your account, and begin the trial.
+          Start with a seven-day trial. Review the offer and subscription
+          details, then create your account through Trainerize.
         </p>
         <Action
           href={site.checkout}
-          label="Explore the online trial"
+          label="Start your seven-day trial"
           placement="online-details"
           event="online_checkout_click"
           service="online"
@@ -85,5 +88,13 @@ import { coach, site } from '../data/site';
         </p>
       </aside>
     </section>
+    <p class="service-alternative">
+      Prefer feedback as you train?{' '}
+      <a class="inline-link" href="/in-person/">
+        Explore in-person training <ArrowIcon />
+      </a>
+    </p>
   </div>
+  <Faq items={onlineFaqs} />
+  <FinalCta online />
 </Base>

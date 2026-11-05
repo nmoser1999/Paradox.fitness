@@ -4,7 +4,7 @@ import DirectionsLink from '../components/DirectionsLink.astro';
 import Action from '../components/Action.astro';
 import FinalCta from '../components/FinalCta.astro';
 import Faq from '../components/Faq.astro';
-import { coach, site } from '../data/site';
+import { coach, site, faqs } from '../data/site';
 ---
 
 <Base
@@ -15,33 +15,34 @@ import { coach, site } from '../data/site';
     <section class="page-heading">
       <p class="eyebrow">One to one / Fremont, California</p>
       <h1>
-        Build a stronger
+        Get stronger.
         <br />
-        <em>everyday.</em>
+        <em>With a coach beside you.</em>
       </h1>
       <p>
-        Personal guidance, useful feedback, and a plan for getting stronger.
-        Train with {coach.name} at the Mission San Jose location.
+        One-to-one training with {coach.name} in Fremont’s Mission San Jose
+        neighborhood. Work on strength, mobility, and technique with feedback as
+        you train.
       </p>
       <div class="actions">
         <Action placement="in-person-hero" />
       </div>
       <p class="fine-print">
-        Complimentary week · Maximum three sessions · Arranged with{' '}
+        Free in-person week · Up to three sessions · Arranged with{' '}
         {coach.firstName}
       </p>
     </section>
     <section class="content-grid section" aria-labelledby="in-person-heading">
       <div class="content-block">
         <h2 id="in-person-heading">
-          Coaching that is
+          Know what to do.
           <br />
-          there with you.
+          <em>Learn how to do it well.</em>
         </h2>
         <p>
-          Get feedback as you train and work on movements with someone in your
-          corner. Sessions bring structure to strength work, mobility, and the
-          practice of moving well.
+          Training is easier to approach when you have a plan and someone to
+          guide you through it. Work directly with {coach.firstName} on your
+          movements, with feedback during each session.
         </p>
         <ul>
           <li>One-to-one coaching and technique feedback</li>
@@ -49,12 +50,18 @@ import { coach, site } from '../data/site';
           <li>Online programming to support consistency between sessions</li>
         </ul>
         <p>
-          Start with an inquiry. {coach.firstName} will talk through your goals,
-          explain the approach, and help arrange your next step.
+          New to training or returning to a routine? Start with a conversation
+          about your goals and experience. {coach.firstName} will help you find
+          a starting point for your complimentary week.
         </p>
       </div>
       <aside class="content-panel">
-        <h2>Clear expectations.</h2>
+        <p class="eyebrow">Your training plan</p>
+        <h2>Start with a free week.</h2>
+        <p>
+          Try up to three in-person sessions, with times arranged with{' '}
+          {coach.firstName}.
+        </p>
         <p class="price">
           From {site.inPersonPrice}
           <span> / session</span>
@@ -64,15 +71,18 @@ import { coach, site } from '../data/site';
           Billing is through Square every two weeks.
         </p>
         <p>No large package purchase is required to get started.</p>
+        <hr />
+        <h3>Where we train</h3>
         <address>
           {site.address}
           <br />
           {site.city}
         </address>
+        <p class="fine-print">Parking is shared with Intero.</p>
         <DirectionsLink class="inline-link" label="Find the studio" />
       </aside>
     </section>
   </div>
-  <Faq />
+  <Faq items={faqs.filter((_, index) => index !== 4)} />
   <FinalCta />
 </Base>

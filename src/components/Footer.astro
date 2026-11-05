@@ -8,7 +8,8 @@ import InstagramIcon from './InstagramIcon.astro';
   <div class="footer-grid">
     <div>
       <a class="brand" href="/">
-        paradox<small>Strength for everyday life.</small>
+        paradox<span aria-hidden="true">.</span>
+        <small>Strength for everyday life.</small>
       </a>
       <p>
         Personal training in Fremont.
@@ -45,6 +46,7 @@ import InstagramIcon from './InstagramIcon.astro';
         {site.phone}
       </a>
       <p>
+        <span class="footer-hours-label">Training hours · By appointment</span>
         {site.hours.map((hours) => (
           <span class="block">{hours}</span>
         ))}
@@ -55,6 +57,7 @@ import InstagramIcon from './InstagramIcon.astro';
     <p>© {new Date().getFullYear()} Paradox Fitness</p>
     <div>
       <a href="/privacy/">Privacy</a>
+      <a href="/referrals/">Referrals</a>
       <button type="button" class="text-button" data-consent-open>
         Analytics settings
       </button>

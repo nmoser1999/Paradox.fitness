@@ -10,15 +10,15 @@ import { coach, site } from '../data/site';
 const pillars = [
   {
     title: 'Build strength.',
-    text: 'Develop a foundation you can bring to everything you do.',
+    text: 'Practice the movements that help you get stronger, with a plan to follow.',
   },
   {
     title: 'Move with confidence.',
-    text: 'Give strength, mobility, and good movement a place in your week.',
+    text: 'Work on technique and mobility with guidance from your coach.',
   },
   {
-    title: 'Find your consistency.',
-    text: 'Follow a plan with guidance and a clear next step.',
+    title: 'Keep showing up.',
+    text: 'Build a training routine around your goals and everyday life.',
   },
 ];
 ---
@@ -37,9 +37,9 @@ const pillars = [
         <br class="desktop-break" /> <em>you want to live.</em>
       </h1>
       <p class="hero-description">
-        Personal training built around strength, mobility, and consistency.
-        <br class="desktop-break" /> Work with {coach.name} to make movement
-        part of your everyday life.
+        One-to-one training in Fremont. Online coaching wherever you train.
+        <br class="desktop-break" /> Build strength, move well, and find your
+        routine with {coach.name}.
       </p>
       <div class="actions justify-center">
         <Action placement="hero" />
@@ -62,7 +62,7 @@ const pillars = [
           src={trainerPortrait}
           formats={['avif', 'webp']}
           widths={[400, 720, 1080, 1440]}
-          sizes="(max-width: 700px) 100vw, 50vw"
+          sizes="(max-width: 760px) calc(100vw - 40px), (min-width: 1328px) 600px, 50vw"
           width={1080}
           height={900}
           fit="cover"
@@ -72,24 +72,25 @@ const pillars = [
         />
         <figcaption>
           {coach.name}
-          <span>Your coach. Your next chapter.</span>
+          <span>Personal training · Fremont &amp; online</span>
         </figcaption>
       </figure>
       <div class="coach-copy" id="coach">
-        <p class="eyebrow">Personal coaching. Real connection.</p>
+        <p class="eyebrow">Meet {coach.name}</p>
         <h2>
-          Move well.
+          A coach
           <br />
-          <em>Live fully.</em>
+          <em>in your corner.</em>
         </h2>
         <p>
-          Training should support the life you enjoy. {coach.firstName}’s
-          approach brings together structured strength work, mobility, and the
-          habits that make showing up feel possible.
+          Know what to work on and how to approach it. {coach.firstName} brings
+          structure to your training, with strength work, mobility, and guidance
+          on your movements.
         </p>
         <p>
-          Choose one-to-one guidance in Fremont or a program you can follow
-          online. Start where you are, and build from there.
+          Work together in Fremont for feedback as you train, or follow a
+          program online with coaching through Trainerize. Start with your goals
+          and a routine that works for you.
         </p>
         <a
           class="inline-link"
@@ -98,7 +99,7 @@ const pillars = [
           data-placement="coach"
           data-service="unsure"
         >
-          Have a conversation with {coach.firstName} <ArrowIcon />
+          Talk training with {coach.firstName} <ArrowIcon />
         </a>
       </div>
     </div>
@@ -120,57 +121,65 @@ const pillars = [
     aria-labelledby="training-heading"
   >
     <div class="section-intro">
-      <p class="eyebrow">Two ways to get started</p>
+      <p class="eyebrow">Choose your way to train</p>
       <h2 id="training-heading">
         Good coaching.
         <br />
         <em>Wherever you train.</em>
       </h2>
-      <p>Choose the support that fits your routine.</p>
+      <p>Hands-on guidance in Fremont or a program you can take with you.</p>
     </div>
     <div class="service-grid">
       <article class="service-card">
-        <p class="eyebrow">01 / Fremont</p>
+        <p class="eyebrow">01 / One to one · Fremont</p>
         <h3>In-person training</h3>
         <p>
-          Work one to one with {coach.firstName}, with feedback on your
-          movements and a structured approach to getting stronger.
+          Train alongside {coach.firstName} for technique feedback and sessions
+          shaped around your starting point.
         </p>
         <ul>
-          <li>Coaching at the Mission San Jose location</li>
-          <li>Strength, mobility, and movement guidance</li>
-          <li>A plan supported by online programming</li>
+          <li>One-to-one sessions in Mission San Jose</li>
+          <li>Strength training and mobility work</li>
+          <li>Online programming between sessions</li>
         </ul>
-        <p class="price">
-          From {site.inPersonPrice}
-          <span> / session</span>
-        </p>
-        <p class="fine-print">
-          Two sessions per week minimum after your trial.
-        </p>
+        <div class="service-offer">
+          <p class="offer-label">Try a free week · Up to three sessions</p>
+          <p class="price">
+            From {site.inPersonPrice}
+            <span> / session afterward</span>
+          </p>
+          <p class="fine-print">
+            Two sessions per week minimum after the trial.
+          </p>
+        </div>
         <Action
           href="/in-person/"
-          label="Explore in-person training"
+          label="See in-person training"
           placement="service-card"
         />
       </article>
       <article class="service-card service-card-light">
-        <p class="eyebrow">02 / Wherever you are</p>
-        <h3>Paradox online</h3>
+        <p class="eyebrow">02 / Online · Trainerize</p>
+        <h3>Online coaching</h3>
         <p>
-          Bring more structure to your training with programs, exercise
-          tutorials, and guidance through Trainerize.
+          Follow structured programs where you already train, with exercise
+          tutorials, coaching, and a shared training community.
         </p>
         <ul>
-          <li>Structured training programs</li>
+          <li>Programs and on-demand workouts</li>
           <li>Exercise demonstrations and tutorials</li>
-          <li>Coaching and a shared training community</li>
+          <li>Coaching through the Trainerize app</li>
         </ul>
-        <p class="price">
-          {site.onlinePrice}
-          <span> / month after your trial</span>
-        </p>
-        <p class="fine-print">Start with the current seven-day trial.</p>
+        <div class="service-offer">
+          <p class="offer-label">Start with a seven-day trial</p>
+          <p class="price">
+            {site.onlinePrice}
+            <span> / month afterward</span>
+          </p>
+          <p class="fine-print">
+            Review subscription terms at Trainerize checkout.
+          </p>
+        </div>
         <Action
           href="/online-group-membership/"
           label="Explore online coaching"
@@ -183,36 +192,36 @@ const pillars = [
   </section>
   <section class="section steps-section shell" aria-labelledby="steps-heading">
     <div class="section-intro">
-      <p class="eyebrow">A simple first step</p>
+      <p class="eyebrow">Getting started in person</p>
       <h2 id="steps-heading">
-        You don’t need it
+        A conversation.
         <br />
-        <em>all figured out.</em>
+        <em>Then a plan.</em>
       </h2>
     </div>
     <ol class="steps">
       <li>
         <span>01</span>
-        <h3>Tell {coach.firstName} a little about yourself.</h3>
+        <h3>Share your goals.</h3>
         <p>
-          Choose a training option and send a short inquiry. It is fine to still
-          be deciding.
+          Send {coach.firstName} a short inquiry. Tell him what you want to work
+          on, or ask for help choosing where to start.
         </p>
       </li>
       <li>
         <span>02</span>
-        <h3>Talk about what works for you.</h3>
+        <h3>Find your starting point.</h3>
         <p>
-          Discuss your goals, your routine, and the kind of support you are
+          Talk through your experience, your routine, and the support you are
           looking for.
         </p>
       </li>
       <li>
         <span>03</span>
-        <h3>Arrange your next step.</h3>
+        <h3>Arrange your free week.</h3>
         <p>
-          Confirm the details with {coach.firstName} and find your starting
-          point.
+          Confirm your training times with {coach.firstName}. Try up to three
+          sessions before discussing an ongoing plan.
         </p>
       </li>
     </ol>

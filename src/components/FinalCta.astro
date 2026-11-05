@@ -1,16 +1,36 @@
 ---
 import Action from './Action.astro';
+import { coach } from '../data/site';
+interface Props {
+  online?: boolean;
+}
+const { online = false } = Astro.props;
 ---
 
 <section class="final-cta shell" aria-labelledby="next-heading">
   <div>
-    <p class="eyebrow">Your next chapter</p>
+    <p class="eyebrow">
+      {online
+        ? 'A little guidance to get going'
+        : `Train with ${coach.firstName} in Fremont`}
+    </p>
     <h2 id="next-heading">
-      Let’s build something
-      <br />
-      you can keep.
+      {online ? 'Questions before you start?' : 'Make room for a stronger you.'}
     </h2>
-    <p>Start with a conversation. Find a way to train that works for you.</p>
+    <p>
+      {online
+        ? `Talk with ${coach.firstName} about the membership and how it fits your training.`
+        : `Try a complimentary training week with up to three sessions. Arrange your first visit with ${coach.firstName}.`}
+    </p>
   </div>
-  <Action placement="final" />
+  {online ? (
+    <Action
+      href="/contact-us-1/?service=online"
+      label="Ask about online coaching"
+      service="online"
+      placement="final"
+    />
+  ) : (
+    <Action placement="final" />
+  )}
 </section>

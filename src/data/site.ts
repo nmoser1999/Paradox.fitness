@@ -22,11 +22,11 @@ export const site = {
 export const faqs = [
   {
     question: 'Do I need training experience?',
-    answer: `You can start with a conversation about where you are now and what you want to work toward. ${coach.firstName} will help you choose a starting point and training approach.`,
+    answer: `No training experience is needed to get in touch. Tell ${coach.firstName} where you are starting and what you want to work toward. He will help you choose an approach that fits your experience and goals.`,
   },
   {
     question: 'How does the free training week work?',
-    answer: `Send an inquiry to arrange a complimentary in-person training week, with a maximum of three sessions. ${coach.firstName} will confirm the details and available times. An inquiry does not reserve a session.`,
+    answer: `The complimentary week includes up to three in-person sessions. Send an inquiry, then arrange the times and details with ${coach.firstName}. Your sessions are confirmed directly with him; submitting the form does not reserve a time.`,
   },
   {
     question: 'Where is in-person training?',
@@ -35,15 +35,34 @@ export const faqs = [
   },
   {
     question: 'What does in-person training cost afterward?',
-    answer: `Sessions start at $85, with a minimum of two sessions per week. Billing is through Square every two weeks. Talk with ${coach.firstName} about the right arrangement before starting.`,
+    answer: `Sessions start at ${site.inPersonPrice}, with a minimum of two sessions per week after the trial. Billing is through Square every two weeks. Confirm your plan and pricing with ${coach.firstName} before continuing.`,
   },
   {
     question: 'What if I want to train online?',
-    answer:
-      'The Paradox online membership provides structured programs, exercise tutorials, and coaching through Trainerize. The current offer is a seven-day trial, followed by $60 per month. Review the checkout terms before subscribing.',
+    answer: `The Paradox online membership includes structured programs, exercise tutorials, and coaching through Trainerize. Start with a seven-day trial, then ${site.onlinePrice} per month. Review the subscription terms at checkout before signing up.`,
   },
   {
-    question: 'How do I book my first session?',
-    answer: `Use the short inquiry form to tell ${coach.firstName} whether you are interested in in-person training, online coaching, or still deciding. He will follow up to discuss the next step.`,
+    question: 'How do I arrange my first session?',
+    answer: `Send the short inquiry form or contact ${coach.firstName} by email or phone. He will follow up to discuss your goals and arrange your training times. If you are still deciding between in-person and online coaching, he can help you choose.`,
+  },
+] as const;
+
+export const onlineFaqs = [
+  {
+    question: 'What is included in the membership?',
+    answer:
+      'You get structured training programs, on-demand workouts, exercise demonstrations, coaching, and a shared training community through the Trainerize app.',
+  },
+  {
+    question: 'How do I start the seven-day trial?',
+    answer: `Use the trial link to open the Paradox Trainerize checkout. Review the offer and subscription terms there, then create your account. Membership is ${site.onlinePrice} per month after the trial.`,
+  },
+  {
+    question: 'How do I check the cancellation terms?',
+    answer: `Review the subscription and cancellation terms in Trainerize before you sign up. If anything is unclear, ask ${coach.firstName} before starting the trial.`,
+  },
+  {
+    question: 'Can I ask a question before joining?',
+    answer: `Yes. Choose online coaching on the inquiry form, or reach ${coach.firstName} by email or phone. Tell him about your goals and where you plan to train so you can discuss whether the membership fits.`,
   },
 ] as const;
