@@ -1,3 +1,4 @@
+import { initializeColorMode } from './color-mode';
 import {
   defaultDesign,
   DESIGN_KEY,
@@ -79,3 +80,4 @@ document.getElementById('suggested-pair')?.addEventListener('click', () => {
 });
 window.addEventListener('popstate', read);
 read();
+initializeColorMode();

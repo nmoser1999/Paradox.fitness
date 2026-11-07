@@ -1,4 +1,5 @@
 ---
+import ButtonLoad from '../components/ButtonLoad.astro';
 import Base from '../layouts/Base.astro';
 import { coach, site } from '../data/site';
 const hasGa = Boolean(import.meta.env.PUBLIC_GA_MEASUREMENT_ID);
@@ -40,8 +41,10 @@ const hasClarity = Boolean(import.meta.env.PUBLIC_CLARITY_PROJECT_ID);
         The color and layout controls save your selections in your browser so
         your preferred appearance continues across pages and visits, including
         on mobile. These functional preferences are separate from optional
-        analytics. The controls are available at the top of each page on
-        desktop.
+        analytics. Light and dark mode follow your browser preference until you
+        use the theme button in the desktop header. Your choice is remembered on
+        every page; “Use browser theme” in the footer restores automatic mode.
+        Color palette and layout controls are available on desktop.
       </p>
       <h2>Optional analytics</h2>
       <p>
@@ -80,6 +83,7 @@ const hasClarity = Boolean(import.meta.env.PUBLIC_CLARITY_PROJECT_ID);
         .
       </p>
       <button class="button button-secondary" type="button" data-consent-open>
+        <ButtonLoad />
         Change analytics settings
       </button>
       <h2>Retention and access</h2>

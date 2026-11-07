@@ -1,3 +1,7 @@
+---
+import ButtonLoad from './ButtonLoad.astro';
+---
+
 <section
   id="consent-panel"
   class="consent-panel"
@@ -14,9 +18,11 @@
   </div>
   <div class="consent-actions">
     <button type="button" class="button button-secondary" data-consent="denied">
+      <ButtonLoad />
       Decline optional analytics
     </button>
     <button type="button" class="button" data-consent="granted">
+      <ButtonLoad />
       Allow analytics
     </button>
   </div>

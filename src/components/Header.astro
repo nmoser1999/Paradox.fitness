@@ -1,6 +1,7 @@
 ---
 import { coach } from '../data/site';
 import Action from './Action.astro';
+import ColorModeToggle from './ColorModeToggle.astro';
 const currentPath = Astro.url.pathname;
 const homeAnchor = currentPath === '/' ? '' : '/';
 const links = [
@@ -26,10 +27,11 @@ const links = [
       </a>
     ))}
   </nav>
+  <ColorModeToggle />
   <Action placement="header" />
   <details class="mobile-menu">
-    <summary>
-      Menu
+    <summary aria-label="Menu">
+      <span class="menu-label">Menu</span>
       <svg
         width="20"
         height="20"

@@ -1,11 +1,15 @@
 ---
+import ButtonLoad from '../components/ButtonLoad.astro';
 import '../styles/global.css';
 import '../styles/appearance.css';
+import '../styles/color-mode.css';
+import { COLOR_MODE_KEY } from '../lib/color-mode';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Consent from '../components/Consent.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import DesignControls from '../components/DesignControls.astro';
+import TrainingAtmosphere from '../components/TrainingAtmosphere.astro';
 import { palettes, layouts, defaultDesign, DESIGN_KEY } from '../lib/design';
 import { coach, site } from '../data/site';
 import { getImage } from 'astro:assets';
@@ -26,6 +30,7 @@ const appearanceSeed = {
   layoutIds: Object.keys(layouts),
   defaults: defaultDesign,
   storageKey: DESIGN_KEY,
+  modeStorageKey: COLOR_MODE_KEY,
 };
 const social = await getImage({
   src: trainerPortrait,
@@ -95,6 +100,16 @@ const schema = {
             : appearanceSeed.defaults.layout;
         document.documentElement.dataset.theme = theme;
         document.documentElement.dataset.layout = layout;
+        let mode;
+        try {
+          mode = localStorage.getItem(appearanceSeed.modeStorageKey);
+        } catch {}
+        document.documentElement.dataset.mode =
+          mode === 'dark' ||
+          (mode !== 'light' &&
+            matchMedia('(prefers-color-scheme: dark)').matches)
+            ? 'dark'
+            : 'light';
       })();
     </script>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -133,6 +148,7 @@ const schema = {
     <DesignControls />
     <Header />
     <main id="main" tabindex="-1">
+      <TrainingAtmosphere />
       <slot />
     </main>
     <Footer />
@@ -147,6 +163,7 @@ const schema = {
         data-placement="mobile-sticky"
         data-service={onlinePage ? 'online' : 'in-person'}
       >
+        <ButtonLoad />
         {onlinePage ? 'Start your online trial' : 'Request your free week'}{' '}
         <ArrowIcon direction={onlinePage ? 'up-right' : 'right'} />
         {onlinePage && <span class="sr-only"> (opens in a new tab)</span>}

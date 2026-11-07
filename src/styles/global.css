@@ -113,7 +113,7 @@ em {
   top: -80px;
   padding: 12px 18px;
   background: var(--ink);
-  color: white;
+  color: var(--paper);
 }
 .skip-link:focus {
   top: 12px;
@@ -159,6 +159,10 @@ em {
   text-underline-offset: 7px;
 }
 .button {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  touch-action: manipulation;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -919,7 +923,7 @@ em {
     grid-template-columns: 1.3fr 0.8fr;
   }
 }
-@media (max-width: 1100px) {
+@media (max-width: 1200px) {
   .desktop-nav {
     display: none;
   }
@@ -1165,10 +1169,74 @@ em {
     border: 1px solid ButtonText;
   }
 }
+/* One 20kg plate scrolls inside the button behind its fixed label and arrow. */
+.button-load {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: clip;
+  border-radius: inherit;
+  color: inherit;
+  opacity: 0;
+  pointer-events: none;
+}
+.button-load__plate {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: auto;
+  height: 160%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+}
+.button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):focus-visible
+  > .button-load {
+  opacity: 0.14;
+}
+@media (hover: hover) and (pointer: fine) {
+  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):hover
+    > .button-load {
+    opacity: 0.14;
+  }
+}
 @media (prefers-reduced-motion: no-preference) {
-  .button {
-    transition:
-      background-color 0.15s,
-      border-color 0.15s;
+  .button-load {
+    transition: opacity 140ms ease-out;
+  }
+  .button-load__plate {
+    transform: translate(-50%, 105%);
+    /* Half the previous speed: 760ms instead of 380ms. */
+    transition: transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .button:not(
+      :disabled,
+      [aria-disabled='true'],
+      [aria-busy='true']
+    ):focus-visible
+    > .button-load
+    > .button-load__plate {
+    transform: translate(-50%, -50%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):hover
+    > .button-load
+    > .button-load__plate {
+    transform: translate(-50%, -50%);
+  }
+}
+.button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):active
+  > .button-load {
+  opacity: 0.2;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):active
+    > .button-load {
+    transition-duration: 80ms;
+  }
+  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):active
+    > .button-load
+    > .button-load__plate {
+    transform: translate(-50%, -50%);
   }
 }

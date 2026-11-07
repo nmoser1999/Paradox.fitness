@@ -1,4 +1,5 @@
 ---
+import ButtonLoad from './ButtonLoad.astro';
 import ArrowIcon from './ArrowIcon.astro';
 interface Props {
   href?: string;
@@ -28,6 +29,7 @@ const external = href.startsWith('https://');
   data-placement={placement}
   data-service={service}
 >
+  <ButtonLoad />
   {label}
   <ArrowIcon direction={external ? 'up-right' : 'right'} />
   {external && <span class="sr-only"> (opens in a new tab)</span>}

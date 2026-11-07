@@ -1,0 +1,384 @@
+---
+import { EQUIPMENT_GEOMETRY } from '../lib/training-equipment';
+// Static/CSS fallback; the proximity renderer is loaded only on eligible desktops.
+const chalk = [
+  [18, 32, 1.1],
+  [62, 78, 1.8],
+  [108, 24, 0.8],
+  [154, 114, 1.2],
+  [204, 54, 0.7],
+  [246, 142, 1.6],
+  [288, 86, 1],
+  [326, 36, 1.3],
+  [36, 170, 0.8],
+  [86, 220, 1.2],
+  [126, 158, 2],
+  [178, 254, 0.9],
+  [220, 206, 1.4],
+  [274, 278, 0.7],
+  [314, 192, 1.8],
+  [342, 242, 0.8],
+  [22, 310, 1.5],
+  [68, 366, 0.7],
+  [114, 294, 1],
+  [156, 394, 1.7],
+  [196, 338, 0.8],
+  [238, 426, 1.2],
+  [284, 354, 1.9],
+  [332, 406, 0.9],
+];
+---
+
+<div class="training-atmosphere" aria-hidden="true" inert>
+  <div class="atmosphere-window">
+    <canvas class="particle-network" width="0" height="0"></canvas>
+    <div class="parallax plate-track">
+      <svg viewBox="0 0 240 240" fill="none" focusable="false">
+        <path
+          stroke="currentColor"
+          stroke-width="1.2"
+          d={EQUIPMENT_GEOMETRY.plate.path}
+        />
+      </svg>
+    </div>
+    <div class="parallax barbell-track">
+      <svg viewBox="0 0 280 160" fill="none" focusable="false">
+        <g transform="rotate(-24 140 80)">
+          <path
+            stroke="currentColor"
+            stroke-width="1.4"
+            d={EQUIPMENT_GEOMETRY.dumbbell.path}
+          />
+        </g>
+      </svg>
+    </div>
+    <div class="parallax kettlebell-track">
+      <svg viewBox="0 0 200 220" fill="none" focusable="false">
+        <path
+          stroke="currentColor"
+          stroke-width="1.3"
+          d={EQUIPMENT_GEOMETRY.kettlebell.path}
+        />
+      </svg>
+    </div>
+    <div class="parallax chalk-track chalk-left">
+      <svg
+        class="chalk-cloud"
+        viewBox="0 0 360 460"
+        fill="currentColor"
+        focusable="false"
+      >
+        {chalk.map(([cx, cy, r]) => (
+          <circle cx={cx} cy={cy} r={r} />
+        ))}
+      </svg>
+    </div>
+    <div class="parallax chalk-track chalk-right">
+      <svg
+        class="chalk-cloud"
+        viewBox="0 0 360 460"
+        fill="currentColor"
+        focusable="false"
+      >
+        {chalk.map(([cx, cy, r]) => (
+          <circle cx={360 - cx} cy={460 - cy} r={r} />
+        ))}
+      </svg>
+    </div>
+    <div class="parallax chalk-track chalk-mid">
+      <svg
+        class="chalk-cloud"
+        viewBox="0 0 360 460"
+        fill="currentColor"
+        focusable="false"
+      >
+        {chalk.map(([cx, cy, r]) => (
+          <circle cx={cx} cy={cy} r={r} />
+        ))}
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script>
+  const host = document.querySelector<HTMLElement>('.training-atmosphere');
+  const main = host?.parentElement;
+  if (host && main) {
+    const allowed = matchMedia(
+      '(min-width: 801px) and (prefers-reduced-motion: no-preference) and (forced-colors: none)',
+    );
+    let controller: ReturnType<
+      typeof import('../lib/training-network').createTrainingNetwork
+    > = null;
+    let visible = false;
+    let loaded = document.readyState === 'complete';
+    let pending = false;
+    let failed = false;
+
+    const canRun = () =>
+      allowed.matches && loaded && visible && !document.hidden;
+    async function activate() {
+      try {
+        if (!canRun()) return;
+        const { createTrainingNetwork } =
+          await import('../lib/training-network');
+        if (!canRun()) return;
+        controller = createTrainingNetwork(host!);
+        controller?.start();
+      } catch {
+        // Optional decoration must never interfere with the site or its controls.
+        failed = true;
+        host!.dataset.networkState = 'fallback';
+      } finally {
+        pending = false;
+      }
+    }
+    function update() {
+      if (!allowed.matches) {
+        controller?.destroy();
+        controller = null;
+        host!.dataset.networkState = 'disabled';
+        return;
+      }
+      if (!canRun()) {
+        controller?.stop();
+        return;
+      }
+      if (controller) {
+        controller.start();
+      } else if (!pending && !failed) {
+        pending = true;
+        if ('requestIdleCallback' in window) {
+          window.requestIdleCallback(activate, { timeout: 1000 });
+        } else {
+          setTimeout(activate, 100);
+        }
+      }
+    }
+    const intersection = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      update();
+    });
+    intersection.observe(main);
+    allowed.addEventListener('change', update);
+    document.addEventListener('visibilitychange', update);
+    window.addEventListener(
+      'load',
+      () => {
+        loaded = true;
+        update();
+      },
+      { once: true },
+    );
+    window.addEventListener('pagehide', () => controller?.stop());
+    window.addEventListener('pageshow', update);
+    update();
+  }
+</script>
+
+<style>
+  .particle-network {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+  }
+  .training-atmosphere[data-network-ready='true'] .particle-network {
+    opacity: 1;
+  }
+  .training-atmosphere[data-network-ready='true'] .parallax {
+    display: none;
+  }
+  :global(#main) {
+    position: relative;
+    isolation: isolate;
+  }
+  /* Opaque reading surfaces hide the network without hiding any text.
+     The homepage .hero-intro intentionally stays open to the background. */
+  :global(
+    #main
+      :is(
+        .pillars,
+        .section:not(.home-hero),
+        .page-heading,
+        .contact-grid,
+        .content-block,
+        .prose,
+        .service-alternative
+      )
+  ) {
+    position: relative;
+    z-index: 0;
+    background-color: var(--paper);
+  }
+  :global(#main .coach-copy) {
+    position: relative;
+    z-index: 0;
+    background-color: var(--panel);
+  }
+  .training-atmosphere {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: clip;
+    pointer-events: none;
+    user-select: none;
+    color: var(--accent);
+  }
+  /* Sticky follows the content, while its absolute parent clips it to #main. */
+  .atmosphere-window {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    overflow: clip;
+    contain: strict;
+  }
+  .parallax {
+    position: absolute;
+  }
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .plate-track {
+    width: clamp(220px, 23vw, 330px);
+    left: -7vw;
+    top: 18%;
+    opacity: 0.14;
+  }
+  .barbell-track {
+    width: clamp(273px, 31.2vw, 429px);
+    right: -5vw;
+    top: 56%;
+    opacity: 0.12;
+  }
+  .kettlebell-track {
+    width: clamp(115px, 13vw, 170px);
+    right: 11.5%;
+    top: 3%;
+    opacity: 0.14;
+  }
+  .chalk-track {
+    width: clamp(200px, 29vw, 420px);
+    opacity: 0.32;
+  }
+  .chalk-left {
+    left: -1%;
+    top: 10%;
+    --rise: -140px;
+    --spread: 42px;
+  }
+  .chalk-right {
+    right: -2%;
+    top: 30%;
+    --rise: -320px;
+    --spread: -58px;
+  }
+  .chalk-mid {
+    width: clamp(150px, 17vw, 240px);
+    left: 35%;
+    top: 64%;
+    opacity: 0.18;
+    --rise: -440px;
+    --spread: 26px;
+  }
+  @media (min-width: 801px) and (prefers-reduced-motion: no-preference) {
+    /* Only these small SVG clouds drift at rest; no full-screen animation surfaces. */
+    .chalk-cloud {
+      animation: chalk-eddy 14s ease-in-out infinite alternate;
+    }
+    .chalk-right .chalk-cloud {
+      animation-duration: 19s;
+      animation-delay: -9s;
+      animation-direction: alternate-reverse;
+    }
+    .chalk-mid .chalk-cloud {
+      animation-duration: 11s;
+      animation-delay: -6s;
+    }
+    @supports (animation-timeline: view()) and (animation-range: contain) {
+      :global(#main) {
+        view-timeline: --training-main block;
+      }
+      .parallax {
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+      }
+      /* Keep timeline separate so the minifier cannot fold it into a shorthand. */
+      .training-atmosphere .parallax {
+        animation-timeline: --training-main;
+        animation-range: contain;
+      }
+      .plate-track {
+        animation-name: plate-turn;
+      }
+      .barbell-track,
+      .kettlebell-track {
+        animation-name: barbell-lift;
+      }
+      .chalk-track {
+        animation-name: chalk-rise;
+      }
+    }
+  }
+  @keyframes plate-turn {
+    from {
+      transform: translate3d(0, 0, 0) rotate(-14deg);
+    }
+    50% {
+      transform: translate3d(20px, -50px, 0) rotate(30deg);
+    }
+    to {
+      transform: translate3d(8px, -100px, 0) rotate(74deg);
+    }
+  }
+  @keyframes barbell-lift {
+    from {
+      transform: translate3d(0, 0, 0) rotate(8deg);
+    }
+    40% {
+      transform: translate3d(-18px, -90px, 0) rotate(-10deg);
+    }
+    70% {
+      transform: translate3d(-8px, -55px, 0) rotate(0);
+    }
+    to {
+      transform: translate3d(18px, -150px, 0) rotate(14deg);
+    }
+  }
+  @keyframes chalk-rise {
+    from {
+      transform: translate3d(0, 35px, 0) scale(0.93);
+    }
+    to {
+      transform: translate3d(var(--spread), var(--rise), 0) scale(1.14);
+    }
+  }
+  @keyframes chalk-eddy {
+    from {
+      transform: translate3d(-12px, 14px, 0) rotate(-8deg);
+      opacity: 0.6;
+    }
+    50% {
+      transform: translate3d(10px, -18px, 0) rotate(5deg);
+      opacity: 1;
+    }
+    to {
+      transform: translate3d(22px, -42px, 0) rotate(12deg);
+      opacity: 0.72;
+    }
+  }
+  @media (max-width: 800px) {
+    .training-atmosphere {
+      display: none;
+    }
+  }
+  @media (forced-colors: active), print {
+    .training-atmosphere {
+      display: none;
+    }
+  }
+</style>

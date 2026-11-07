@@ -101,7 +101,7 @@
   --line: #b9c39c;
   --surface: #f6f7ef;
   --button-ink: #fff;
-  --control-line: #84936c;
+  --control-line: #7b8a63;
 }
 [data-layout] h1,
 [data-layout] h2 {
@@ -115,7 +115,6 @@
 [data-layout] .button:hover {
   background: var(--accent);
   border-color: var(--accent);
-  filter: brightness(0.93);
 }
 [data-layout] .button-secondary {
   color: var(--ink);
@@ -123,7 +122,6 @@
 [data-layout] .button-secondary:hover {
   background: var(--panel);
   color: var(--ink);
-  filter: none;
 }
 [data-theme] .service-card-light,
 [data-theme] .contact-form,

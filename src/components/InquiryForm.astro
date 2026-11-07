@@ -1,4 +1,5 @@
 ---
+import ButtonLoad from './ButtonLoad.astro';
 import { coach } from '../data/site';
 import ArrowIcon from './ArrowIcon.astro';
 import SelectControl from './SelectControl.astro';
@@ -110,6 +111,7 @@ import SelectControl from './SelectControl.astro';
   </div>
   <div class="form-footer">
     <button type="submit" class="button" id="inquiry-submit">
+      <ButtonLoad />
       <span data-inquiry-label>Send my inquiry</span>
       <ArrowIcon />
     </button>
