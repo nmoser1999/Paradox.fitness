@@ -3,6 +3,7 @@ import ButtonLoad from '../components/ButtonLoad.astro';
 import '../styles/global.css';
 import '../styles/appearance.css';
 import '../styles/color-mode.css';
+import '../styles/buttons.css';
 import { COLOR_MODE_KEY } from '../lib/color-mode';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -163,10 +164,11 @@ const schema = {
         data-placement="mobile-sticky"
         data-service={onlinePage ? 'online' : 'in-person'}
       >
-        <ButtonLoad />
-        {onlinePage ? 'Start your online trial' : 'Request your free week'}{' '}
-        <ArrowIcon direction={onlinePage ? 'up-right' : 'right'} />
-        {onlinePage && <span class="sr-only"> (opens in a new tab)</span>}
+        <ButtonLoad>
+          {onlinePage ? 'Start your online trial' : 'Request your free week'}{' '}
+          <ArrowIcon direction={onlinePage ? 'up-right' : 'right'} />
+          {onlinePage && <span class="sr-only"> (opens in a new tab)</span>}
+        </ButtonLoad>
       </a>
     )}
     <script>
