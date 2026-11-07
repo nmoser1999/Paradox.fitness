@@ -5,6 +5,7 @@ import Base from '../layouts/Base.astro';
 import Action from '../components/Action.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import Faq from '../components/Faq.astro';
+import ServiceCorner from '../components/ServiceCorner.astro';
 import FinalCta from '../components/FinalCta.astro';
 import { coach, site } from '../data/site';
 const pillars = [
@@ -29,15 +30,13 @@ const pillars = [
 >
   <section class="home-hero shell" aria-labelledby="hero-heading">
     <div class="hero-intro">
-      <p class="eyebrow justify-center">
-        Fremont, California · In person &amp; online
-      </p>
+      <p class="eyebrow justify-center">Fremont, CA · In person &amp; online</p>
       <h1 id="hero-heading">
         Strength for the life
         <br class="desktop-break" /> <em>you want to live.</em>
       </h1>
       <p class="hero-description">
-        One-to-one training in Fremont. Online coaching wherever you train.
+        One-to-one training in Fremont, CA. Online coaching wherever you train.
         <br class="desktop-break" /> Build strength, move well, and find your
         routine with {coach.name}.
       </p>
@@ -130,7 +129,8 @@ const pillars = [
       <p>Hands-on guidance in Fremont or a program you can take with you.</p>
     </div>
     <div class="service-grid">
-      <article class="service-card">
+      <article class="service-card" id="pricing" tabindex="-1">
+        <ServiceCorner kind="in-person" />
         <p class="eyebrow">01 / One to one · Fremont</p>
         <h3>In-person training</h3>
         <p>
@@ -159,6 +159,7 @@ const pillars = [
         />
       </article>
       <article class="service-card service-card-light">
+        <ServiceCorner kind="online" />
         <p class="eyebrow">02 / Online · Trainerize</p>
         <h3>Online coaching</h3>
         <p>

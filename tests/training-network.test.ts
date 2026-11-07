@@ -206,19 +206,30 @@ describe('Training particle proximity', () => {
 });
 
 describe('Training particle work budget', () => {
-  it('adds 50% more dots and a kettlebell while retaining a fixed cap', () => {
-    const nodes = createParticles(5120, 2880);
-    expect(nodes.length).toBeLessThanOrEqual(63);
-    expect(nodes.filter((node) => node.kind === 'dot')).toHaveLength(60);
-    expect(nodes.filter((node) => node.kind === 'plate')).toHaveLength(1);
-    expect(nodes.filter((node) => node.kind === 'dumbbell')).toHaveLength(1);
-    expect(nodes.filter((node) => node.kind === 'kettlebell')).toHaveLength(1);
-    expect(
-      nodes.every(
-        (node) => node.x > 0 && node.x < 5120 && node.y > 0 && node.y < 2880,
-      ),
-    ).toBe(true);
-  });
+  it.each([
+    [801, 600, 36],
+    [953, 845, 58],
+    [1280, 900, 72],
+    [5120, 2880, 72],
+  ])(
+    'adds 20%% more dots within a fixed cap at %i×%i',
+    (width, height, dots) => {
+      const nodes = createParticles(width, height);
+      expect(nodes.length).toBeLessThanOrEqual(75);
+      expect(nodes.filter((node) => node.kind === 'dot')).toHaveLength(dots);
+      expect(nodes.filter((node) => node.kind === 'plate')).toHaveLength(1);
+      expect(nodes.filter((node) => node.kind === 'dumbbell')).toHaveLength(1);
+      expect(nodes.filter((node) => node.kind === 'kettlebell')).toHaveLength(
+        1,
+      );
+      expect(
+        nodes.every(
+          (node) =>
+            node.x > 0 && node.x < width && node.y > 0 && node.y < height,
+        ),
+      ).toBe(true);
+    },
+  );
   it('does no particle work for a zero-size surface', () => {
     expect(createParticles(0, 900)).toEqual([]);
     expect(createParticles(1280, 0)).toEqual([]);

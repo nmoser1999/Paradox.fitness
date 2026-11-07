@@ -30,19 +30,23 @@ export const faqs = [
   },
   {
     question: 'Where is in-person training?',
+    cta: 'directions',
     answer:
       'Training takes place at 43255 Mission Blvd in the Mission San Jose area of Fremont. Parking is shared with Intero.',
   },
   {
-    question: 'What does in-person training cost afterward?',
+    question: 'What does in-person training cost?',
+    cta: 'pricing',
     answer: `Sessions start at ${site.inPersonPrice}, with a minimum of two sessions per week after the trial. Billing is through Square every two weeks. Confirm your plan and pricing with ${coach.firstName} before continuing.`,
   },
   {
     question: 'What if I want to train online?',
+    cta: 'online',
     answer: `The Paradox online membership includes structured programs, exercise tutorials, and coaching through Trainerize. Start with a seven-day trial, then ${site.onlinePrice} per month. Review the subscription terms at checkout before signing up.`,
   },
   {
     question: 'How do I arrange my first session?',
+    cta: 'inquiry',
     answer: `Send the short inquiry form or contact ${coach.firstName} by email or phone. He will follow up to discuss your goals and arrange your training times. If you are still deciding between in-person and online coaching, he can help you choose.`,
   },
 ] as const;

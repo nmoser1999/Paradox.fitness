@@ -1,0 +1,96 @@
+---
+import {
+  EQUIPMENT_GEOMETRY,
+  PLATE_OUTLINE_PATH,
+} from '../lib/training-equipment';
+
+interface Props {
+  kind: 'in-person' | 'online';
+}
+const { kind } = Astro.props;
+const physical = kind === 'in-person';
+const width = physical ? 120 : 160;
+const plate = EQUIPMENT_GEOMETRY.plate;
+const plateScale = 25 / plate.radius;
+---
+
+<svg
+  class="service-corner"
+  data-service-corner={kind}
+  viewBox={`0 0 ${width} 120`}
+  width={width}
+  height="120"
+  fill="none"
+  preserveAspectRatio="xMidYMid meet"
+  aria-hidden="true"
+  focusable="false"
+>
+  <!-- Match the section behind the card, keeping its focus outline intact. -->
+  <path
+    fill="var(--paper)"
+    d={
+      physical
+        ? 'M-1-1H121V121L120 120A120 120 0 0 1 0 0Z'
+        : 'M-1-1H161V121L160 120 0 0Z'
+    }
+  />
+  <path
+    d={physical ? 'M0 .5A119.5 119.5 0 0 0 119.5 120' : 'M0 .5 159.5 120'}
+    stroke="var(--line)"
+    vector-effect="non-scaling-stroke"
+  />
+  <g
+    class="service-corner__engraving"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    {physical ? (
+      <path
+        d={PLATE_OUTLINE_PATH}
+        transform={`translate(84 36) scale(${plateScale}) translate(${-plate.x} ${-plate.y})`}
+        stroke-width={1.4 / plateScale}
+      />
+    ) : (
+      <>
+        <rect x="97" y="14" width="48" height="34" rx="4" />
+        <path d="M97 42h48m-24 6v8m-10 0h20" opacity="0.55" />
+        <path d="M111 29h20m-20-6v12m20-12v12m-23-9v6m26-6v6" />
+      </>
+    )}
+  </g>
+</svg>
+
+<style>
+  .service-corner {
+    display: none;
+  }
+  @media (min-width: 801px) {
+    :global(.service-card) {
+      --service-corner-size: clamp(60px, 7vw, 104px);
+      --service-corner-width: var(--service-corner-size);
+      position: relative;
+    }
+    :global(.service-card-light) {
+      --service-corner-width: calc(var(--service-corner-size) * 4 / 3);
+    }
+    .service-corner {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      display: block;
+      width: var(--service-corner-width);
+      height: var(--service-corner-size);
+      overflow: visible;
+      color: var(--accent);
+      pointer-events: none;
+    }
+    .service-corner__engraving {
+      opacity: 0.9;
+    }
+    :global(.service-card > .eyebrow) {
+      max-width: calc(100% - max(24px, var(--service-corner-width) - 38px));
+    }
+  }
+</style>

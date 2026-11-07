@@ -1,4 +1,6 @@
 ---
+import { Picture } from 'astro:assets';
+import trainerPortrait from '../../assets/unnamed.jpg';
 import Base from '../layouts/Base.astro';
 import DirectionsLink from '../components/DirectionsLink.astro';
 import InquiryForm from '../components/InquiryForm.astro';
@@ -11,7 +13,7 @@ import { coach, site } from '../data/site';
   mobileCta={false}
 >
   <div class="shell">
-    <section class="page-heading">
+    <section class="page-heading" data-network-open>
       <p class="eyebrow">Get in touch with {coach.name}</p>
       <h1>
         Let’s talk
@@ -28,6 +30,20 @@ import { coach, site } from '../data/site';
       <InquiryForm />
       <aside class="content-panel">
         <h2>Talk to {coach.firstName} directly.</h2>
+        <div class="contact-headshot">
+          <Picture
+            src={trainerPortrait}
+            formats={['avif', 'webp']}
+            widths={[480, 640, 960]}
+            sizes="448px"
+            width={640}
+            height={640}
+            fit="cover"
+            alt={`${coach.name}, your personal trainer.`}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
         <p>
           <a
             href={`mailto:${site.email}`}
@@ -59,7 +75,7 @@ import { coach, site } from '../data/site';
           <br />
           Parking shared with Intero.
         </p>
-        <DirectionsLink class="inline-link" />
+        <DirectionsLink />
         <p>
           <span class="footer-hours-label">
             Training hours · By appointment
@@ -76,3 +92,27 @@ import { coach, site } from '../data/site';
     </div>
   </div>
 </Base>
+
+<style>
+  .contact-headshot {
+    position: relative;
+    width: 160px;
+    max-width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    margin-bottom: 24px;
+    background: var(--paper);
+  }
+  /* Reframe the existing square portrait around Nicho's head and shoulders. */
+  .contact-headshot :global(img) {
+    position: absolute;
+    left: -90%;
+    top: -63%;
+    width: 280%;
+    height: 280%;
+    max-width: none;
+    object-fit: cover;
+  }
+</style>

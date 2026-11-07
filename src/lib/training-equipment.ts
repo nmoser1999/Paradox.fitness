@@ -111,15 +111,76 @@ const kettlebellInset = curvedOutline({ x: 54, y: 104 }, [
   ['C', 80, 82, 66, 86, 54, 104],
 ]);
 
+// One top-centred 20 KG stamp; canvas and fallback SVG share this vector path.
+const plateWeightStrokes = [
+  [
+    [0, 2],
+    [0, 1],
+    [1, 0],
+    [6, 0],
+    [7, 1],
+    [7, 3],
+    [6, 4],
+    [0, 10],
+    [7, 10],
+  ],
+  [
+    [12, 0],
+    [16, 0],
+    [17, 1],
+    [17, 9],
+    [16, 10],
+    [12, 10],
+    [11, 9],
+    [11, 1],
+    [12, 0],
+  ],
+  [
+    [23, 0],
+    [23, 10],
+  ],
+  [
+    [30, 0],
+    [23, 5],
+    [30, 10],
+  ],
+  [
+    [42, 2],
+    [40, 0],
+    [36, 0],
+    [34, 2],
+    [34, 8],
+    [36, 10],
+    [40, 10],
+    [42, 8],
+    [42, 5],
+    [38, 5],
+  ],
+];
+const plateWeightMark = plateWeightStrokes
+  .map((stroke) =>
+    stroke
+      .map(([x, y], i) => {
+        const px = Math.round((94.8 + x * 1.2) * 10) / 10,
+          py = Math.round((74 + y * 1.2) * 10) / 10;
+        return `${i ? 'L' : 'M'}${px} ${py}`;
+      })
+      .join(''),
+  )
+  .join('');
+
+// Shared unlettered plate for small icons; the field adds its weight stamp.
+export const PLATE_OUTLINE_PATH =
+  [108, 96, 22, 14].map((r) => circlePath(120, 120, r)).join('') +
+  'M83 43a84 84 0 0 1 74 0l-8 17a65 65 0 0 0-58 0zM157 197a84 84 0 0 1-74 0l8-17a65 65 0 0 0 58 0zM43 157a84 84 0 0 1 0-74l17 8a65 65 0 0 0 0 58zM197 83a84 84 0 0 1 0 74l-17-8a65 65 0 0 0 0-58zM52 52l9 9m118 118 9 9M52 188l9-9M179 61l9-9';
+
 export const EQUIPMENT_GEOMETRY = {
   plate: {
     x: 120,
     y: 120,
     radius: 108,
     silhouette: circlePath(120, 120, 108),
-    path:
-      [108, 96, 22, 14].map((r) => circlePath(120, 120, r)).join('') +
-      'M83 43a84 84 0 0 1 74 0l-8 17a65 65 0 0 0-58 0zM157 197a84 84 0 0 1-74 0l8-17a65 65 0 0 0 58 0zM43 157a84 84 0 0 1 0-74l17 8a65 65 0 0 0 0 58zM197 83a84 84 0 0 1 0 74l-17-8a65 65 0 0 0 0-58zM52 52l9 9m118 118 9 9M52 188l9-9M179 61l9-9',
+    path: PLATE_OUTLINE_PATH + plateWeightMark,
     boundaries: [] as Point[][],
   },
   dumbbell: {

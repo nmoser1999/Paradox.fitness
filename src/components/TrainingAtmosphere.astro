@@ -195,13 +195,13 @@ const chalk = [
     isolation: isolate;
   }
   /* Opaque reading surfaces hide the network without hiding any text.
-     The homepage .hero-intro intentionally stays open to the background. */
+     The homepage hero and explicitly open headings reveal the background. */
   :global(
     #main
       :is(
         .pillars,
         .section:not(.home-hero),
-        .page-heading,
+        .page-heading:not([data-network-open]),
         .contact-grid,
         .content-block,
         .prose,
@@ -225,6 +225,14 @@ const chalk = [
     pointer-events: none;
     user-select: none;
     color: var(--accent);
+  }
+  :global(#main[data-equipment-pointer='grab']) {
+    cursor: grab;
+  }
+  :global(#main[data-equipment-pointer='dragging']),
+  :global(#main[data-equipment-pointer='dragging'] *) {
+    cursor: grabbing !important;
+    user-select: none;
   }
   /* Sticky follows the content, while its absolute parent clips it to #main. */
   .atmosphere-window {

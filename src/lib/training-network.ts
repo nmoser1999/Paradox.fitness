@@ -1,4 +1,19 @@
 import {
+  beginEquipmentDrag,
+  finishEquipmentDrag,
+  pickEquipment,
+  positionEquipmentDrag,
+  raiseEquipment,
+  type EquipmentDrag,
+} from './training-drag';
+import {
+  advancePointerField,
+  createPointerField,
+  networkViewportTop,
+  POINTER_STRIDE,
+  type FieldPointer,
+} from './training-interaction';
+import {
   EQUIPMENT_GEOMETRY,
   attachmentPoint,
   connectionBound,
@@ -80,8 +95,8 @@ export function createParticles(width: number, height: number): NetworkNode[] {
     42,
     Math.max(22, Math.round((width * height) / 24000)),
   );
-  // Increase dots by 50%, independently of the three equipment nodes.
-  const dotCount = Math.round((previousCount - 2) * 1.5);
+  // Add 20% to the existing dot density, independently of the three equipment nodes.
+  const dotCount = Math.round(Math.round((previousCount - 2) * 1.5) * 1.2);
   const count = dotCount + 3;
   const columns = Math.ceil(Math.sqrt((dotCount * width) / height));
   const rows = Math.ceil(dotCount / columns);
@@ -157,7 +172,8 @@ export function createTrainingNetwork(host: HTMLElement) {
   const canvas = host.querySelector<HTMLCanvasElement>('canvas');
   const viewport = host.querySelector<HTMLElement>('.atmosphere-window');
   const context = canvas?.getContext('2d');
-  if (!canvas || !viewport || !context) return null;
+  const surface = host.parentElement;
+  if (!canvas || !viewport || !context || !surface) return null;
 
   // Drawing, occlusion, and attachment calculations share one geometry catalog.
   const cacheGeometry = (
@@ -180,6 +196,22 @@ export function createTrainingNetwork(host: HTMLElement) {
   let nodes: NetworkNode[] = [];
   let anchors: Anchor[] = [];
   let degrees = new Uint8Array(0);
+  let pointerField = createPointerField(0);
+  let fieldSettled = true;
+  let equipmentOrder: number[] = [];
+  let drag: EquipmentDrag | null = null;
+  let hoveredEquipment = -1;
+  let canDragHere = true;
+  let suppressClick = false;
+  let dropCount = 0;
+  const cursor = { x: 0, y: 0, active: false };
+  const pointer: FieldPointer = { x: 0, y: 0, active: false };
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  let listening = false;
+  let overControl = false;
+  let sceneLeft = 0,
+    sceneTop = 0,
+    sceneHeight = 0;
   // At most four links can touch the plate; reuse their junction markers.
   const rimJunctions = new Float32Array(12);
   let rimJunctionCount = 0;
@@ -187,6 +219,246 @@ export function createTrainingNetwork(host: HTMLElement) {
   let running = false;
   let last = 0;
   let ready = false;
+
+  function cacheSceneGeometry() {
+    const rect = host.getBoundingClientRect();
+    sceneLeft = rect.left;
+    sceneTop = rect.top + window.scrollY;
+    sceneHeight = rect.height;
+  }
+  const interactiveSurface =
+    'a, button, input, textarea, select, summary, label, [contenteditable]';
+  // Plain text can sit over visible equipment. Only controls and opaque surfaces
+  // block pickup; a heading's full rectangle must not cut holes in the grab area.
+  const protectedDragSurface = `${interactiveSurface}, figure, picture, img, .pillars, .section:not(.home-hero), .page-heading:not([data-network-open]), .contact-grid, .content-block, .prose, .service-alternative, .coach-panel, .coach-copy, .service-card, .content-panel, .contact-form, [data-network-drag-ignore]`;
+  function updateLocalPointer() {
+    pointer.x = cursor.x - sceneLeft;
+    pointer.y =
+      cursor.y -
+      networkViewportTop(sceneTop, sceneHeight, height, window.scrollY);
+    pointer.active =
+      cursor.active &&
+      !drag &&
+      pointer.x >= 0 &&
+      pointer.x <= width &&
+      pointer.y >= 0 &&
+      pointer.y <= height;
+  }
+  function updateAnchors(shift: number) {
+    for (let i = 0; i < nodes.length; i++) {
+      const offset = i * POINTER_STRIDE;
+      anchors[i].x = nodes[i].x + pointerField[offset];
+      anchors[i].y =
+        nodes[i].y - shift * nodes[i].depth + pointerField[offset + 1];
+      anchors[i].angle = nodes[i].angle + pointerField[offset + 2];
+    }
+  }
+  function setGrabHint(index: number) {
+    if (drag || hoveredEquipment === index) return;
+    hoveredEquipment = index;
+    if (index >= 0) surface!.dataset.equipmentPointer = 'grab';
+    else delete surface!.dataset.equipmentPointer;
+  }
+  function endDrag(cancel = false) {
+    const active = drag;
+    if (!active) return;
+    drag = null;
+    if (!cancel) {
+      updateLocalPointer();
+      positionEquipmentDrag(
+        active,
+        nodes,
+        pointer,
+        width,
+        height,
+        window.scrollY * 0.018,
+      );
+    }
+    finishEquipmentDrag(active, nodes, cancel);
+    suppressClick = !cancel;
+    if (!cancel && active.moved)
+      host.dataset.networkDrops = String(++dropCount);
+    window.removeEventListener('keydown', dragKey);
+    try {
+      if (surface!.hasPointerCapture(active.pointerId))
+        surface!.releasePointerCapture(active.pointerId);
+    } catch {}
+    delete surface!.dataset.equipmentPointer;
+    hoveredEquipment = -1;
+    clearPointer();
+    host.dataset.networkDrag = listening ? 'idle' : 'disabled';
+    if (!cancel && listening) resumePointerHover();
+  }
+  function dragKey(event: KeyboardEvent) {
+    if (event.key === 'Escape' && drag) {
+      event.preventDefault();
+      endDrag(true);
+    }
+  }
+  function cancelInteraction() {
+    endDrag(true);
+    clearPointer();
+    setGrabHint(-1);
+  }
+  function leavePointer() {
+    if (!drag) {
+      clearPointer();
+      setGrabHint(-1);
+    }
+  }
+  function downPointer(event: PointerEvent) {
+    suppressClick = false;
+    if (
+      drag ||
+      event.pointerType !== 'mouse' ||
+      event.button !== 0 ||
+      !event.isPrimary ||
+      !(event.target instanceof Element)
+    )
+      return;
+    updatePointerTarget(event.target);
+    if (!canDragHere) return;
+    cacheSceneGeometry();
+    cursor.x = event.clientX;
+    cursor.y = event.clientY;
+    updateLocalPointer();
+    updateAnchors(window.scrollY * 0.018);
+    const index = pickEquipment(anchors, pointer, equipmentOrder);
+    if (index < 0) return;
+    try {
+      surface!.setPointerCapture(event.pointerId);
+    } catch {
+      return;
+    }
+    drag = beginEquipmentDrag(
+      nodes,
+      anchors,
+      pointerField,
+      index,
+      pointer,
+      event.pointerId,
+      window.scrollY * 0.018,
+    );
+    if (!drag) return;
+    event.preventDefault();
+    raiseEquipment(equipmentOrder, index);
+    clearPointer();
+    hoveredEquipment = -1;
+    surface!.dataset.equipmentPointer = 'dragging';
+    host.dataset.networkDrag = nodes[index].kind;
+    window.addEventListener('keydown', dragKey);
+  }
+  function upPointer(event: PointerEvent) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    cursor.x = event.clientX;
+    cursor.y = event.clientY;
+    endDrag();
+  }
+  function lostPointer(event: PointerEvent) {
+    if (drag && event.pointerId === drag.pointerId) cancelInteraction();
+  }
+  function clickPointer(event: MouseEvent) {
+    const blocked = suppressClick;
+    suppressClick = false;
+    if (blocked && event.detail > 0) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+  function setPointerActive(active: boolean) {
+    if (cursor.active === active) return;
+    cursor.active = active;
+    host.dataset.networkPointer = active
+      ? 'active'
+      : listening
+        ? 'idle'
+        : 'disabled';
+  }
+  function clearPointer() {
+    setPointerActive(false);
+  }
+  function enterPointer(event: PointerEvent) {
+    if (event.pointerType === 'mouse') cacheSceneGeometry();
+  }
+  function updatePointerTarget(target: EventTarget | null) {
+    overControl =
+      target instanceof Element && !!target.closest(interactiveSurface);
+    canDragHere =
+      target instanceof Element && !target.closest(protectedDragSurface);
+    if (overControl) clearPointer();
+    if (!canDragHere) setGrabHint(-1);
+  }
+  function overPointer(event: PointerEvent) {
+    updatePointerTarget(event.target);
+  }
+  function resumePointerHover() {
+    // Capture retargets release to main. Check the actual surface once on drop,
+    // then restore the grab cursor without requiring another mouse movement.
+    const target = document.elementFromPoint(cursor.x, cursor.y);
+    updatePointerTarget(target);
+    setPointerActive(!!target && surface!.contains(target) && !overControl);
+    updateLocalPointer();
+    updateAnchors(window.scrollY * 0.018);
+    setGrabHint(
+      pointer.active && canDragHere
+        ? pickEquipment(anchors, pointer, equipmentOrder)
+        : -1,
+    );
+  }
+  function movePointer(event: PointerEvent) {
+    // Coalesce input into the existing frame loop. No drawing/layout in this handler.
+    cursor.x = event.clientX;
+    cursor.y = event.clientY;
+    if (drag) {
+      if (event.pointerId === drag.pointerId && !(event.buttons & 1)) endDrag();
+      return;
+    }
+    setPointerActive(
+      event.pointerType === 'mouse' && event.buttons === 0 && !overControl,
+    );
+  }
+  function syncPointerInput() {
+    const enabled = running && finePointer.matches;
+    if (enabled === listening) return;
+    listening = enabled;
+    if (enabled) {
+      cacheSceneGeometry();
+      surface!.addEventListener('pointerenter', enterPointer, {
+        passive: true,
+      });
+      surface!.addEventListener('pointerover', overPointer, { passive: true });
+      surface!.addEventListener('pointermove', movePointer, { passive: true });
+      surface!.addEventListener('pointerleave', leavePointer, {
+        passive: true,
+      });
+      surface!.addEventListener('pointercancel', cancelInteraction, {
+        passive: true,
+      });
+      surface!.addEventListener('pointerdown', downPointer, { passive: false });
+      surface!.addEventListener('pointerup', upPointer, { passive: true });
+      surface!.addEventListener('lostpointercapture', lostPointer, {
+        passive: true,
+      });
+      surface!.addEventListener('click', clickPointer, true);
+      window.addEventListener('blur', cancelInteraction, { passive: true });
+    } else {
+      cancelInteraction();
+      surface!.removeEventListener('pointerenter', enterPointer);
+      surface!.removeEventListener('pointerover', overPointer);
+      surface!.removeEventListener('pointermove', movePointer);
+      surface!.removeEventListener('pointerleave', leavePointer);
+      surface!.removeEventListener('pointercancel', cancelInteraction);
+      surface!.removeEventListener('pointerdown', downPointer);
+      surface!.removeEventListener('pointerup', upPointer);
+      surface!.removeEventListener('lostpointercapture', lostPointer);
+      surface!.removeEventListener('click', clickPointer, true);
+      window.removeEventListener('blur', cancelInteraction);
+    }
+    overControl = false;
+    clearPointer();
+    host.dataset.networkPointer = enabled ? 'idle' : 'disabled';
+    host.dataset.networkDrag = enabled ? 'idle' : 'disabled';
+  }
 
   // Fade toward the middle to keep text and calls to action visually dominant.
   const clarity = (x: number) =>
@@ -201,12 +473,7 @@ export function createTrainingNetwork(host: HTMLElement) {
     context.lineWidth = 0.75;
     degrees.fill(0);
     rimJunctionCount = 0;
-    const shift = window.scrollY * 0.018;
-    for (let i = 0; i < nodes.length; i++) {
-      anchors[i].x = nodes[i].x;
-      anchors[i].y = nodes[i].y - shift * nodes[i].depth;
-      anchors[i].angle = nodes[i].angle;
-    }
+    updateAnchors(window.scrollY * 0.018);
     let edges = 0;
     const reach = Math.min(210, Math.max(145, width * 0.16));
     for (let i = 0; i < anchors.length && edges < 64; i++) {
@@ -250,30 +517,28 @@ export function createTrainingNetwork(host: HTMLElement) {
       context.arc(anchor.x, anchor.y, node.radius, 0, Math.PI * 2);
       context.fill();
     }
-    // Erase ALL network marks beneath equipment, not only direct connections.
-    // The same local transform is used for masking and drawing each silhouette.
-    context.globalAlpha = 1;
-    context.globalCompositeOperation = 'destination-out';
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i].kind !== 'dot') paintEquipment(nodes[i], anchors[i], true);
-    }
-    context.globalCompositeOperation = 'source-over';
-    for (let i = 0; i < nodes.length; i++) {
-      if (nodes[i].kind !== 'dot') paintEquipment(nodes[i], anchors[i], false);
-    }
-    // Draw explicit contact nodes on top of the outline after occlusion.
-    for (let i = 0; i < rimJunctionCount; i++) {
-      const offset = i * 3;
-      context.globalAlpha = rimJunctions[offset + 2];
-      context.beginPath();
-      context.arc(
-        rimJunctions[offset],
-        rimJunctions[offset + 1],
-        1.6,
-        0,
-        Math.PI * 2,
-      );
-      context.fill();
+    // Paint back-to-front so dragged equipment cleanly occludes lower objects.
+    for (const i of equipmentOrder) {
+      context.globalAlpha = 1;
+      context.globalCompositeOperation = 'destination-out';
+      paintEquipment(nodes[i], anchors[i], true);
+      context.globalCompositeOperation = 'source-over';
+      paintEquipment(nodes[i], anchors[i], false);
+      if (nodes[i].kind === 'plate') {
+        for (let j = 0; j < rimJunctionCount; j++) {
+          const offset = j * 3;
+          context.globalAlpha = rimJunctions[offset + 2];
+          context.beginPath();
+          context.arc(
+            rimJunctions[offset],
+            rimJunctions[offset + 1],
+            1.6,
+            0,
+            Math.PI * 2,
+          );
+          context.fill();
+        }
+      }
     }
     context.globalAlpha = 1;
     if (!ready) {
@@ -287,7 +552,7 @@ export function createTrainingNetwork(host: HTMLElement) {
     const glyph = equipment[node.kind];
     context.save();
     context.translate(anchor.x, anchor.y);
-    context.rotate(node.angle);
+    context.rotate(anchor.angle ?? node.angle);
     const scale = node.radius / glyph.radius;
     context.scale(scale, scale);
     context.translate(-glyph.x, -glyph.y);
@@ -304,15 +569,25 @@ export function createTrainingNetwork(host: HTMLElement) {
 
   function resize() {
     if (!canvas || !viewport || !context) return;
-    width = viewport.clientWidth;
-    height = viewport.clientHeight;
-    if (width === 0 || height === 0) return;
+    const nextWidth = viewport.clientWidth,
+      nextHeight = viewport.clientHeight;
+    if (nextWidth === 0 || nextHeight === 0) return;
+    cacheSceneGeometry();
     // Cap both density and total pixels, including on large Retina displays.
-    ratio = Math.min(
+    const nextRatio = Math.min(
       window.devicePixelRatio || 1,
       1.5,
-      Math.sqrt(2500000 / (width * height)),
+      Math.sqrt(2500000 / (nextWidth * nextHeight)),
     );
+    if (nextWidth === width && nextHeight === height && nextRatio === ratio) {
+      draw();
+      return;
+    }
+    endDrag(true);
+    setGrabHint(-1);
+    width = nextWidth;
+    height = nextHeight;
+    ratio = nextRatio;
     canvas.width = Math.max(1, Math.floor(width * ratio));
     canvas.height = Math.max(1, Math.floor(height * ratio));
     nodes = createParticles(width, height);
@@ -323,7 +598,12 @@ export function createTrainingNetwork(host: HTMLElement) {
       kind,
       angle,
     }));
+    equipmentOrder = [];
+    for (let i = 0; i < nodes.length; i++)
+      if (nodes[i].kind !== 'dot') equipmentOrder.push(i);
     degrees = new Uint8Array(nodes.length);
+    pointerField = createPointerField(nodes.length);
+    fieldSettled = true;
     host.dataset.networkNodes = String(nodes.length);
     draw();
   }
@@ -332,13 +612,43 @@ export function createTrainingNetwork(host: HTMLElement) {
     if (!running) return;
     frame = requestAnimationFrame(tick);
     if (last && now - last < 1000 / 30 - 0.5) return;
-    advanceParticles(nodes, last ? (now - last) / 1000 : 0, width, height);
+    const elapsed = last ? (now - last) / 1000 : 0;
+    const scrollY = window.scrollY;
+    advanceParticles(nodes, elapsed, width, height);
+    if (cursor.active || drag || !fieldSettled) updateLocalPointer();
+    if (drag)
+      positionEquipmentDrag(
+        drag,
+        nodes,
+        pointer,
+        width,
+        height,
+        scrollY * 0.018,
+      );
+    else if (pointer.active && canDragHere) {
+      updateAnchors(scrollY * 0.018);
+      setGrabHint(pickEquipment(anchors, pointer, equipmentOrder));
+    } else setGrabHint(-1);
+    if (elapsed > 0 && (cursor.active || !fieldSettled)) {
+      fieldSettled = !advancePointerField(
+        nodes,
+        pointerField,
+        pointer,
+        elapsed,
+        scrollY * 0.018,
+        hoveredEquipment,
+      );
+    }
     last = now;
     draw();
   }
 
   const resizeObserver = new ResizeObserver(resize);
   resizeObserver.observe(viewport);
+  resizeObserver.observe(host);
+  // Header dismissal and other layout shifts can move main without resizing it.
+  resizeObserver.observe(document.body);
+  finePointer.addEventListener('change', syncPointerInput);
   const paletteObserver = new MutationObserver(() => {
     color = getComputedStyle(host).color;
     draw();
@@ -355,6 +665,7 @@ export function createTrainingNetwork(host: HTMLElement) {
     frame = 0;
     last = 0;
     host.dataset.networkState = 'paused';
+    syncPointerInput();
   }
 
   return {
@@ -362,6 +673,7 @@ export function createTrainingNetwork(host: HTMLElement) {
       if (running) return;
       running = true;
       host.dataset.networkState = 'running';
+      syncPointerInput();
       frame = requestAnimationFrame(tick);
     },
     stop,
@@ -369,9 +681,13 @@ export function createTrainingNetwork(host: HTMLElement) {
       stop();
       resizeObserver.disconnect();
       paletteObserver.disconnect();
+      finePointer.removeEventListener('change', syncPointerInput);
       canvas.width = canvas.height = 0;
       delete host.dataset.networkReady;
       delete host.dataset.networkNodes;
+      host.dataset.networkPointer = 'disabled';
+      host.dataset.networkDrag = 'disabled';
+      delete host.dataset.networkDrops;
       host.dataset.networkState = 'disabled';
     },
   };

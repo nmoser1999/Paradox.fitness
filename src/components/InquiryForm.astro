@@ -35,12 +35,12 @@ import SelectControl from './SelectControl.astro';
     hidden
   ></div>
   <div class="form-intro">
-    <h2>Tell {coach.firstName} a little about yourself.</h2>
+    <h2>Tell me a little about yourself.</h2>
     <p>Your name and email are all you need to start.</p>
   </div>
   <div class="form-fields">
     <div class="form-field full-width">
-      <label for="name">Your name (required)</label>
+      <label for="name">Your name*</label>
       <input
         id="name"
         name="name"
@@ -50,7 +50,7 @@ import SelectControl from './SelectControl.astro';
       />
     </div>
     <div class="form-field full-width">
-      <label for="email">Email address (required)</label>
+      <label for="email">Email address*</label>
       <input
         id="email"
         name="email"
@@ -111,9 +111,10 @@ import SelectControl from './SelectControl.astro';
   </div>
   <div class="form-footer">
     <button type="submit" class="button" id="inquiry-submit">
-      <ButtonLoad />
-      <span data-inquiry-label>Send my inquiry</span>
-      <ArrowIcon />
+      <ButtonLoad>
+        <span data-inquiry-label>Send my inquiry</span>
+        <ArrowIcon />
+      </ButtonLoad>
     </button>
     <p>
       By sending this inquiry, you are asking {coach.firstName} to contact you

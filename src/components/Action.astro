@@ -29,8 +29,9 @@ const external = href.startsWith('https://');
   data-placement={placement}
   data-service={service}
 >
-  <ButtonLoad />
-  {label}
-  <ArrowIcon direction={external ? 'up-right' : 'right'} />
-  {external && <span class="sr-only"> (opens in a new tab)</span>}
+  <ButtonLoad>
+    {label}
+    <ArrowIcon direction={external ? 'up-right' : 'right'} />
+    {external && <span class="sr-only"> (opens in a new tab)</span>}
+  </ButtonLoad>
 </a>

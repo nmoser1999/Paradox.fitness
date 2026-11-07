@@ -25,8 +25,8 @@ function updateForm() {
   if (buttonLabel)
     buttonLabel.textContent =
       service?.value === 'in-person'
-        ? 'Request my training week'
-        : 'Send my inquiry';
+        ? 'Start your training journey'
+        : 'Send inquiry';
 }
 service?.addEventListener('change', updateForm);
 contactMethod?.addEventListener('change', updateForm);

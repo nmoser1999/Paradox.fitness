@@ -1,9 +1,27 @@
 ---
 import { faqs } from '../data/site';
+import Action from './Action.astro';
+import DirectionsLink from './DirectionsLink.astro';
 interface Props {
-  items?: ReadonlyArray<{ question: string; answer: string }>;
+  items?: ReadonlyArray<{
+    question: string;
+    answer: string;
+    cta?: 'inquiry' | 'online' | 'directions' | 'pricing';
+  }>;
 }
-const { items = faqs } = Astro.props;
+const { items = faqs }: Props = Astro.props;
+const actions = {
+  inquiry: {},
+  online: {
+    href: '/online-group-membership/',
+    label: 'Explore online coaching',
+    service: 'online',
+  },
+  pricing: {
+    href: '#pricing',
+    label: 'See Pricing',
+  },
+} as const;
 ---
 
 <section
@@ -27,7 +45,22 @@ const { items = faqs } = Astro.props;
           <span aria-hidden="true">+</span>
         </summary>
         <p>{faq.answer}</p>
+        {faq.cta && (
+          <div class="faq-action">
+            {faq.cta === 'directions' ? (
+              <DirectionsLink />
+            ) : (
+              <Action placement="faq" {...actions[faq.cta]} />
+            )}
+          </div>
+        )}
       </details>
     ))}
   </div>
 </section>
+
+<style>
+  .faq-action {
+    padding-bottom: 24px;
+  }
+</style>

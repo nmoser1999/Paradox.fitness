@@ -321,6 +321,9 @@
 [data-layout] #main {
   scroll-margin-top: var(--anchor-offset, 160px);
 }
+[data-layout] #pricing {
+  scroll-margin-top: calc(var(--anchor-offset, 160px) + 16px);
+}
 body:has(.design-bar[hidden]) {
   --anchor-offset: 24px;
 }
@@ -658,7 +661,7 @@ body:has(.design-bar[hidden]) {
   .design-bar {
     display: none;
   }
-  [data-layout] :is(#coach, #questions, #main) {
+  [data-layout] :is(#coach, #questions, #main, #pricing) {
     scroll-margin-top: 25px;
   }
 }

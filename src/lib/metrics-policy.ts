@@ -12,6 +12,7 @@ const allowed: Record<string, readonly string[]> = {
     'header',
     'hero',
     'coach',
+    'faq',
     'service-card',
     'final',
     'mobile-sticky',

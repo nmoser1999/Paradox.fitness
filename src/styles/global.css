@@ -168,7 +168,9 @@ em {
   justify-content: center;
   gap: 23px;
   min-height: 49px;
-  padding: 14px 22px;
+  --button-pad-block: 14px;
+  --button-pad-inline: 22px;
+  padding: var(--button-pad-block) var(--button-pad-inline);
   background: var(--accent);
   border: 1px solid var(--accent);
   color: #fff;
@@ -207,7 +209,8 @@ em {
   pointer-events: none;
 }
 .site-header > .button {
-  padding: 12px 18px;
+  --button-pad-block: 12px;
+  --button-pad-inline: 18px;
   font-size: 0.8125rem;
 }
 .mobile-menu,
@@ -555,7 +558,7 @@ em {
 }
 .footer-grid p,
 .footer-grid address,
-.footer-grid > div > a:not(.brand) {
+.footer-grid > div > a:not(.brand, .button) {
   font-size: 0.875rem;
   color: var(--muted);
 }
@@ -607,13 +610,8 @@ em {
   padding-block: 10px;
 }
 .directions-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   gap: 10px;
-  min-height: 44px;
   max-width: 100%;
-  padding-block: 10px;
   vertical-align: middle;
 }
 .directions-label {
@@ -624,8 +622,8 @@ em {
 .maps-icon {
   display: block;
   flex: none;
-  width: 32px;
-  height: 32px;
+  width: 24px;
+  height: 24px;
   object-fit: contain;
 }
 .text-button {
@@ -892,10 +890,11 @@ em {
 }
 .consent-actions .button {
   font-size: 0.8125rem;
-  padding-inline: 16px;
+  --button-pad-inline: 16px;
 }
 #coach,
-#questions {
+#questions,
+#pricing {
   scroll-margin-top: 25px;
 }
 
@@ -908,7 +907,7 @@ em {
   }
   .site-header > .button {
     gap: 10px;
-    padding-inline: 14px;
+    --button-pad-inline: 14px;
   }
   .coach-copy {
     padding: 30px;
@@ -986,6 +985,19 @@ em {
   .footer-grid > div:first-child {
     grid-column: 1/-1;
   }
+  /* Keep the Maps action horizontal in the narrow footer columns. */
+  .footer-grid .directions-link {
+    --button-pad-inline: 12px;
+    --button-pad-block: 11px;
+    min-height: 48px;
+    gap: 8px;
+    white-space: nowrap;
+    overflow-wrap: normal;
+  }
+  .footer-grid .directions-link .maps-icon {
+    width: 20px;
+    height: 20px;
+  }
   .final-cta {
     align-items: flex-start;
     flex-direction: column;
@@ -1017,7 +1029,8 @@ em {
   .site-header > .button {
     font-size: 0.68rem;
     min-height: 44px;
-    padding: 10px 12px;
+    --button-pad-block: 10px;
+    --button-pad-inline: 12px;
   }
   .site-header > .button > .arrow-icon {
     display: none;
@@ -1167,76 +1180,5 @@ em {
   .mobile-menu nav,
   .consent-panel {
     border: 1px solid ButtonText;
-  }
-}
-/* One 20kg plate scrolls inside the button behind its fixed label and arrow. */
-.button-load {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  overflow: clip;
-  border-radius: inherit;
-  color: inherit;
-  opacity: 0;
-  pointer-events: none;
-}
-.button-load__plate {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: auto;
-  height: 160%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-}
-.button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):focus-visible
-  > .button-load {
-  opacity: 0.14;
-}
-@media (hover: hover) and (pointer: fine) {
-  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):hover
-    > .button-load {
-    opacity: 0.14;
-  }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .button-load {
-    transition: opacity 140ms ease-out;
-  }
-  .button-load__plate {
-    transform: translate(-50%, 105%);
-    /* Half the previous speed: 760ms instead of 380ms. */
-    transition: transform 760ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-  .button:not(
-      :disabled,
-      [aria-disabled='true'],
-      [aria-busy='true']
-    ):focus-visible
-    > .button-load
-    > .button-load__plate {
-    transform: translate(-50%, -50%);
-  }
-}
-@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
-  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):hover
-    > .button-load
-    > .button-load__plate {
-    transform: translate(-50%, -50%);
-  }
-}
-.button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):active
-  > .button-load {
-  opacity: 0.2;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):active
-    > .button-load {
-    transition-duration: 80ms;
-  }
-  .button:not(:disabled, [aria-disabled='true'], [aria-busy='true']):active
-    > .button-load
-    > .button-load__plate {
-    transform: translate(-50%, -50%);
   }
 }

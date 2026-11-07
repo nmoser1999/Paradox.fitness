@@ -1,5 +1,6 @@
 ---
 import { site } from '../data/site';
+import ButtonLoad from './ButtonLoad.astro';
 
 interface Props {
   label?: string;
@@ -9,21 +10,23 @@ const { label = 'Get directions', class: className } = Astro.props;
 ---
 
 <a
-  class:list={['directions-link', className]}
+  class:list={['button', 'directions-link', className]}
   href={site.directions}
   target="_blank"
   rel="noopener"
 >
-  <span class="directions-label">{label}</span>
-  <img
-    class="maps-icon"
-    src="/icons/google-maps.webp"
-    width="64"
-    height="64"
-    alt=""
-    aria-hidden="true"
-    loading="lazy"
-    decoding="async"
-  />
-  <span class="sr-only"> in Google Maps (opens in a new tab)</span>
+  <ButtonLoad>
+    <span class="directions-label">{label}</span>
+    <img
+      class="maps-icon"
+      src="/icons/google-maps.webp"
+      width="64"
+      height="64"
+      alt=""
+      aria-hidden="true"
+      loading="lazy"
+      decoding="async"
+    />
+    <span class="sr-only"> in Google Maps (opens in a new tab)</span>
+  </ButtonLoad>
 </a>
