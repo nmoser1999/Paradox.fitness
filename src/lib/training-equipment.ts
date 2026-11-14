@@ -188,7 +188,7 @@ export const EQUIPMENT_GEOMETRY = {
     y: 80,
     radius: 126,
     silhouette: dumbbellSilhouette,
-    path: dumbbellSilhouette + 'M117 77l6 6m5-6 6 6m5-6 6 6m5-6 6 6m5-6 6 6',
+    path: dumbbellSilhouette,
     boundaries: dumbbellParts.map((part) => part.points),
   },
   kettlebell: {

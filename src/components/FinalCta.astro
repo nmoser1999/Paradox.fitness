@@ -15,7 +15,9 @@ const { online = false } = Astro.props;
         : `Train with ${coach.firstName} in Fremont`}
     </p>
     <h2 id="next-heading">
-      {online ? 'Questions before you start?' : 'Make room for a stronger you.'}
+      {online
+        ? 'Questions before you start?'
+        : 'Start your fitness transformation'}
     </h2>
     <p>
       {online
