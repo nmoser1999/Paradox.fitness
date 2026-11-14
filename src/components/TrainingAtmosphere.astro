@@ -195,12 +195,12 @@ const chalk = [
     isolation: isolate;
   }
   /* Opaque reading surfaces hide the network without hiding any text.
-     The homepage hero and explicitly open headings reveal the background. */
+     The homepage hero and explicitly open sections reveal the background. */
   :global(
     #main
       :is(
         .pillars,
-        .section:not(.home-hero),
+        .section:not(.home-hero):not([data-network-open]),
         .page-heading:not([data-network-open]),
         .contact-grid,
         .content-block,

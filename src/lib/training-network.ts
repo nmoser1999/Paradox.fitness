@@ -230,7 +230,7 @@ export function createTrainingNetwork(host: HTMLElement) {
     'a, button, input, textarea, select, summary, label, [contenteditable]';
   // Plain text can sit over visible equipment. Only controls and opaque surfaces
   // block pickup; a heading's full rectangle must not cut holes in the grab area.
-  const protectedDragSurface = `${interactiveSurface}, figure, picture, img, .pillars, .section:not(.home-hero), .page-heading:not([data-network-open]), .contact-grid, .content-block, .prose, .service-alternative, .coach-panel, .coach-copy, .service-card, .content-panel, .contact-form, [data-network-drag-ignore]`;
+  const protectedDragSurface = `${interactiveSurface}, figure, picture, img, .pillars, .section:not(.home-hero):not([data-network-open]), .page-heading:not([data-network-open]), .contact-grid, .content-block, .prose, .service-alternative, .coach-panel, .coach-copy, .service-card, .content-panel, .contact-form, [data-network-drag-ignore]`;
   function updateLocalPointer() {
     pointer.x = cursor.x - sceneLeft;
     pointer.y =

@@ -1,17 +1,10 @@
 ---
-import {
-  EQUIPMENT_GEOMETRY,
-  PLATE_OUTLINE_PATH,
-} from '../lib/training-equipment';
-
 interface Props {
   kind: 'in-person' | 'online';
 }
 const { kind } = Astro.props;
 const physical = kind === 'in-person';
 const width = physical ? 120 : 160;
-const plate = EQUIPMENT_GEOMETRY.plate;
-const plateScale = 25 / plate.radius;
 ---
 
 <svg
@@ -47,11 +40,17 @@ const plateScale = 25 / plate.radius;
     stroke-linejoin="round"
   >
     {physical ? (
-      <path
-        d={PLATE_OUTLINE_PATH}
-        transform={`translate(84 36) scale(${plateScale}) translate(${-plate.x} ${-plate.y})`}
-        stroke-width={1.4 / plateScale}
-      />
+      <g
+        data-service-icon="hex-dumbbell"
+        transform="translate(84 36) rotate(-45)"
+        fill="none"
+        stroke-width="2.2"
+        stroke-linejoin="miter"
+      >
+        <path d="M-10-3H10v6H-10Z" />
+        <path d="M-28-7-19-14-10-7v14l-9 7-9-7Z" />
+        <path d="M10-7 19-14 28-7v14l-9 7-9-7Z" />
+      </g>
     ) : (
       <>
         <rect x="97" y="14" width="48" height="34" rx="4" />

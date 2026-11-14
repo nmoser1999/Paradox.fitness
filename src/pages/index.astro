@@ -117,6 +117,7 @@ const pillars = [
   <section
     class="section shell"
     id="training"
+    data-network-open
     aria-labelledby="training-heading"
   >
     <div class="section-intro">
@@ -131,14 +132,14 @@ const pillars = [
     <div class="service-grid">
       <article class="service-card" id="pricing" tabindex="-1">
         <ServiceCorner kind="in-person" />
-        <p class="eyebrow">01 / One to one · Fremont</p>
-        <h3>In-person training</h3>
+        <p class="eyebrow">01 / One on one · Fremont</p>
+        <h3>Personal training</h3>
         <p>
           Train alongside {coach.firstName} for technique feedback and sessions
           shaped around your starting point.
         </p>
         <ul>
-          <li>One-to-one sessions in Mission San Jose</li>
+          <li>In person sessions in Fremont, CA</li>
           <li>Strength training and mobility work</li>
           <li>Online programming between sessions</li>
         </ul>
@@ -146,7 +147,7 @@ const pillars = [
           <p class="offer-label">Try a free week · Up to three sessions</p>
           <p class="price">
             From {site.inPersonPrice}
-            <span> / session afterward</span>
+            <span> / session</span>
           </p>
           <p class="fine-print">
             Two sessions per week minimum after the trial.
@@ -154,7 +155,7 @@ const pillars = [
         </div>
         <Action
           href="/in-person/"
-          label="See in-person training"
+          label="Get your free week"
           placement="service-card"
         />
       </article>
@@ -175,7 +176,7 @@ const pillars = [
           <p class="offer-label">Start with a seven-day trial</p>
           <p class="price">
             {site.onlinePrice}
-            <span> / month afterward</span>
+            <span> / month</span>
           </p>
           <p class="fine-print">
             Review subscription terms at Trainerize checkout.
@@ -191,7 +192,11 @@ const pillars = [
       </article>
     </div>
   </section>
-  <section class="section steps-section shell" aria-labelledby="steps-heading">
+  <section
+    class="section steps-section shell"
+    data-network-open
+    aria-labelledby="steps-heading"
+  >
     <div class="section-intro">
       <p class="eyebrow">Getting started in person</p>
       <h2 id="steps-heading">

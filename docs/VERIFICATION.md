@@ -233,6 +233,12 @@ Theme-toggle placement follow-up on November 6, 2026: moved the sun/moon control
 - Visual and layout checks passed at 801px, 1280px, and 390px, with no overflow and the mobile decoration still hidden. A 1440px close-up confirmed the icon. The console contained no errors. All **79 tests**, Astro diagnostics, the eight-page audit build, metadata/link/form/CSP/budget checks, formatting, and whitespace checks passed. Combined assets remain approximately **12.9 KB JS and 10.8 KB CSS gzip**.
 - Fresh local homepage Lighthouse 13.6.0 audits scored **100 in all four categories** on desktop and mobile, with zero blocking time and layout shift. Reports, geometry comparisons, source hashes, browser checks, and the close-up are retained in ignored `reports/matching-plate-icon-2026-11-06/`. Production verification follows the protocol below.
 
+## Hex dumbbell service icon — November 13, 2026
+
+- Replaced the in-person plate icon with one outline hex dumbbell, rotated 45 degrees upward to the right. Two closed six-sided heads share a straight handle, with quiet facet/grip details. It stays within the existing corner footprint and inherits palette color and stroke styling. The online artwork, desktop breakpoint, and native button behavior remain as before. This is static inline SVG with no new script or image request.
+- Desktop checks passed at 801, 1280, and 1440px; at 800px and 390px the decoration stayed hidden with zero dimensions. Each corner contained one dumbbell group, preserved decorative accessibility behavior, and caused no horizontal overflow. The console contained no errors. Astro diagnostics, the eight-page audit build, metadata/link/form/CSP/budget checks, formatting, and whitespace checks passed. Combined assets remain approximately **12.9 KB JS and 10.8 KB CSS gzip**.
+- Fresh local Mineral/panorama homepage Lighthouse 13.6.0 audits scored **100 in all four categories** on desktop and mobile. Both measured zero layout shift; total blocking time was 82ms on desktop and 0ms on mobile, with no run warnings. Reports, source hash, responsive checks, and the preview are retained in ignored `reports/hex-dumbbell-corner-2026-11-13/`. Production verification follows the protocol below.
+
 ## Required checks on Netlify
 
 These cannot be completed by a local static build and remain launch gates:

@@ -1,0 +1,29 @@
+---
+import ServiceCorner from './ServiceCorner.astro';
+
+interface Props {
+  kind: 'in-person' | 'online';
+  id?: string;
+  tabindex?: number;
+}
+const { kind, id, tabindex } = Astro.props;
+---
+
+<aside
+  class:list={[
+    'content-panel',
+    'service-card',
+    { 'service-card-light': kind === 'online' },
+  ]}
+  id={id}
+  tabindex={tabindex}
+>
+  <ServiceCorner kind={kind} />
+  <slot />
+</aside>
+
+<style>
+  .content-panel {
+    display: block;
+  }
+</style>

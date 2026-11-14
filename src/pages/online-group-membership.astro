@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Action from '../components/Action.astro';
 import Faq from '../components/Faq.astro';
 import FinalCta from '../components/FinalCta.astro';
+import ServicePanel from '../components/ServicePanel.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
 import { coach, site, onlineFaqs } from '../data/site';
 ---
@@ -64,7 +65,7 @@ import { coach, site, onlineFaqs } from '../data/site';
           <li>A shared space for questions and training discussion</li>
         </ul>
       </div>
-      <aside class="content-panel">
+      <ServicePanel kind="online">
         <p class="eyebrow">The Paradox membership</p>
         <h2>A plan in your pocket.</h2>
         <p class="price">
@@ -86,7 +87,7 @@ import { coach, site, onlineFaqs } from '../data/site';
           Already training with {coach.firstName} in person? Ask how online
           programming fits your plan.
         </p>
-      </aside>
+      </ServicePanel>
     </section>
     <p class="service-alternative">
       Prefer feedback as you train?{' '}

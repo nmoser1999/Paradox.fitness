@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import DirectionsLink from '../components/DirectionsLink.astro';
 import Action from '../components/Action.astro';
 import FinalCta from '../components/FinalCta.astro';
+import ServicePanel from '../components/ServicePanel.astro';
 import Faq from '../components/Faq.astro';
 import { coach, site, faqs } from '../data/site';
 ---
@@ -55,7 +56,7 @@ import { coach, site, faqs } from '../data/site';
           a starting point for your complimentary week.
         </p>
       </div>
-      <aside class="content-panel" id="pricing" tabindex="-1">
+      <ServicePanel kind="in-person" id="pricing" tabindex={-1}>
         <p class="eyebrow">Your training plan</p>
         <h2>Start with a free week.</h2>
         <p>
@@ -80,7 +81,7 @@ import { coach, site, faqs } from '../data/site';
         </address>
         <p class="fine-print">Parking is shared with Intero.</p>
         <DirectionsLink label="Find the studio" />
-      </aside>
+      </ServicePanel>
     </section>
   </div>
   <Faq items={faqs.filter((_, index) => index !== 4)} />
