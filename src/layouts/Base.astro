@@ -9,9 +9,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Consent from '../components/Consent.astro';
 import ArrowIcon from '../components/ArrowIcon.astro';
-import DesignControls from '../components/DesignControls.astro';
 import TrainingAtmosphere from '../components/TrainingAtmosphere.astro';
-import { palettes, layouts, defaultDesign, DESIGN_KEY } from '../lib/design';
+import { defaultDesign } from '../lib/design';
 import { coach, site } from '../data/site';
 import { getImage } from 'astro:assets';
 import trainerPortrait from '../../assets/unnamed.jpg';
@@ -26,11 +25,7 @@ const { title, description, noindex = false, mobileCta = true } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const indexable = import.meta.env.SITE_INDEXABLE === 'true' && !noindex;
 const onlinePage = Astro.url.pathname === '/online-group-membership/';
-const appearanceSeed = {
-  paletteIds: Object.keys(palettes),
-  layoutIds: Object.keys(layouts),
-  defaults: defaultDesign,
-  storageKey: DESIGN_KEY,
+const colorModeSeed = {
   modeStorageKey: COLOR_MODE_KEY,
 };
 const social = await getImage({
@@ -75,35 +70,19 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="grove" data-layout="panorama">
+<html
+  lang="en"
+  data-theme={defaultDesign.theme}
+  data-layout={defaultDesign.layout}
+>
   <head>
     <meta charset="utf-8" />
-    <script is:inline define:vars={{ appearanceSeed }}>
-      // Apply saved appearance before first paint. Enum lists come from the shared catalog.
+    <script is:inline define:vars={{ colorModeSeed }}>
+      // The Studio/panorama design is fixed in HTML; only light/dark mode varies.
       (() => {
-        let saved = {};
-        try {
-          saved =
-            JSON.parse(
-              localStorage.getItem(appearanceSeed.storageKey) || '{}',
-            ) || {};
-        } catch {}
-        const params = new URLSearchParams(location.search);
-        const theme = appearanceSeed.paletteIds.includes(params.get('theme'))
-          ? params.get('theme')
-          : appearanceSeed.paletteIds.includes(saved.theme)
-            ? saved.theme
-            : appearanceSeed.defaults.theme;
-        const layout = appearanceSeed.layoutIds.includes(params.get('layout'))
-          ? params.get('layout')
-          : appearanceSeed.layoutIds.includes(saved.layout)
-            ? saved.layout
-            : appearanceSeed.defaults.layout;
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.dataset.layout = layout;
         let mode;
         try {
-          mode = localStorage.getItem(appearanceSeed.modeStorageKey);
+          mode = localStorage.getItem(colorModeSeed.modeStorageKey);
         } catch {}
         document.documentElement.dataset.mode =
           mode === 'dark' ||
@@ -120,7 +99,7 @@ const schema = {
       name="robots"
       content={indexable ? 'index,follow' : 'noindex,nofollow'}
     />
-    <meta name="theme-color" content="#45592e" />
+    <meta name="theme-color" content="#f7f8fb" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
@@ -146,7 +125,6 @@ const schema = {
     <a class="skip-link" href="#main">
       Skip to content
     </a>
-    <DesignControls />
     <Header />
     <main id="main" tabindex="-1">
       <TrainingAtmosphere />
@@ -172,8 +150,9 @@ const schema = {
       </a>
     )}
     <script>
-      import '../lib/appearance';
+      import { initializeColorMode } from '../lib/color-mode';
       import '../lib/consent';
+      initializeColorMode();
     </script>
   </body>
 </html>

@@ -67,7 +67,7 @@ Set build-time environment variables in Netlify:
 | `PUBLIC_CLARITY_PROJECT_ID` | Empty until configured                                        | Optional Clarity project ID                    |
 | `ENABLE_DESIGN_REVIEW`      | `false` for production                                        | Excludes the old concept archive at `/design/` |
 
-Netlify branch/deploy-preview contexts keep indexing off and include the archived concept explorer. The real app’s color and layout selectors are included on every page regardless of that flag. When you later set `SITE_INDEXABLE=true`, **scope that value to the production context**, preserving the false values for review contexts. A production deploy is the `main` release even while its temporary Netlify URL is being used; keep indexing false until launch.
+Netlify branch/deploy-preview contexts keep indexing off and include the archived concept explorer. The main site stays locked to Studio cobalt with the Centered panorama layout; the archive flag does not restore its design chooser. When you later set `SITE_INDEXABLE=true`, **scope that value to the production context**, preserving the false values for review contexts. A production deploy is the `main` release even while its temporary Netlify URL is being used; keep indexing false until launch.
 
 Start the first deploy. Open the generated `…netlify.app` URL, confirm the build succeeded, and check navigation and images. Do not use a successful build as proof of email delivery.
 

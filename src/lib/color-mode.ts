@@ -83,10 +83,5 @@ export function initializeColorMode() {
       apply();
     }
   });
-  // Palette changes keep the selected mode and update the browser toolbar color.
-  new MutationObserver(updateBrowserChrome).observe(root, {
-    attributes: true,
-    attributeFilter: ['data-theme'],
-  });
   apply();
 }

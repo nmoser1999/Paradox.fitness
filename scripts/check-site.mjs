@@ -71,6 +71,14 @@ const titles = new Set();
 const indexable = process.env.SITE_INDEXABLE === 'true';
 for (const file of pages) {
   const html = await readFile(file, 'utf8');
+  assert(
+    /<html\b[^>]*data-theme="studio"[^>]*data-layout="panorama"/.test(html),
+    `Expected the locked Studio/panorama design: ${file}`,
+  );
+  assert(
+    !/id="(?:design-controls|palette-select|layout-select)"/.test(html),
+    `Design chooser must not appear on the fixed site: ${file}`,
+  );
   const utility = ['thanks/index.html', '404.html'].includes(
     path.relative(root, file).split(path.sep).join('/'),
   );
@@ -118,16 +126,6 @@ assert(
 const thanks = await readFile(path.join(root, 'thanks', 'index.html'), 'utf8');
 assert(thanks.includes('noindex'), 'Confirmation must remain noindex');
 const homepage = await readFile(path.join(root, 'index.html'), 'utf8');
-for (const id of ['palette-select', 'layout-select']) {
-  const options = homepage.match(
-    new RegExp(`<select[^>]*id="${id}"[^>]*>([\\s\\S]*?)<\\/select>`),
-  )?.[1];
-  assert.equal(
-    (options?.match(/<option\b/g) || []).length,
-    8,
-    `Expected eight live design choices in ${id}`,
-  );
-}
 const clientSource = (
   await Promise.all(
     all
@@ -139,9 +137,8 @@ const clientSource = (
   )
 ).join('\n');
 assert(
-  clientSource.includes('palette-select') &&
-    clientSource.includes('layout-select'),
-  'Live design controller was not bundled',
+  !/palette-select|layout-select|paradox-design-v1/.test(clientSource),
+  'Legacy design preferences must not override the fixed site',
 );
 const robots = await readFile(path.join(root, 'robots.txt'), 'utf8');
 assert(

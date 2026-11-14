@@ -1,19 +1,22 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-paper: #eef0e2;
-  --color-forest: #303b25;
-  --color-olive: #45592e;
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-accent: var(--accent);
 }
 
 :root {
   color-scheme: light;
-  --paper: #eef0e2;
-  --ink: #303b25;
-  --muted: #586348;
-  --accent: #45592e;
-  --panel: #dce2c2;
-  --line: #b9c39c;
+  --paper: #f7f8fb;
+  --ink: #17243a;
+  --muted: #566378;
+  --accent: #244eb2;
+  --panel: #e2e8f4;
+  --line: #bcc7db;
+  --surface: #fff;
+  --button-ink: #fff;
+  --control-line: #7f90ad;
   font-family: Arial, Helvetica, sans-serif;
   color: var(--ink);
   background: var(--paper);
@@ -182,8 +185,8 @@ em {
   cursor: pointer;
 }
 .button:hover {
-  background: #354621;
-  border-color: #354621;
+  background: var(--accent);
+  border-color: var(--accent);
   text-decoration: none;
 }
 .button-secondary {
@@ -194,7 +197,7 @@ em {
 .button-secondary:hover {
   color: var(--ink);
   border-color: var(--accent);
-  background: #e3e8d1;
+  background: var(--panel);
 }
 .button:disabled {
   cursor: wait;
@@ -290,7 +293,7 @@ em {
   content: '';
   position: absolute;
   inset: 55% 0 0;
-  background: linear-gradient(transparent, #13210fd9);
+  background: linear-gradient(transparent, #121e33d9);
   pointer-events: none;
 }
 .coach-photo figcaption {
@@ -321,7 +324,7 @@ em {
 .coach-copy p:not(.eyebrow) {
   margin-bottom: 18px;
   font-size: 0.975rem;
-  color: #48543a;
+  color: var(--muted);
 }
 .inline-link {
   display: inline-flex;
@@ -386,14 +389,14 @@ em {
   background: var(--panel);
 }
 .service-card-light {
-  background: #f6f7ef;
+  background: var(--surface);
 }
 .service-card h3 {
   font-size: 2rem;
   margin-bottom: 16px;
 }
 .service-card > p:not(.eyebrow):not(.price):not(.fine-print) {
-  color: #48543a;
+  color: var(--muted);
   font-size: 1rem;
   max-width: 420px;
 }
@@ -522,14 +525,14 @@ em {
   margin-bottom: 76px;
 }
 .final-cta .eyebrow {
-  color: #e8eddd;
+  color: var(--button-ink);
 }
 .final-cta h2 {
   font-size: clamp(2rem, 4vw, 3.3rem);
 }
 .final-cta p:not(.eyebrow) {
   font-size: 0.975rem;
-  color: #edf0e4;
+  color: var(--button-ink);
   margin-top: 20px;
   max-width: 540px;
 }
@@ -703,7 +706,7 @@ em {
   margin: 0 0 16px;
 }
 .content-panel p {
-  color: #48543a;
+  color: var(--muted);
   margin-block: 16px;
 }
 .content-panel .price {
@@ -748,7 +751,7 @@ em {
   align-items: start;
 }
 .contact-form {
-  background: #f7f8f1;
+  background: var(--surface);
   border: 1px solid var(--line);
   padding: 34px;
   border-radius: 14px;
@@ -787,7 +790,7 @@ em {
   padding: 12px 13px;
   min-height: 47px;
   background: #fff;
-  border: 1px solid #8d9a7d;
+  border: 1px solid var(--control-line);
   border-radius: 5px;
   color: var(--ink);
   font-size: 1rem;
@@ -870,9 +873,9 @@ em {
   margin-inline: auto;
   padding: 24px;
   border: 1px solid var(--line);
-  background: #f8f9f2;
+  background: var(--surface);
   border-radius: 12px;
-  box-shadow: 0 8px 40px #303b2526;
+  box-shadow: 0 8px 40px #17243a26;
 }
 .consent-panel h2 {
   font-size: 1.1rem;
@@ -957,10 +960,10 @@ em {
     z-index: 10;
     display: flex;
     flex-direction: column;
-    background: #f8f9f2;
+    background: var(--surface);
     border: 1px solid var(--line);
     border-radius: 8px;
-    box-shadow: 0 8px 20px #303b2520;
+    box-shadow: 0 8px 20px #17243a20;
     padding: 12px 18px;
   }
   .mobile-menu a {
@@ -1148,7 +1151,7 @@ em {
     bottom: max(12px, env(safe-area-inset-bottom));
     left: 20px;
     right: 20px;
-    box-shadow: 0 5px 24px #26331c38;
+    box-shadow: 0 5px 24px #17243a38;
   }
   .consent-panel {
     inset: auto 12px 12px;

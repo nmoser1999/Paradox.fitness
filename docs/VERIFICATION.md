@@ -7,11 +7,19 @@
 1. Astro/strict TypeScript diagnostics.
 2. Unit tests covering optional contact fields, callback requirements, malformed inputs, honeypot handling, analytics allowlists, removal of identifying URL components, and approved campaign attribution.
 3. Static production build and image optimization.
-4. Generated HTML checks: one H1, unique titles, description/canonical metadata, local links/assets, a detectable Netlify form, noindex confirmation, CSP hash coverage, the minimal browser feature policy, and bundle size budgets. CSP checks also cover the archived explorer when included and reject inline style/event attributes.
+4. Generated HTML checks: fixed Studio/panorama attributes on every main-site page, no design chooser or legacy preference controller, one H1, unique titles, description/canonical metadata, local links/assets, a detectable Netlify form, noindex confirmation, CSP hash coverage, the minimal browser feature policy, and bundle size budgets. CSP checks also cover the archived explorer when included and reject inline style/event attributes.
 
 `npm run format:check` checks source/document formatting. The GitHub workflow runs both ordinary and design-review builds. Dependency installation reported zero known vulnerabilities at implementation time; this is not a promise about future package advisories.
 
 The passing build has **about 4.5 KB gzipped JavaScript and 7.4 KB gzipped CSS across all first-party bundles combined**, with optimized portrait assets. Small code size is useful evidence, not a Lighthouse score. Refer to the final command output for the latest bundle totals.
+
+## Studio design lock · November 14, 2026
+
+The main site is fixed to Studio cobalt and Centered panorama. The design chooser, legacy preference controller, and alternative production palette/layout styles were removed. Generated-output checks assert the fixed attributes and absent chooser on all eight pages. The actual head-script tests confirm that old design storage and query values cannot alter the fixed design, including when preference storage is blocked.
+
+`npm run verify` passed with zero Astro diagnostics, 74 tests, and all generated-output checks. Formatting and whitespace checks passed. The production/indexable and review/noindex builds both passed their output checks. First-party bundles total 11.9 KB JavaScript and 8.1 KB CSS gzip.
+
+Desktop browser review at 1280px confirmed the dark Studio token values, centered hero, panorama coach grid, absent design bar, and no horizontal overflow. An old `?theme=grove&layout=portrait` link still rendered Studio/panorama. The light/dark toggle retained the fixed design; navigating to the inquiry page retained Studio/panorama and preselected in-person training. Screenshot: `reports/studio-panorama-locked.png`. These changes were verified locally; this review did not publish a deployment.
 
 ## Browser review
 
@@ -23,11 +31,11 @@ Review the built site, not only the dev server. Check:
 - Consent settings, decline/accept/withdrawal, and absence of vendor scripts when IDs are empty or consent is declined.
 - Current Trainerize URL, promotional parameters, and separation of checkout clicks from lead events.
 
-The original explorer’s 64 color/layout combinations passed desktop selector/image/overflow checks before implementation. The production site defaults to Grove/panorama; new production browser results should be recorded separately from those concept checks.
+The original explorer’s 64 color/layout combinations passed desktop selector/image/overflow checks before implementation. The production site is now locked to Studio/panorama; the earlier variant checks below are historical.
 
 Implementation review on November 4, 2026: all eight built pages had a single H1, no horizontal overflow at 1280px, and no vendor tags with provider IDs unset. Visual checks covered the homepage, inquiry, and online pages at 320px/390px. The hero CTA preselected in-person service; callback selection made the phone field required; a local submission displayed the recoverable error, retained the entered name/email, and re-enabled retry. Analytics settings opened with a disabled-provider explanation. Both indexable public and noindex design-review build modes passed their generated-output checks. Live delivery, provider-account behavior, Netlify headers, and Lighthouse remain the launch gates below.
 
-The real app now includes independent selectors on every page. All 64 live homepage combinations passed selector consistency, image-loading, and 1280px overflow checks. Browser review confirmed that Precision/reversed-layout preferences persisted into the inquiry page and through reload, while in-person service preselection still worked. Mobile visual review included live selectors, Studio/reversed and Mineral/immersive homepages, and a Precision/arched contact page at 320px/390px. Five additional unit tests cover independent selection, share-link overrides, and invalid stored/query values.
+Before the November 14 design lock, the app included independent selectors on every page. All 64 live homepage combinations passed selector consistency, image-loading, and 1280px overflow checks. Browser review confirmed that Precision/reversed-layout preferences persisted into the inquiry page and through reload, while in-person service preselection still worked. Mobile visual review included live selectors, Studio/reversed and Mineral/immersive homepages, and a Precision/arched contact page at 320px/390px. Five additional unit tests cover independent selection, share-link overrides, and invalid stored/query values.
 
 Shared-dropdown review on November 4, 2026: all four app dropdowns use `SelectControl.astro`. Browser measurements confirmed centered chevrons, a 16px form inset with 44px end padding, and a 12px desktop design-control inset with 40px end padding. All eight palettes preserved form arrow/text color matching and had no desktop overflow. Visual review at 320px and 390px confirmed clear arrow spacing in both form and design controls. In-person query preselection and the callback phone requirement still worked. The high-contrast fallback is implemented with `forced-colors`; it was not tested on a Windows high-contrast browser.
 

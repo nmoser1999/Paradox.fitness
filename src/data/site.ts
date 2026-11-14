@@ -15,7 +15,7 @@ export const site = {
   checkout:
     'https://www.trainerize.me/profile/pdoxfitness/?code=7DAYTRIAL&mode=checkout&planGUID=2fc2486856bc410e87ce1e6c5382ac9c',
   inPersonPrice: '$85',
-  onlinePrice: '$60',
+  onlinePrice: '$65',
   hours: ['Monday–Friday · 6:00 am–7:30 pm', 'Saturday · 6:00 am–12:00 pm'],
 } as const;
 
