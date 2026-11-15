@@ -62,12 +62,12 @@ Set build-time environment variables in Netlify:
 | Variable                    | Initial value                                                 | Purpose                                        |
 | --------------------------- | ------------------------------------------------------------- | ---------------------------------------------- |
 | `PUBLIC_SITE_URL`           | `https://www.pdoxfitness.com` if retaining the current domain | Canonical URLs, social images, sitemap         |
-| `SITE_INDEXABLE`            | `false` during launch preparation                             | Keeps staging out of search                    |
+| `SITE_INDEXABLE`            | `true` for production; `false` for previews and branch deploys | Allows production indexing; keeps staging out of search |
 | `PUBLIC_GA_MEASUREMENT_ID`  | Empty until configured                                        | Optional GA4 ID, such as `G-…`                 |
 | `PUBLIC_CLARITY_PROJECT_ID` | Empty until configured                                        | Optional Clarity project ID                    |
 | `ENABLE_DESIGN_REVIEW`      | `false` for production                                        | Excludes the old concept archive at `/design/` |
 
-Netlify branch/deploy-preview contexts keep indexing off and include the archived concept explorer. The main site stays locked to Studio cobalt with the Centered panorama layout; the archive flag does not restore its design chooser. When you later set `SITE_INDEXABLE=true`, **scope that value to the production context**, preserving the false values for review contexts. A production deploy is the `main` release even while its temporary Netlify URL is being used; keep indexing false until launch.
+Netlify branch/deploy-preview contexts keep indexing off and include the archived concept explorer. Production builds allow indexing. If the Netlify dashboard has an explicit `SITE_INDEXABLE=false` override for production, change it to `true` or remove it. The main site stays locked to Studio cobalt with the Centered panorama layout; the archive flag does not restore its design chooser.
 
 Start the first deploy. Open the generated `…netlify.app` URL, confirm the build succeeded, and check navigation and images. Do not use a successful build as proof of email delivery.
 

@@ -10,7 +10,7 @@ Static Astro + TypeScript + Tailwind website, prepared for Netlify. The approved
 4. Run `npm run verify` before releasing changes.
 5. Follow [DEPLOYMENT.md](DEPLOYMENT.md) to launch on Netlify with Namecheap DNS.
 
-Local preview never sends or pretends to store inquiries. Test actual delivery on Netlify before launch. Analytics are disabled until configured. Search indexing is disabled by default until the production launch checks pass.
+Local preview never sends or pretends to store inquiries. Test actual delivery on Netlify before launch. Analytics are disabled until configured. Production builds allow indexing; deploy previews and branch deploys remain blocked from indexing.
 
 ## Commands
 

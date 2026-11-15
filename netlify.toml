@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "24"
   ASTRO_TELEMETRY_DISABLED = "1"
-  SITE_INDEXABLE = "false"
+  SITE_INDEXABLE = "true"
   ENABLE_DESIGN_REVIEW = "false"
 
 [context.deploy-preview.environment]
@@ -16,5 +16,4 @@
   SITE_INDEXABLE = "false"
   ENABLE_DESIGN_REVIEW = "true"
 
-# Set SITE_INDEXABLE=true in Netlify's production-context environment only
-# after the domain, copy, offers, and email delivery have passed launch review.
+# Production is indexable; deploy previews and branch deploys remain noindex.
